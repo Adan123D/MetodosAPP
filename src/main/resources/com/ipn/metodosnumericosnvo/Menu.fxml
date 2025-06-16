@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ipn.metodosnumericosnvo.MenuController">
+    <top>
+        <HBox spacing="10.0" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="5.0" right="10.0" bottom="5.0" left="5.0"/>
+            </padding>
+            <MenuBar HBox.hgrow="ALWAYS" prefHeight="25.0" maxHeight="25.0" minHeight="25.0">
+                <!-- Raíces de Ecuaciones -->
+                <Menu text="Raíces de Ecuaciones">
+                    <MenuItem text="Método de Bisección" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Muller" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de la Secante" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Newton" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Punto Fijo" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Falsa Posición" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Steffensen" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Bisección-Aitken" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de la Secante-Aitken" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Deflación" onAction="#handleMenuItemClick"/>
+                </Menu>
+
+                <!-- Derivación -->
+                <Menu text="Derivación">
+                    <MenuItem text="Interpolación" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Polinomio Interpolante de Lagrange" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Derivación Numérica" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Interpolación de Richardson" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Derivación para puntos desigualmente espaciados" onAction="#handleMenuItemClick"/>
+                </Menu>
+
+                <!-- Integración -->
+                <Menu text="Integración">
+                    <MenuItem text="Integración Numérica" onAction="#handleMenuItemClick"/>
+                    <Menu text="Integración Compuesta">
+                        <MenuItem text="Trapecio Compuesto" onAction="#handleMenuItemClick"/>
+                        <MenuItem text="Simpson 1/3 Compuesto" onAction="#handleMenuItemClick"/>
+                        <MenuItem text="Simpson 3/8 Compuesto" onAction="#handleMenuItemClick"/>
+                    </Menu>
+                    <Menu text="Integración Múltiple">
+                        <MenuItem text="Método del Trapecio" onAction="#handleMenuItemClick"/>
+                        <MenuItem text="Método de Simpson 1/3" onAction="#handleMenuItemClick"/>
+                    </Menu>
+                    <MenuItem text="Interpolación de Romberg" onAction="#handleMenuItemClick"/>
+                    <Menu text="Método de Cuadratura Adaptiva">
+                        <MenuItem text="Simpson Compuesto" onAction="#handleMenuItemClick"/>
+                        <MenuItem text="Trapecio Simple" onAction="#handleMenuItemClick"/>
+                    </Menu>
+                </Menu>
+
+                <!-- Ecuaciones Diferenciales -->
+                <Menu text="Ecuaciones Diferenciales">
+                    <MenuItem text="Método de Euler" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Taylor" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Runge-Kutta" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Heun" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="SEDO" onAction="#handleMenuItemClick"/>
+                </Menu>
+
+                <!-- Sistema de Ecuaciones -->
+                <Menu text="Sistema de Ecuaciones">
+                    <MenuItem text="Eliminación Gaussiana" onAction="#handleMenuItemClick"/>
+                </Menu>
+            </MenuBar>
+            <HBox alignment="CENTER_RIGHT" spacing="5.0" prefWidth="250.0" prefHeight="25.0" maxHeight="25.0" minHeight="25.0">
+                <Button text="Gráfica" onAction="#onGraficaButtonClick" minWidth="70" maxWidth="70" maxHeight="22.0"/>
+                <Button text="Home" onAction="#onHomeButtonClick" minWidth="70" maxWidth="70" maxHeight="22.0"/>
+                <Button text="Exit" onAction="#onExitButtonClick" minWidth="70" maxWidth="70" maxHeight="22.0"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+            <Label fx:id="welcomeText"/>
+        </VBox>
+    </center>
+</BorderPane>

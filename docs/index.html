@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación - Métodos Numéricos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        header {
+            background-color: #f4f4f4;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #444;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .doc-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Documentación de Métodos Numéricos</h1>
+            <p>Guía completa para usuarios y desarrolladores</p>
+        </header>
+
+        <div class="doc-section">
+            <h2>Introducción</h2>
+            <p>
+                Bienvenido a la documentación de la aplicación Métodos Numéricos. Esta aplicación proporciona una interfaz gráfica para diversos métodos numéricos utilizados en matemáticas e ingeniería.
+            </p>
+            <p>
+                <a href="README.md" target="_blank">Ver descripción general</a>
+            </p>
+        </div>
+
+        <div class="doc-section">
+            <h2>Guía de Usuario</h2>
+            <p>
+                La guía de usuario proporciona información detallada sobre cómo instalar, configurar y utilizar la aplicación Métodos Numéricos.
+            </p>
+            <ul>
+                <li><a href="user-guide.md#instalación" target="_blank">Instalación</a></li>
+                <li><a href="user-guide.md#interfaz-de-usuario" target="_blank">Interfaz de Usuario</a></li>
+                <li><a href="user-guide.md#uso-de-los-métodos-numéricos" target="_blank">Uso de los Métodos Numéricos</a></li>
+                <li><a href="user-guide.md#visualización-de-gráficas" target="_blank">Visualización de Gráficas</a></li>
+                <li><a href="user-guide.md#solución-de-problemas-comunes" target="_blank">Solución de Problemas</a></li>
+            </ul>
+            <p>
+                <a href="user-guide.md" target="_blank">Ver guía de usuario completa</a>
+            </p>
+        </div>
+
+        <div class="doc-section">
+            <h2>Documentación Técnica</h2>
+            <p>
+                La documentación técnica proporciona información detallada sobre la arquitectura, estructura del código e implementación de los métodos numéricos en la aplicación.
+            </p>
+            <ul>
+                <li><a href="technical-docs.md#arquitectura" target="_blank">Arquitectura</a></li>
+                <li><a href="technical-docs.md#estructura-del-código" target="_blank">Estructura del Código</a></li>
+                <li><a href="technical-docs.md#implementación-de-los-métodos-numéricos" target="_blank">Implementación de los Métodos Numéricos</a></li>
+                <li><a href="technical-docs.md#interfaz-gráfica" target="_blank">Interfaz Gráfica</a></li>
+                <li><a href="technical-docs.md#extensibilidad" target="_blank">Extensibilidad</a></li>
+                <li><a href="technical-docs.md#consideraciones-de-rendimiento" target="_blank">Consideraciones de Rendimiento</a></li>
+                <li><a href="technical-docs.md#pruebas" target="_blank">Pruebas</a></li>
+                <li><a href="technical-docs.md#futuras-mejoras" target="_blank">Futuras Mejoras</a></li>
+            </ul>
+            <p>
+                <a href="technical-docs.md" target="_blank">Ver documentación técnica completa</a>
+            </p>
+        </div>
+
+        <div class="doc-section">
+            <h2>Métodos Numéricos Implementados</h2>
+            <p>
+                La aplicación incluye implementaciones de diversos métodos numéricos organizados en las siguientes categorías:
+            </p>
+            <ul>
+                <li>
+                    <strong>Raíces de Ecuaciones</strong>
+                    <ul>
+                        <li><a href="technical-docs.md#método-de-bisección" target="_blank">Método de Bisección</a></li>
+                        <li><a href="technical-docs.md#método-de-newton" target="_blank">Método de Newton</a></li>
+                        <li>Método de Muller</li>
+                        <li>Método de la Secante</li>
+                        <li>Método de Punto Fijo</li>
+                        <li>Método de Falsa Posición</li>
+                        <li>Método de Steffensen</li>
+                        <li>Método de Bisección-Aitken</li>
+                        <li>Método de la Secante-Aitken</li>
+                        <li>Deflación</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Derivación</strong>
+                    <ul>
+                        <li><a href="technical-docs.md#derivación-numérica" target="_blank">Derivación Numérica</a></li>
+                        <li>Interpolación</li>
+                        <li>Polinomio Interpolante de Lagrange</li>
+                        <li>Interpolación de Richardson</li>
+                        <li>Derivación para puntos desigualmente espaciados</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Integración</strong>
+                    <ul>
+                        <li><a href="technical-docs.md#método-del-trapecio-compuesto" target="_blank">Método del Trapecio Compuesto</a></li>
+                        <li>Simpson 1/3 Compuesto</li>
+                        <li>Simpson 3/8 Compuesto</li>
+                        <li>Integración Múltiple</li>
+                        <li>Interpolación de Romberg</li>
+                        <li>Método de Cuadratura Adaptiva</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Ecuaciones Diferenciales</strong>
+                    <ul>
+                        <li><a href="technical-docs.md#método-de-runge-kutta" target="_blank">Método de Runge-Kutta</a></li>
+                        <li>Método de Euler</li>
+                        <li>Método de Taylor</li>
+                        <li>Método de Heun</li>
+                        <li>SEDO</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Sistema de Ecuaciones</strong>
+                    <ul>
+                        <li><a href="technical-docs.md#eliminación-gaussiana" target="_blank">Eliminación Gaussiana</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>© 2023 Métodos Numéricos. Todos los derechos reservados.</p>
+            <p>Para más información o soporte, contacte a: <a href="mailto:correo@ejemplo.com">correo@ejemplo.com</a></p>
+        </footer>
+    </div>
+</body>
+</html>
