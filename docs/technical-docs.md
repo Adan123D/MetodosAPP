@@ -321,9 +321,10 @@ El visualizador de funciones está implementado en el controlador principal (`Me
    - Botón para visualizar la función
    - Área de visualización (`functionDisplayPane`)
    - Etiqueta para mostrar errores (`functionErrorLabel`)
+   - Botones de operaciones matemáticas para facilitar la entrada de funciones
 
 2. **Proceso de Visualización**:
-   - El usuario ingresa una función matemática en el campo de texto.
+   - El usuario ingresa una función matemática en el campo de texto o utiliza los botones de operaciones matemáticas.
    - La función se convierte a formato LaTeX mediante el método `convertToLatex()`.
    - Se crea un objeto `TeXFormula` con la cadena LaTeX.
    - Se renderiza la fórmula en un objeto `BufferedImage`.
@@ -335,15 +336,35 @@ El visualizador de funciones está implementado en el controlador principal (`Me
    - Reemplaza funciones matemáticas comunes (sin, cos, log, etc.) con sus equivalentes en LaTeX.
    - Maneja fracciones (a/b → \frac{a}{b}).
    - Maneja exponentes (x^n → x^{n}).
+   - Maneja raíces cuadradas, cúbicas y n-ésimas (sqrt(x) → \sqrt{x}, cbrt(x) → \sqrt[3]{x}, root(n,x) → \sqrt[n]{x}).
+   - Maneja funciones exponenciales (e^x → \mathrm{e}^{x}).
    - Reemplaza operadores y símbolos especiales.
 
 ```java
 // Ejemplo de conversión a LaTeX
 String input = "sin(x^2) + 5/x";
 String latex = "\\sin(x^{2}) + \\frac{5}{x}";
+
+// Ejemplo de raíz n-ésima
+String input = "root(3,x)";
+String latex = "\\sqrt[3]{x}";
+
+// Ejemplo de función exponencial
+String input = "e^(x+1)";
+String latex = "\\mathrm{e}^{x+1}";
 ```
 
-4. **Manejo de Errores**:
+4. **Botones de Operaciones Matemáticas**:
+   - Primera fila: Potencia (x^n), Raíz cuadrada (√x), Raíz cúbica (∛x), Raíz n-ésima (ⁿ√x), sin, cos, tan
+   - Segunda fila: Fracción (a/b), Pi (π), Paréntesis, log, ln, Exponencial (e^x)
+   - Cada botón inserta la sintaxis correspondiente en el campo de texto en la posición del cursor
+
+5. **Manejo de Raíces N-ésimas**:
+   - La aplicación implementa un algoritmo sofisticado para manejar la sintaxis `root(n,x)` y convertirla a la notación LaTeX `\sqrt[n]{x}`.
+   - El algoritmo analiza la expresión, extrae el valor de n y el contenido de la raíz, y construye la fórmula LaTeX correcta.
+   - Maneja correctamente paréntesis anidados y expresiones complejas.
+
+6. **Manejo de Errores**:
    - Validación de entrada vacía.
    - Captura de excepciones durante el proceso de renderizado.
    - Muestra de mensajes de error claros al usuario.

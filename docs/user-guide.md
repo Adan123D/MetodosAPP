@@ -102,20 +102,61 @@ El área central de la aplicación es donde se mostrarán los formularios para i
 La aplicación incluye un visualizador de funciones matemáticas que permite ver la representación gráfica de las funciones ingresadas. Para utilizar esta función:
 
 1. Localice el área del visualizador de funciones en la pantalla principal.
-2. Ingrese la función matemática en el campo de texto (por ejemplo, "sin(x^2) + 5/x").
+2. Ingrese la función matemática en el campo de texto (por ejemplo, "sin(x^2) + 5/x") o utilice los botones de operaciones matemáticas disponibles debajo del área de visualización.
 3. Haga clic en el botón "Visualizar" o presione Enter.
 4. La función se mostrará renderizada en notación matemática en el área de visualización.
+
+#### Botones de Operaciones Matemáticas
+
+Para facilitar la entrada de funciones matemáticas, el visualizador incluye dos filas de botones:
+
+**Primera fila:**
+- **x^n**: Inserta el símbolo de potencia (^)
+- **√x**: Inserta la función de raíz cuadrada (sqrt)
+- **∛x**: Inserta la función de raíz cúbica (cbrt)
+- **ⁿ√x**: Inserta la función de raíz n-ésima (root(n,x))
+- **sin**: Inserta la función seno (sin)
+- **cos**: Inserta la función coseno (cos)
+- **tan**: Inserta la función tangente (tan)
+
+**Segunda fila:**
+- **a/b**: Inserta la estructura para fracciones (()/())
+- **π**: Inserta la constante pi (pi)
+- **(**: Inserta un paréntesis izquierdo
+- **)**: Inserta un paréntesis derecho
+- **log**: Inserta la función logaritmo (log)
+- **ln**: Inserta la función logaritmo natural (ln)
+- **e^x**: Inserta la función exponencial (e^())
+
+Para usar estos botones:
+1. Coloque el cursor en la posición donde desea insertar la función o símbolo.
+2. Haga clic en el botón correspondiente.
+3. Complete la expresión según sea necesario (por ejemplo, reemplace "n" en root(n,x) con el índice deseado).
+
+#### Notaciones Soportadas
 
 El visualizador admite diversas notaciones matemáticas:
 - Funciones trigonométricas: sin, cos, tan, cot, sec, csc
 - Funciones trigonométricas inversas: arcsin, arccos, arctan
 - Funciones hiperbólicas: sinh, cosh, tanh
 - Funciones logarítmicas: log, ln
-- Raíces cuadradas: sqrt
+- Raíces: 
+  - Raíz cuadrada: sqrt(x)
+  - Raíz cúbica: cbrt(x)
+  - Raíz n-ésima: root(n,x) donde n es el índice de la raíz
+- Función exponencial: e^(x)
 - Fracciones: utilizando el símbolo / (por ejemplo, "1/x")
 - Exponentes: utilizando el símbolo ^ (por ejemplo, "x^2")
 - Constantes: pi, inf (infinito)
 - Operadores: +, -, *, /, ^
+
+#### Ejemplos de Uso
+
+- Raíz cuadrada: `sqrt(x^2 + 1)`
+- Raíz cúbica: `cbrt(x)`
+- Raíz n-ésima: `root(4,x)` (raíz cuarta de x)
+- Función exponencial: `e^(x*sin(x))`
+- Fracción compleja: `(x^2 + 1)/(x - 1)`
 
 Si ocurre algún error al visualizar la función, se mostrará un mensaje de error debajo del área de visualización.
 

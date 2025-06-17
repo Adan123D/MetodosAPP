@@ -107,6 +107,28 @@
                           style="-fx-background-color: white; -fx-border-color: #dddddd; -fx-border-radius: 3;"/>
 
                     <Label fx:id="functionErrorLabel" textFill="RED" visible="false"/>
+
+                    <!-- Math Operation Buttons - Row 1 -->
+                    <HBox alignment="CENTER" spacing="5.0">
+                        <Button text="x^n" onAction="#onPowerButtonClick" prefWidth="60"/>
+                        <Button text="√x" onAction="#onSqrtButtonClick" prefWidth="60"/>
+                        <Button text="∛x" onAction="#onCbrtButtonClick" prefWidth="60"/>
+                        <Button text="ⁿ√x" onAction="#onNthRootButtonClick" prefWidth="60"/>
+                        <Button text="sin" onAction="#onSinButtonClick" prefWidth="60"/>
+                        <Button text="cos" onAction="#onCosButtonClick" prefWidth="60"/>
+                        <Button text="tan" onAction="#onTanButtonClick" prefWidth="60"/>
+                    </HBox>
+
+                    <!-- Math Operation Buttons - Row 2 -->
+                    <HBox alignment="CENTER" spacing="5.0">
+                        <Button text="a/b" onAction="#onFractionButtonClick" prefWidth="60"/>
+                        <Button text="π" onAction="#onPiButtonClick" prefWidth="60"/>
+                        <Button text="(" onAction="#onLeftParenButtonClick" prefWidth="60"/>
+                        <Button text=")" onAction="#onRightParenButtonClick" prefWidth="60"/>
+                        <Button text="log" onAction="#onLogButtonClick" prefWidth="60"/>
+                        <Button text="ln" onAction="#onLnButtonClick" prefWidth="60"/>
+                        <Button text="e^x" onAction="#onExpButtonClick" prefWidth="60"/>
+                    </HBox>
                 </VBox>
             </VBox>
         </StackPane>

@@ -240,8 +240,9 @@ public class MenuController {
             .replace("log", "\\log")
             .replace("ln", "\\ln")
 
-            // Square root and nth root
+            // Square root, cube root and nth root
             .replace("sqrt", "\\sqrt")
+            .replace("cbrt", "\\sqrt[3]")
 
             // Absolute value - convert |x| to \left|x\right|
             .replace("|", "\\left|")
@@ -254,7 +255,80 @@ public class MenuController {
             .replace("!=", " \\neq ")  // Not equal
             .replace("==", " = ")      // Equal
             .replace("pi", "\\pi")     // Pi symbol
+            .replace("e^", "\\mathrm{e}^")  // Exponential function
             .replace("inf", "\\infty"); // Infinity symbol
+
+        //--------------------------------------------------
+        // Step 1.5: Handle nth root (convert root(n,x) to \sqrt[n]{x})
+        //--------------------------------------------------
+        if (latexFormula.contains("root(")) {
+            StringBuilder result = new StringBuilder();
+            int i = 0;
+
+            while (i < latexFormula.length()) {
+                // Look for "root(" pattern
+                if (i + 5 <= latexFormula.length() && latexFormula.substring(i, i + 5).equals("root(")) {
+                    // Found the start of a root function
+                    result.append("\\sqrt[");
+                    i += 5; // Move past "root("
+
+                    // Find the index of the comma
+                    int commaIndex = -1;
+                    int parenCount = 1; // We're already inside one parenthesis
+                    int j = i;
+
+                    while (j < latexFormula.length() && commaIndex == -1) {
+                        char c = latexFormula.charAt(j);
+                        if (c == '(') parenCount++;
+                        else if (c == ')') parenCount--;
+                        else if (c == ',' && parenCount == 1) commaIndex = j;
+                        j++;
+                    }
+
+                    if (commaIndex != -1) {
+                        // Extract the n value
+                        String nValue = latexFormula.substring(i, commaIndex);
+                        result.append(nValue).append("]{");
+
+                        // Find the closing parenthesis
+                        int closeParenIndex = -1;
+                        parenCount = 1;
+                        j = commaIndex + 1;
+
+                        while (j < latexFormula.length() && closeParenIndex == -1) {
+                            char c = latexFormula.charAt(j);
+                            if (c == '(') parenCount++;
+                            else if (c == ')') {
+                                parenCount--;
+                                if (parenCount == 0) closeParenIndex = j;
+                            }
+                            j++;
+                        }
+
+                        if (closeParenIndex != -1) {
+                            // Extract the x value
+                            String xValue = latexFormula.substring(commaIndex + 1, closeParenIndex);
+                            result.append(xValue).append("}");
+                            i = closeParenIndex + 1; // Move past the closing parenthesis
+                        } else {
+                            // No closing parenthesis found, just append the rest
+                            result.append(latexFormula.substring(commaIndex + 1));
+                            i = latexFormula.length();
+                        }
+                    } else {
+                        // No comma found, just append the rest
+                        result.append(latexFormula.substring(i));
+                        i = latexFormula.length();
+                    }
+                } else {
+                    // Not a root function, just append the character
+                    result.append(latexFormula.charAt(i));
+                    i++;
+                }
+            }
+
+            latexFormula = result.toString();
+        }
 
         //--------------------------------------------------
         // Step 2: Handle fractions (convert a/b to \frac{a}{b})
@@ -358,8 +432,192 @@ public class MenuController {
     }
 
     //--------------------------------------------------
+    // Math Operation Button Handlers
+    //--------------------------------------------------
+
+    /**
+     * Handles the click event for the power button (x^n).
+     * Inserts the power syntax at the cursor position.
+     */
+    @FXML
+    protected void onPowerButtonClick() {
+        insertTextAtCursor("^");
+    }
+
+    /**
+     * Handles the click event for the square root button (√x).
+     * Inserts the square root syntax at the cursor position.
+     */
+    @FXML
+    protected void onSqrtButtonClick() {
+        insertTextAtCursor("sqrt(", ")");
+    }
+
+    /**
+     * Handles the click event for the cube root button (∛x).
+     * Inserts the cube root syntax at the cursor position.
+     */
+    @FXML
+    protected void onCbrtButtonClick() {
+        insertTextAtCursor("cbrt(", ")");
+    }
+
+    /**
+     * Handles the click event for the nth root button (ⁿ√x).
+     * Inserts the nth root syntax at the cursor position.
+     */
+    @FXML
+    protected void onNthRootButtonClick() {
+        insertTextAtCursor("root(n,", ")");
+    }
+
+    /**
+     * Handles the click event for the sine button.
+     * Inserts the sine function syntax at the cursor position.
+     */
+    @FXML
+    protected void onSinButtonClick() {
+        insertTextAtCursor("sin(", ")");
+    }
+
+    /**
+     * Handles the click event for the cosine button.
+     * Inserts the cosine function syntax at the cursor position.
+     */
+    @FXML
+    protected void onCosButtonClick() {
+        insertTextAtCursor("cos(", ")");
+    }
+
+    /**
+     * Handles the click event for the tangent button.
+     * Inserts the tangent function syntax at the cursor position.
+     */
+    @FXML
+    protected void onTanButtonClick() {
+        insertTextAtCursor("tan(", ")");
+    }
+
+    /**
+     * Handles the click event for the fraction button (a/b).
+     * Inserts the fraction syntax at the cursor position.
+     */
+    @FXML
+    protected void onFractionButtonClick() {
+        insertTextAtCursor("(", ")/()");
+    }
+
+    /**
+     * Handles the click event for the pi button (π).
+     * Inserts the pi symbol at the cursor position.
+     */
+    @FXML
+    protected void onPiButtonClick() {
+        insertTextAtCursor("pi");
+    }
+
+    /**
+     * Handles the click event for the left parenthesis button.
+     * Inserts a left parenthesis at the cursor position.
+     */
+    @FXML
+    protected void onLeftParenButtonClick() {
+        insertTextAtCursor("(");
+    }
+
+    /**
+     * Handles the click event for the right parenthesis button.
+     * Inserts a right parenthesis at the cursor position.
+     */
+    @FXML
+    protected void onRightParenButtonClick() {
+        insertTextAtCursor(")");
+    }
+
+    /**
+     * Handles the click event for the logarithm button.
+     * Inserts the logarithm function syntax at the cursor position.
+     */
+    @FXML
+    protected void onLogButtonClick() {
+        insertTextAtCursor("log(", ")");
+    }
+
+    /**
+     * Handles the click event for the natural logarithm button.
+     * Inserts the natural logarithm function syntax at the cursor position.
+     */
+    @FXML
+    protected void onLnButtonClick() {
+        insertTextAtCursor("ln(", ")");
+    }
+
+    /**
+     * Handles the click event for the exponential button (e^x).
+     * Inserts the exponential function syntax at the cursor position.
+     */
+    @FXML
+    protected void onExpButtonClick() {
+        insertTextAtCursor("e^(", ")");
+    }
+
+    //--------------------------------------------------
     // Utility Methods
     //--------------------------------------------------
+
+    /**
+     * Inserts text at the current cursor position in the function text field.
+     * If there is a selection, the text will replace the selection.
+     * 
+     * @param textToInsert The text to insert at the cursor position
+     */
+    private void insertTextAtCursor(String textToInsert) {
+        insertTextAtCursor(textToInsert, "");
+    }
+
+    /**
+     * Inserts text at the current cursor position in the function text field,
+     * with optional suffix text. If there is a selection, the text will wrap around the selection.
+     * 
+     * @param prefixText The text to insert before the cursor or selection
+     * @param suffixText The text to insert after the cursor or selection
+     */
+    private void insertTextAtCursor(String prefixText, String suffixText) {
+        // Get the current text and selection
+        String currentText = functionTextField.getText();
+        int caretPosition = functionTextField.getCaretPosition();
+        int selectionStart = functionTextField.getSelection().getStart();
+        int selectionEnd = functionTextField.getSelection().getEnd();
+
+        // Check if there is a selection
+        if (selectionStart != selectionEnd) {
+            // There is a selection, wrap it with prefix and suffix
+            String selectedText = currentText.substring(selectionStart, selectionEnd);
+            String newText = currentText.substring(0, selectionStart) + 
+                             prefixText + selectedText + suffixText + 
+                             currentText.substring(selectionEnd);
+
+            // Update the text field
+            functionTextField.setText(newText);
+
+            // Set the caret position after the inserted text
+            functionTextField.positionCaret(selectionStart + prefixText.length() + selectedText.length() + suffixText.length());
+        } else {
+            // No selection, just insert at caret position
+            String newText = currentText.substring(0, caretPosition) + 
+                             prefixText + suffixText + 
+                             currentText.substring(caretPosition);
+
+            // Update the text field
+            functionTextField.setText(newText);
+
+            // Set the caret position between prefix and suffix
+            functionTextField.positionCaret(caretPosition + prefixText.length());
+        }
+
+        // Set focus back to the text field
+        functionTextField.requestFocus();
+    }
 
     /**
      * Displays an error message to the user.
