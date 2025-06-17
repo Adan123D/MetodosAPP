@@ -70,13 +70,13 @@ public static double bisection(Function<Double, Double> function, double a, doub
     if (function.apply(a) * function.apply(b) >= 0) {
         throw new IllegalArgumentException("La función debe tener signos opuestos en los extremos del intervalo");
     }
-    
+
     double c = a;
     int iteration = 0;
-    
+
     while ((b - a) > tolerance && iteration < maxIterations) {
         c = (a + b) / 2;
-        
+
         if (function.apply(c) == 0.0) {
             break;
         } else if (function.apply(c) * function.apply(a) < 0) {
@@ -84,10 +84,10 @@ public static double bisection(Function<Double, Double> function, double a, doub
         } else {
             a = c;
         }
-        
+
         iteration++;
     }
-    
+
     return c;
 }
 ```
@@ -111,18 +111,18 @@ public static double newton(Function<Double, Double> function, Function<Double, 
                            double x0, double tolerance, int maxIterations) {
     double x = x0;
     int iteration = 0;
-    
+
     while (Math.abs(function.apply(x)) > tolerance && iteration < maxIterations) {
         double derivativeValue = derivative.apply(x);
-        
+
         if (Math.abs(derivativeValue) < 1e-10) {
             throw new ArithmeticException("Derivada cercana a cero, posible divergencia");
         }
-        
+
         x = x - function.apply(x) / derivativeValue;
         iteration++;
     }
-    
+
     return x;
 }
 ```
@@ -190,12 +190,12 @@ El método del trapecio compuesto aproxima el valor de una integral definida div
 public static double compositeTrapezoid(Function<Double, Double> function, double a, double b, int n) {
     double h = (b - a) / n;
     double sum = 0.5 * (function.apply(a) + function.apply(b));
-    
+
     for (int i = 1; i < n; i++) {
         double x = a + i * h;
         sum += function.apply(x);
     }
-    
+
     return h * sum;
 }
 ```
@@ -221,20 +221,20 @@ public static double[] rungeKutta4(BiFunction<Double, Double, Double> f, double 
                                   double h, int steps) {
     double[] y = new double[steps + 1];
     double[] x = new double[steps + 1];
-    
+
     y[0] = y0;
     x[0] = x0;
-    
+
     for (int i = 0; i < steps; i++) {
         double k1 = h * f.apply(x[i], y[i]);
         double k2 = h * f.apply(x[i] + 0.5 * h, y[i] + 0.5 * k1);
         double k3 = h * f.apply(x[i] + 0.5 * h, y[i] + 0.5 * k2);
         double k4 = h * f.apply(x[i] + h, y[i] + k3);
-        
+
         y[i + 1] = y[i] + (k1 + 2 * k2 + 2 * k3 + k4) / 6;
         x[i + 1] = x[i] + h;
     }
-    
+
     return y;
 }
 ```
@@ -255,14 +255,14 @@ La eliminación gaussiana es un método para resolver sistemas de ecuaciones lin
  */
 public static double[] gaussianElimination(double[][] A, double[] b) {
     int n = b.length;
-    
+
     // Crear matriz aumentada
     double[][] augmentedMatrix = new double[n][n + 1];
     for (int i = 0; i < n; i++) {
         System.arraycopy(A[i], 0, augmentedMatrix[i], 0, n);
         augmentedMatrix[i][n] = b[i];
     }
-    
+
     // Eliminación hacia adelante
     for (int k = 0; k < n - 1; k++) {
         for (int i = k + 1; i < n; i++) {
@@ -272,7 +272,7 @@ public static double[] gaussianElimination(double[][] A, double[] b) {
             }
         }
     }
-    
+
     // Sustitución hacia atrás
     double[] x = new double[n];
     for (int i = n - 1; i >= 0; i--) {
@@ -282,7 +282,7 @@ public static double[] gaussianElimination(double[][] A, double[] b) {
         }
         x[i] = (augmentedMatrix[i][n] - sum) / augmentedMatrix[i][i];
     }
-    
+
     return x;
 }
 ```
@@ -294,22 +294,92 @@ public static double[] gaussianElimination(double[][] A, double[] b) {
 El archivo `Menu.fxml` define la estructura de la interfaz de usuario utilizando un enfoque declarativo. A continuación, se muestra una descripción de los componentes principales:
 
 - `BorderPane`: Contenedor principal que divide la interfaz en regiones (top, center, bottom, left, right).
+- `StackPane`: Contenedor para centrar elementos en la región central.
 - `HBox`: Contenedor horizontal para la barra de menú y los botones de acción.
 - `MenuBar`: Barra de menú con las categorías de métodos numéricos.
 - `Menu`: Cada categoría de métodos numéricos.
 - `MenuItem`: Cada método numérico específico.
 - `Button`: Botones de acción (Gráfica, Home, Exit).
-- `VBox`: Contenedor vertical para el área de trabajo central.
-- `Label`: Etiqueta para mostrar mensajes al usuario.
+- `VBox`: Contenedor vertical para el área de trabajo central y el visualizador de funciones.
+- `TextField`: Campo de texto para ingresar funciones matemáticas.
+- `Pane`: Contenedor para mostrar la visualización de funciones.
+- `Label`: Etiqueta para mostrar mensajes al usuario y errores.
+
+### Visualizador de Funciones
+
+La aplicación incluye un visualizador de funciones matemáticas que permite a los usuarios ingresar una función y verla renderizada en notación matemática. Esta funcionalidad utiliza las siguientes tecnologías:
+
+- **JLaTeXMath**: Biblioteca para renderizar fórmulas LaTeX.
+- **FXGraphics2D**: Biblioteca para integrar gráficos AWT con JavaFX.
+
+#### Implementación del Visualizador
+
+El visualizador de funciones está implementado en el controlador principal (`MenuController.java`) y consta de los siguientes componentes:
+
+1. **Interfaz de Usuario**:
+   - Campo de texto para ingresar la función (`functionTextField`)
+   - Botón para visualizar la función
+   - Área de visualización (`functionDisplayPane`)
+   - Etiqueta para mostrar errores (`functionErrorLabel`)
+
+2. **Proceso de Visualización**:
+   - El usuario ingresa una función matemática en el campo de texto.
+   - La función se convierte a formato LaTeX mediante el método `convertToLatex()`.
+   - Se crea un objeto `TeXFormula` con la cadena LaTeX.
+   - Se renderiza la fórmula en un objeto `BufferedImage`.
+   - La imagen se convierte a un formato compatible con JavaFX.
+   - La imagen se muestra centrada en el área de visualización.
+
+3. **Conversión a LaTeX**:
+   - El método `convertToLatex()` transforma la notación matemática estándar a sintaxis LaTeX.
+   - Reemplaza funciones matemáticas comunes (sin, cos, log, etc.) con sus equivalentes en LaTeX.
+   - Maneja fracciones (a/b → \frac{a}{b}).
+   - Maneja exponentes (x^n → x^{n}).
+   - Reemplaza operadores y símbolos especiales.
+
+```java
+// Ejemplo de conversión a LaTeX
+String input = "sin(x^2) + 5/x";
+String latex = "\\sin(x^{2}) + \\frac{5}{x}";
+```
+
+4. **Manejo de Errores**:
+   - Validación de entrada vacía.
+   - Captura de excepciones durante el proceso de renderizado.
+   - Muestra de mensajes de error claros al usuario.
 
 ### Controlador Principal
 
 El controlador principal (`MenuController.java`) maneja los eventos de la interfaz de usuario y conecta la vista con la lógica de negocio. A continuación, se muestran los métodos principales:
 
 ```java
+/**
+ * Controller class for the main menu of the Numerical Methods application.
+ * Handles user interactions with the menu items and the function visualizer.
+ */
 public class MenuController {
+    // UI Components
     @FXML
     private Label welcomeText;
+
+    @FXML
+    private TextField functionTextField;
+
+    @FXML
+    private Pane functionDisplayPane;
+
+    @FXML
+    private Label functionErrorLabel;
+
+    /**
+     * Initializes the controller.
+     * Sets the initial state of UI components.
+     */
+    @FXML
+    public void initialize() {
+        functionErrorLabel.setVisible(false);
+        welcomeText.setText("Bienvenido al Visualizador de Funciones");
+    }
 
     /**
      * Maneja los clics en los elementos del menú.
@@ -319,7 +389,7 @@ public class MenuController {
         MenuItem menuItem = (MenuItem) event.getSource();
         String menuText = menuItem.getText();
         welcomeText.setText("Selected: " + menuText);
-        
+
         // Aquí se implementaría la lógica específica para cada método numérico
     }
 
@@ -347,6 +417,20 @@ public class MenuController {
     @FXML
     protected void onExitButtonClick() {
         Platform.exit();
+    }
+
+    /**
+     * Visualiza la función ingresada en el campo de texto.
+     */
+    private void visualizeFunction() {
+        // Implementación detallada en el código fuente
+    }
+
+    /**
+     * Convierte una función a formato LaTeX.
+     */
+    private String convertToLatex(String function) {
+        // Implementación detallada en el código fuente
     }
 }
 ```

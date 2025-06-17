@@ -97,6 +97,28 @@ En la parte superior derecha de la aplicación, encontrará los siguientes boton
 
 El área central de la aplicación es donde se mostrarán los formularios para ingresar los parámetros de los métodos numéricos y donde se visualizarán los resultados.
 
+### Visualizador de Funciones
+
+La aplicación incluye un visualizador de funciones matemáticas que permite ver la representación gráfica de las funciones ingresadas. Para utilizar esta función:
+
+1. Localice el área del visualizador de funciones en la pantalla principal.
+2. Ingrese la función matemática en el campo de texto (por ejemplo, "sin(x^2) + 5/x").
+3. Haga clic en el botón "Visualizar" o presione Enter.
+4. La función se mostrará renderizada en notación matemática en el área de visualización.
+
+El visualizador admite diversas notaciones matemáticas:
+- Funciones trigonométricas: sin, cos, tan, cot, sec, csc
+- Funciones trigonométricas inversas: arcsin, arccos, arctan
+- Funciones hiperbólicas: sinh, cosh, tanh
+- Funciones logarítmicas: log, ln
+- Raíces cuadradas: sqrt
+- Fracciones: utilizando el símbolo / (por ejemplo, "1/x")
+- Exponentes: utilizando el símbolo ^ (por ejemplo, "x^2")
+- Constantes: pi, inf (infinito)
+- Operadores: +, -, *, /, ^
+
+Si ocurre algún error al visualizar la función, se mostrará un mensaje de error debajo del área de visualización.
+
 ## Uso de los Métodos Numéricos
 
 A continuación, se describe cómo utilizar cada categoría de métodos numéricos disponibles en la aplicación.

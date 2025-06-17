@@ -111,6 +111,18 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- JLaTeXMath for LaTeX rendering -->
+        <dependency>
+            <groupId>org.scilab.forge</groupId>
+            <artifactId>jlatexmath</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+        <!-- FXGraphics2D for rendering in JavaFX -->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>fxgraphics2d</artifactId>
+            <version>1.8</version>
+        </dependency>
     </dependencies>
 
     <build>
