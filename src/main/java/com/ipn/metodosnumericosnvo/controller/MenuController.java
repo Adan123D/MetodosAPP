@@ -1,16 +1,27 @@
-package com.ipn.metodosnumericosnvo;
+package com.ipn.metodosnumericosnvo.controller;
+
 
 // JavaFX imports
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
+import java.io.IOException;
+
+import com.ipn.metodosnumericosnvo.controller.ChartVisualizerController;
 
 // JLaTeXMath imports
 import org.scilab.forge.jlatexmath.TeXConstants;
@@ -39,6 +50,9 @@ public class MenuController {
 
     @FXML
     private Label functionErrorLabel;
+
+    @FXML
+    private javafx.scene.control.MenuButton symbolsMenuButton;
 
     /**
      * Initializes the controller.
@@ -76,13 +90,49 @@ public class MenuController {
 
     /**
      * Handles the click event for the Gráfica button.
-     * This method will be used to display graphs of mathematical functions.
+     * This method opens a new window for visualizing mathematical functions as charts.
+     * If a function is entered in the main menu, it will be passed to the chart visualizer.
      */
     @FXML
     protected void onGraficaButtonClick() {
-        welcomeText.setText("Función de Gráfica seleccionada");
-        // Here you would add code to display a graph
+        try {
+            // Cargar el archivo FXML del visualizador de gráficas
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/ChartVisualizer.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo ChartVisualizer.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador y configurar la función inicial si existe
+            ChartVisualizerController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al visualizador
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setInitialFunction(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage chartStage = new Stage();
+            chartStage.setTitle("Visualizador de Funciones");
+            chartStage.setScene(new Scene(root, 1000, 700));
+            chartStage.initModality(Modality.NONE);
+            chartStage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        showError("Error al abrir el visualizador de gráficas: " + e.getMessage());
+    } catch (Exception e) {
+        e.printStackTrace();
+        showError("Error inesperado al abrir el visualizador: " + e.getMessage());
     }
+}
 
     /**
      * Handles the click event for the Home button.
@@ -431,135 +481,113 @@ public class MenuController {
         return latexFormula;
     }
 
+
     //--------------------------------------------------
-    // Math Operation Button Handlers
+    // Symbol Menu Handlers
     //--------------------------------------------------
 
     /**
-     * Handles the click event for the power button (x^n).
-     * Inserts the power syntax at the cursor position.
+     * Handles the click event for items in the symbols dropdown menu.
+     * Extracts the symbol or function from the menu item text and inserts it at the cursor position.
+     * 
+     * @param event The action event from the menu item click
      */
     @FXML
-    protected void onPowerButtonClick() {
-        insertTextAtCursor("^");
+    protected void onSymbolMenuItemClick(ActionEvent event) {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String menuText = menuItem.getText();
+
+        // Extract the symbol or function from the menu text
+        // The format is typically "Description (symbol)"
+        if (menuText.contains("(") && menuText.contains(")")) {
+            String symbol = menuText.substring(menuText.indexOf("(") + 1, menuText.indexOf(")"));
+
+            // Handle different types of symbols and functions
+            switch (symbol) {
+                // Basic operators
+                case "^":
+                case "*":
+                case "/":
+                case "+":
+                case "-":
+                    insertTextAtCursor(symbol);
+                    break;
+
+                // Functions that need parentheses
+                case "sin":
+                case "cos":
+                case "tan":
+                case "cot":
+                case "sec":
+                case "csc":
+                case "arcsin":
+                case "arccos":
+                case "arctan":
+                case "sinh":
+                case "cosh":
+                case "tanh":
+                case "ln":
+                case "log":
+                case "sqrt":
+                case "cbrt":
+                case "abs":
+                    insertTextAtCursor(symbol + "(", ")");
+                    break;
+
+                // Special case for exponential
+                case "e^":
+                    insertTextAtCursor("e^(", ")");
+                    break;
+
+                // Special case for root
+                case "root":
+                    insertTextAtCursor("root(n,", ")");
+                    break;
+
+                // Constants
+                case "π":
+                    insertTextAtCursor("pi");
+                    break;
+                case "e":
+                    insertTextAtCursor("e");
+                    break;
+                case "inf":
+                    insertTextAtCursor("inf");
+                    break;
+
+                // Parentheses and brackets
+                case "()":
+                    insertTextAtCursor("(", ")");
+                    break;
+                case "[]":
+                    insertTextAtCursor("[", "]");
+                    break;
+                case "{}":
+                    insertTextAtCursor("{", "}");
+                    break;
+
+                // Special case for factorial
+                case "!":
+                    insertTextAtCursor("!");
+                    break;
+
+                // Special case for fraction
+                case "a/b":
+                    insertTextAtCursor("(", ")/()");
+                    break;
+
+                default:
+                    // If we can't identify the symbol, just insert the text as is
+                    insertTextAtCursor(symbol);
+                    break;
+            }
+        } else {
+            // If the menu text doesn't follow the expected format, just use it as is
+            insertTextAtCursor(menuText);
+        }
     }
 
-    /**
-     * Handles the click event for the square root button (√x).
-     * Inserts the square root syntax at the cursor position.
-     */
-    @FXML
-    protected void onSqrtButtonClick() {
-        insertTextAtCursor("sqrt(", ")");
-    }
-
-    /**
-     * Handles the click event for the cube root button (∛x).
-     * Inserts the cube root syntax at the cursor position.
-     */
-    @FXML
-    protected void onCbrtButtonClick() {
-        insertTextAtCursor("cbrt(", ")");
-    }
-
-    /**
-     * Handles the click event for the nth root button (ⁿ√x).
-     * Inserts the nth root syntax at the cursor position.
-     */
-    @FXML
-    protected void onNthRootButtonClick() {
-        insertTextAtCursor("root(n,", ")");
-    }
-
-    /**
-     * Handles the click event for the sine button.
-     * Inserts the sine function syntax at the cursor position.
-     */
-    @FXML
-    protected void onSinButtonClick() {
-        insertTextAtCursor("sin(", ")");
-    }
-
-    /**
-     * Handles the click event for the cosine button.
-     * Inserts the cosine function syntax at the cursor position.
-     */
-    @FXML
-    protected void onCosButtonClick() {
-        insertTextAtCursor("cos(", ")");
-    }
-
-    /**
-     * Handles the click event for the tangent button.
-     * Inserts the tangent function syntax at the cursor position.
-     */
-    @FXML
-    protected void onTanButtonClick() {
-        insertTextAtCursor("tan(", ")");
-    }
-
-    /**
-     * Handles the click event for the fraction button (a/b).
-     * Inserts the fraction syntax at the cursor position.
-     */
-    @FXML
-    protected void onFractionButtonClick() {
-        insertTextAtCursor("(", ")/()");
-    }
-
-    /**
-     * Handles the click event for the pi button (π).
-     * Inserts the pi symbol at the cursor position.
-     */
-    @FXML
-    protected void onPiButtonClick() {
-        insertTextAtCursor("pi");
-    }
-
-    /**
-     * Handles the click event for the left parenthesis button.
-     * Inserts a left parenthesis at the cursor position.
-     */
-    @FXML
-    protected void onLeftParenButtonClick() {
-        insertTextAtCursor("(");
-    }
-
-    /**
-     * Handles the click event for the right parenthesis button.
-     * Inserts a right parenthesis at the cursor position.
-     */
-    @FXML
-    protected void onRightParenButtonClick() {
-        insertTextAtCursor(")");
-    }
-
-    /**
-     * Handles the click event for the logarithm button.
-     * Inserts the logarithm function syntax at the cursor position.
-     */
-    @FXML
-    protected void onLogButtonClick() {
-        insertTextAtCursor("log(", ")");
-    }
-
-    /**
-     * Handles the click event for the natural logarithm button.
-     * Inserts the natural logarithm function syntax at the cursor position.
-     */
-    @FXML
-    protected void onLnButtonClick() {
-        insertTextAtCursor("ln(", ")");
-    }
-
-    /**
-     * Handles the click event for the exponential button (e^x).
-     * Inserts the exponential function syntax at the cursor position.
-     */
-    @FXML
-    protected void onExpButtonClick() {
-        insertTextAtCursor("e^(", ")");
-    }
+    // Math Operation Button Handlers have been replaced by the Symbol Menu Handlers
 
     //--------------------------------------------------
     // Utility Methods
@@ -619,24 +647,11 @@ public class MenuController {
         functionTextField.requestFocus();
     }
 
-    /**
-     * Displays an error message to the user.
-     * This method updates the UI to show an error message in the function visualizer.
-     * It performs three actions:
-     * 1. Sets the text of the error label
-     * 2. Makes the error label visible
-     * 3. Updates the welcome text to indicate an error
-     * 
-     * @param message The error message to display to the user
-     */
-    private void showError(String message) {
-        // Set the error message text
-        functionErrorLabel.setText(message);
-
-        // Make the error label visible
-        functionErrorLabel.setVisible(true);
-
-        // Update the welcome text to indicate an error
-        welcomeText.setText("Error en la función");
-    }
+private void showError(String message) {
+    javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+    alert.setTitle("Error");
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+}
 }

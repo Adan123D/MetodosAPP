@@ -17,8 +17,21 @@ La aplicación Métodos Numéricos está desarrollada utilizando JavaFX, un fram
 |      Vista       |     |   Controlador    |     |      Modelo      |
 |                  |     |                  |     |                  |
 |  - Menu.fxml     |<--->| - MenuController |<--->| - Algoritmos de  |
-|                  |     |                  |     |   métodos        |
+|  - ChartVisual-  |     | - ChartVisualizer|     |   métodos        |
+|    izer.fxml     |<--->|   Controller     |<--->| - FunctionEval   |
+|                  |     |                  |     | - DerivativeCal  |
+|                  |     |                  |     | - IntegralCal    |
+|                  |     |                  |     | - RootFinder     |
 +------------------+     +------------------+     +------------------+
+                                 ^
+                                 |
+                                 v
+                         +------------------+
+                         |  Visualización   |
+                         |                  |
+                         | - FunctionGrapher|
+                         | - Function3DChart|
+                         +------------------+
 ```
 
 ## Estructura del Código
@@ -26,12 +39,25 @@ La aplicación Métodos Numéricos está desarrollada utilizando JavaFX, un fram
 ### Paquetes Principales
 
 - `com.ipn.metodosnumericosnvo`: Paquete principal de la aplicación.
-  - `Menu.java`: Clase principal que inicia la aplicación JavaFX.
-  - `MenuController.java`: Controlador principal que maneja los eventos de la interfaz de usuario.
+  - `app`: Subpaquete para las clases principales de la aplicación.
+    - `Menu.java`: Clase principal que inicia la aplicación JavaFX.
+    - `FunctionGrapherWebApp.java`: Aplicación independiente para la graficación de funciones.
+  - `controller`: Subpaquete para los controladores de la interfaz de usuario.
+    - `MenuController.java`: Controlador principal que maneja los eventos de la interfaz de usuario.
+    - `ChartVisualizerController.java`: Controlador para la visualización de gráficas.
+  - `math`: Subpaquete para las clases relacionadas con cálculos matemáticos.
+    - `FunctionEvaluator.java`: Evaluador de funciones matemáticas.
+    - `DerivativeCalculator.java`: Calculador de derivadas.
+    - `IntegralCalculator.java`: Calculador de integrales.
+    - `RootFinder.java`: Buscador de raíces de funciones.
+  - `visualization`: Subpaquete para las clases relacionadas con la visualización gráfica.
+    - `FunctionGrapherWeb.java`: Graficador de funciones basado en web.
+    - `Function3DChartManager.java`: Administrador de gráficas 3D.
 
 ### Recursos
 
 - `src/main/resources/com/ipn/metodosnumericosnvo/Menu.fxml`: Define la interfaz de usuario principal.
+- `src/main/resources/com/ipn/metodosnumericosnvo/ChartVisualizer.fxml`: Define la interfaz para la visualización de gráficas.
 
 ### Dependencias
 
@@ -311,10 +337,19 @@ La aplicación incluye un visualizador de funciones matemáticas que permite a l
 
 - **JLaTeXMath**: Biblioteca para renderizar fórmulas LaTeX.
 - **FXGraphics2D**: Biblioteca para integrar gráficos AWT con JavaFX.
+- **Plotly.js**: Biblioteca JavaScript para la creación de gráficas interactivas en el navegador web.
+- **WebView**: Componente de JavaFX que permite incrustar contenido web en la aplicación.
 
 #### Implementación del Visualizador
 
-El visualizador de funciones está implementado en el controlador principal (`MenuController.java`) y consta de los siguientes componentes:
+El visualizador de funciones está implementado a través de varias clases:
+
+- **MenuController.java**: Proporciona la funcionalidad básica de visualización de fórmulas matemáticas en la pantalla principal.
+- **ChartVisualizerController.java**: Controla la interfaz de usuario para la visualización de gráficas.
+- **FunctionGrapherWeb.java**: Implementa la graficación de funciones utilizando Plotly.js y WebView.
+- **Function3DChartManager.java**: Maneja la visualización de gráficas en 3D.
+
+El sistema de visualización consta de los siguientes componentes:
 
 1. **Interfaz de Usuario**:
    - Campo de texto para ingresar la función (`functionTextField`)
@@ -374,6 +409,8 @@ String latex = "\\mathrm{e}^{x+1}";
 El controlador principal (`MenuController.java`) maneja los eventos de la interfaz de usuario y conecta la vista con la lógica de negocio. A continuación, se muestran los métodos principales:
 
 ```java
+package com.ipn.metodosnumericosnvo.controller;
+
 /**
  * Controller class for the main menu of the Numerical Methods application.
  * Handles user interactions with the menu items and the function visualizer.
@@ -485,7 +522,10 @@ Se recomienda implementar pruebas unitarias para cada método numérico utilizan
 Algunas mejoras que podrían implementarse en futuras versiones:
 
 - Soporte para entrada de funciones mediante una interfaz más amigable (por ejemplo, un editor de ecuaciones).
-- Visualización más avanzada de gráficos utilizando bibliotecas como JFreeChart.
+- Mejoras en la visualización 3D de funciones.
 - Exportación de resultados a formatos como CSV, PDF o Excel.
 - Implementación de más métodos numéricos avanzados.
 - Soporte para cálculos en paralelo para mejorar el rendimiento en problemas grandes.
+- Mejora del sistema de manejo de errores y recuperación en la graficación de funciones.
+- Implementación de un sistema de guardado y carga de funciones y configuraciones.
+- Soporte para dispositivos móviles mediante una versión web responsiva.

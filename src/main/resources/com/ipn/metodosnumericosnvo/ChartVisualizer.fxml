@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ipn.metodosnumericosnvo.controller.ChartVisualizerController"
+            prefWidth="800" prefHeight="600">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <top>
+        <VBox spacing="10">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Visualizador de Funciones" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <ToggleButton fx:id="modeToggleButton" text="Modo 2D/3D" onAction="#onModeToggleButtonClick"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Función:" />
+                <TextField fx:id="functionTextField" prefWidth="300" promptText="Ingrese una función (ej: sin(x))"/>
+                <Button fx:id="addButton" text="Añadir" onAction="#onAddButtonClick"/>
+                <ComboBox fx:id="functionsComboBox" prefWidth="200"/>
+                <Button fx:id="removeButton" text="Eliminar" onAction="#onRemoveButtonClick"/>
+            </HBox>
+
+            <!-- Symbols and Analysis Tools Dropdown Menus -->
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <MenuButton fx:id="symbolsMenuButton" text="Insertar Símbolos" prefWidth="200">
+                    <items>
+                        <!-- Basic Operators -->
+                        <Menu text="Operadores Básicos">
+                            <MenuItem text="Potencia (^)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Multiplicación (*)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="División (/)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Suma (+)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Resta (-)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Trigonometric Functions -->
+                        <Menu text="Funciones Trigonométricas">
+                            <MenuItem text="Seno (sin)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Coseno (cos)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Tangente (tan)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Cotangente (cot)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Secante (sec)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Cosecante (csc)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Inverse Trigonometric Functions -->
+                        <Menu text="Funciones Trigonométricas Inversas">
+                            <MenuItem text="Arcoseno (arcsin)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Arcocoseno (arccos)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Arcotangente (arctan)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Hyperbolic Functions -->
+                        <Menu text="Funciones Hiperbólicas">
+                            <MenuItem text="Seno hiperbólico (sinh)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Coseno hiperbólico (cosh)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Tangente hiperbólica (tanh)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Logarithmic Functions -->
+                        <Menu text="Funciones Logarítmicas">
+                            <MenuItem text="Logaritmo natural (ln)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Logaritmo base 10 (log)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Exponencial (e^)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Root Functions -->
+                        <Menu text="Raíces">
+                            <MenuItem text="Raíz cuadrada (sqrt)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Raíz cúbica (cbrt)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Raíz n-ésima (root)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Constants -->
+                        <Menu text="Constantes">
+                            <MenuItem text="Pi (π)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Euler (e)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Infinito (inf)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Parentheses and Brackets -->
+                        <Menu text="Paréntesis y Corchetes">
+                            <MenuItem text="Paréntesis ()" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Corchetes []" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Llaves {}" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+
+                        <!-- Special Functions -->
+                        <Menu text="Funciones Especiales">
+                            <MenuItem text="Valor absoluto (abs)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Factorial (!)" onAction="#onSymbolMenuItemClick"/>
+                            <MenuItem text="Fracción (a/b)" onAction="#onSymbolMenuItemClick"/>
+                        </Menu>
+                    </items>
+                </MenuButton>
+                <MenuButton fx:id="analysisMenuButton" text="Herramientas de Análisis" prefWidth="200">
+                    <items>
+                        <MenuItem text="Calcular Derivada" onAction="#onDerivativeClick"/>
+                        <MenuItem text="Calcular Integral" onAction="#onIntegralClick"/>
+                        <MenuItem text="Encontrar Raíces" onAction="#onRootsClick"/>
+                        <MenuItem text="Encontrar Intersecciones" onAction="#onIntersectionsClick"/>
+                    </items>
+                </MenuButton>
+            </HBox>
+
+            <Label fx:id="statusLabel" textFill="BLUE" visible="false"/>
+        </VBox>
+    </top>
+
+    <center>
+        <Pane fx:id="chartPane" VBox.vgrow="ALWAYS" style="-fx-border-color: #cccccc; -fx-border-radius: 5;"/>
+    </center>
+
+    <bottom>
+        <VBox spacing="10">
+            <!-- Zoom Controls -->
+            <HBox alignment="CENTER" spacing="10">
+                <Button text="Zoom In" onAction="#onZoomInClick" prefWidth="100"/>
+                <Button text="Zoom Out" onAction="#onZoomOutClick" prefWidth="100"/>
+                <Button text="Reset Zoom" onAction="#onResetZoomClick" prefWidth="100"/>
+            </HBox>
+
+            <!-- Range Controls -->
+            <HBox alignment="CENTER" spacing="10">
+                <Label text="X Min:"/>
+                <TextField fx:id="xMinTextField" prefWidth="60" promptText="-10"/>
+                <Label text="X Max:"/>
+                <TextField fx:id="xMaxTextField" prefWidth="60" promptText="10"/>
+                <Label text="Y Min:"/>
+                <TextField fx:id="yMinTextField" prefWidth="60" promptText="-10"/>
+                <Label text="Y Max:"/>
+                <TextField fx:id="yMaxTextField" prefWidth="60" promptText="10"/>
+                <Button text="Aplicar" onAction="#onApplyRangesClick" prefWidth="80"/>
+            </HBox>
+
+            <!-- Export and Close Buttons -->
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Button text="Exportar Imagen" onAction="#onExportImageClick" prefWidth="120"/>
+                <Button text="Cerrar" onAction="#onCloseButtonClick"/>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>
