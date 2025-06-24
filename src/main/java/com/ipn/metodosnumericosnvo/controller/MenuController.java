@@ -29,6 +29,7 @@ import com.ipn.metodosnumericosnvo.controller.FalsaPosicionController;
 import com.ipn.metodosnumericosnvo.controller.MullerController;
 import com.ipn.metodosnumericosnvo.controller.PuntoFIjoController;
 import com.ipn.metodosnumericosnvo.controller.SecanteController;
+import com.ipn.metodosnumericosnvo.controller.Secante_AitkenController;
 import com.ipn.metodosnumericosnvo.controller.SteffensenController;
 
 // JLaTeXMath imports
@@ -433,6 +434,48 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             showError("Error al abrir la ventana de Steffensen: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Secante-Aitken menu item.
+     * This method opens a new window for the Secante-Aitken method.
+     * If a function is entered in the main menu, it will be passed to the Secante-Aitken window.
+     */
+    @FXML
+    protected void onSecanteAitkenMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Secante-Aitken
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Secante_Aitken.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Secante_Aitken.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            Secante_AitkenController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Secante-Aitken
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage secanteAitkenStage = new Stage();
+            secanteAitkenStage.setTitle("Método de la Secante con Aceleración de Aitken");
+            secanteAitkenStage.setScene(new Scene(root, 800, 600));
+            secanteAitkenStage.initModality(Modality.NONE);
+            secanteAitkenStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Secante-Aitken: " + e.getMessage());
         }
     }
 

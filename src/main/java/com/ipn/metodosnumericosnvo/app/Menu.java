@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.mariuszgromada.math.mxparser.License;
 
 import java.io.IOException;
 /**
@@ -42,6 +43,8 @@ public class Menu extends Application {
      * @param args Command line arguments (not used)
      */
     public static void main(String[] args) {
+        // Confirm non-commercial use of the mXparser library
+        License.iConfirmNonCommercialUse("Métodos Numéricos IPN");
         launch();
     }
 }

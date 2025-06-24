@@ -22,7 +22,7 @@
                     <MenuItem text="Método de Falsa Posición" onAction="#onFalsaPosicionMenuItemClick"/>
                     <MenuItem text="Método de Steffensen" onAction="#onSteffensenMenuItemClick"/>
                     <MenuItem text="Método de Bisección-Aitken" onAction="#onBiseccionAitkenMenuItemClick"/>
-                    <MenuItem text="Método de la Secante-Aitken" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de la Secante-Aitken" onAction="#onSecanteAitkenMenuItemClick"/>
                     <MenuItem text="Deflación" onAction="#onDeflacionMenuItemClick"/>
                 </Menu>
 
