@@ -21,6 +21,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 
+import com.ipn.metodosnumericosnvo.controller.BiseccionController;
 import com.ipn.metodosnumericosnvo.controller.ChartVisualizerController;
 
 // JLaTeXMath imports
@@ -84,8 +85,54 @@ public class MenuController {
         String menuText = menuItem.getText();
         welcomeText.setText("Selected: " + menuText);
 
-        // Here you can add specific logic for each menu item
-        // based on the menuText value
+        // Handle specific menu items
+        switch (menuText) {
+            default:
+                // For menu items that are not yet implemented
+                break;
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Bisección menu item.
+     * This method opens a new window for the bisection method.
+     * If a function is entered in the main menu, it will be passed to the bisection window.
+     */
+    @FXML
+    protected void onBiseccionMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de bisección
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Biseccion.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Biseccion.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador y configurar la función inicial si existe
+            BiseccionController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de bisección
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage biseccionStage = new Stage();
+            biseccionStage.setTitle("Método de Bisección");
+            biseccionStage.setScene(new Scene(root, 800, 600));
+            biseccionStage.initModality(Modality.NONE);
+            biseccionStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Bisección: " + e.getMessage());
+        }
     }
 
     /**

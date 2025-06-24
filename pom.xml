@@ -152,12 +152,20 @@
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
         </dependency>
+
+        <!-- mXparser for mathematical expression parsing and evaluation -->
+        <dependency>
+            <groupId>org.mariuszgromada.math</groupId>
+            <artifactId>MathParser.org-mXparser</artifactId>
+            <version>6.1.0</version>
+        </dependency>
         <!-- JavaFX 3D dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>17.0.6</version>
         </dependency>
+
     </dependencies>
 
     <build>

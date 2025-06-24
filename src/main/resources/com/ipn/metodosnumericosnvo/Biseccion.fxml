@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/javafx"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="com.ipn.metodosnumericosnvo.controller.BiseccionController">
+    <top>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Función:"/>
+            <TextField fx:id="funcionField" prefWidth="160" text="cos(x) - x*exp(x)"/>
+            <Label text="x0:"/>
+            <TextField fx:id="x0Field" prefWidth="60" text="0"/>
+            <Label text="x1:"/>
+            <TextField fx:id="x1Field" prefWidth="60" text="1"/>
+            <Label text="Tolerancia:"/>
+            <TextField fx:id="tolField" prefWidth="60" text="1e-6"/>
+            <Button fx:id="calcularBtn" text="Calcular" onAction="#onCalcular"/>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="tablaIteraciones" prefHeight="400">
+            <columns>
+                <TableColumn fx:id="colIteracion" text="Iter"/>
+                <TableColumn fx:id="colX0" text="x0"/>
+                <TableColumn fx:id="colX1" text="x1"/>
+                <TableColumn fx:id="colX2" text="x2"/>
+                <TableColumn fx:id="colFx0" text="f(x0)"/>
+                <TableColumn fx:id="colFx1" text="f(x1)"/>
+                <TableColumn fx:id="colFx2" text="f(x2)"/>
+                <TableColumn fx:id="colError" text="Error"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

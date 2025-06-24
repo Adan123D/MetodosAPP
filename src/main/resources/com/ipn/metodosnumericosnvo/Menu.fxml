@@ -14,7 +14,7 @@
             <MenuBar HBox.hgrow="ALWAYS" prefHeight="25.0" maxHeight="25.0" minHeight="25.0">
                 <!-- Raíces de Ecuaciones -->
                 <Menu text="Raíces de Ecuaciones">
-                    <MenuItem text="Método de Bisección" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Bisección" onAction="#onBiseccionMenuItemClick"/>
                     <MenuItem text="Método de Muller" onAction="#handleMenuItemClick"/>
                     <MenuItem text="Método de la Secante" onAction="#handleMenuItemClick"/>
                     <MenuItem text="Método de Newton" onAction="#handleMenuItemClick"/>

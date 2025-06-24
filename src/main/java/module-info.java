@@ -26,6 +26,9 @@ module com.ipn.metodosnumericosnvo {
     // Required for optimized mathematical calculations
     requires commons.math3;
 
+    // Required for mXparser function evaluation
+    requires MathParser.org.mXparser;
+
     opens com.ipn.metodosnumericosnvo.app to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.controller to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.math to javafx.fxml;
