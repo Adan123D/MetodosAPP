@@ -22,7 +22,14 @@ import javafx.stage.Window;
 import java.io.IOException;
 
 import com.ipn.metodosnumericosnvo.controller.BiseccionController;
+import com.ipn.metodosnumericosnvo.controller.Biseccion_AitkenController;
 import com.ipn.metodosnumericosnvo.controller.ChartVisualizerController;
+import com.ipn.metodosnumericosnvo.controller.DeflacionController;
+import com.ipn.metodosnumericosnvo.controller.FalsaPosicionController;
+import com.ipn.metodosnumericosnvo.controller.MullerController;
+import com.ipn.metodosnumericosnvo.controller.PuntoFIjoController;
+import com.ipn.metodosnumericosnvo.controller.SecanteController;
+import com.ipn.metodosnumericosnvo.controller.SteffensenController;
 
 // JLaTeXMath imports
 import org.scilab.forge.jlatexmath.TeXConstants;
@@ -132,6 +139,342 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             showError("Error al abrir la ventana de Bisección: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Falsa Posición menu item.
+     * This method opens a new window for the false position method.
+     * If a function is entered in the main menu, it will be passed to the false position window.
+     */
+    @FXML
+    protected void onFalsaPosicionMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de falsa posición
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/FalsaPosicion.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo FalsaPosicion.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            FalsaPosicionController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de falsa posición
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage falsaPosicionStage = new Stage();
+            falsaPosicionStage.setTitle("Método de Falsa Posición");
+            falsaPosicionStage.setScene(new Scene(root, 800, 600));
+            falsaPosicionStage.initModality(Modality.NONE);
+            falsaPosicionStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Falsa Posición: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Newton menu item.
+     * This method opens a new window for the Newton-Raphson method.
+     * If a function is entered in the main menu, it will be passed to the Newton window.
+     */
+    @FXML
+    protected void onNewtonMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Newton
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Newton.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Newton.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            NewtonController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Newton
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage newtonStage = new Stage();
+            newtonStage.setTitle("Método de Newton-Raphson");
+            newtonStage.setScene(new Scene(root, 800, 600));
+            newtonStage.initModality(Modality.NONE);
+            newtonStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Newton: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de la Secante menu item.
+     * This method opens a new window for the Secant method.
+     * If a function is entered in the main menu, it will be passed to the Secant window.
+     */
+    @FXML
+    protected void onSecanteMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de la Secante
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Secante.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Secante.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            SecanteController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de la Secante
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage secanteStage = new Stage();
+            secanteStage.setTitle("Método de la Secante");
+            secanteStage.setScene(new Scene(root, 800, 600));
+            secanteStage.initModality(Modality.NONE);
+            secanteStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de la Secante: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Deflación menu item.
+     * This method opens a new window for the deflation method.
+     * If a function is entered in the main menu, it will be passed to the deflation window.
+     */
+    @FXML
+    protected void onDeflacionMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de deflación
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Deflacion.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Deflacion.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            DeflacionController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de deflación
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage deflacionStage = new Stage();
+            deflacionStage.setTitle("Método de Deflación");
+            deflacionStage.setScene(new Scene(root, 800, 600));
+            deflacionStage.initModality(Modality.NONE);
+            deflacionStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Deflación: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Punto Fijo menu item.
+     * This method opens a new window for the fixed point method.
+     * If a function is entered in the main menu, it will be passed to the fixed point window.
+     */
+    @FXML
+    protected void onPuntoFijoMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de punto fijo
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/PuntoFIjo.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo PuntoFIjo.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            PuntoFIjoController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de punto fijo
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage puntoFijoStage = new Stage();
+            puntoFijoStage.setTitle("Método de Punto Fijo");
+            puntoFijoStage.setScene(new Scene(root, 800, 600));
+            puntoFijoStage.initModality(Modality.NONE);
+            puntoFijoStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Punto Fijo: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Muller menu item.
+     * This method opens a new window for the Muller method.
+     * If a function is entered in the main menu, it will be passed to the Muller window.
+     */
+    @FXML
+    protected void onMullerMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Muller
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Muller.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Muller.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            MullerController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Muller
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage mullerStage = new Stage();
+            mullerStage.setTitle("Método de Müller");
+            mullerStage.setScene(new Scene(root, 950, 600));
+            mullerStage.initModality(Modality.NONE);
+            mullerStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Müller: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Steffensen menu item.
+     * This method opens a new window for the Steffensen method.
+     * If a function is entered in the main menu, it will be passed to the Steffensen window.
+     */
+    @FXML
+    protected void onSteffensenMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Steffensen
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Steffensen.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Steffensen.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            SteffensenController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Steffensen
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage steffensenStage = new Stage();
+            steffensenStage.setTitle("Método de Steffensen");
+            steffensenStage.setScene(new Scene(root, 800, 600));
+            steffensenStage.initModality(Modality.NONE);
+            steffensenStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Steffensen: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Bisección-Aitken menu item.
+     * This method opens a new window for the Bisección-Aitken method.
+     * If a function is entered in the main menu, it will be passed to the Bisección-Aitken window.
+     */
+    @FXML
+    protected void onBiseccionAitkenMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Bisección-Aitken
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Biseccion_Aitken.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Biseccion_Aitken.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            Biseccion_AitkenController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Bisección-Aitken
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage biseccionAitkenStage = new Stage();
+            biseccionAitkenStage.setTitle("Método de Bisección con Aitken Δ²");
+            biseccionAitkenStage.setScene(new Scene(root, 800, 600));
+            biseccionAitkenStage.initModality(Modality.NONE);
+            biseccionAitkenStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Bisección-Aitken: " + e.getMessage());
         }
     }
 

@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ipn.metodosnumericosnvo.controller.DeflacionController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ipn.metodosnumericosnvo.controller.DeflacionController" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="Deflación Sintética (todas las raíces del polinomio)" style="-fx-font-size: 16px;"/>
+    <HBox spacing="10">
+        <Label text="Coeficientes (mayor a menor, separados por coma):"/>
+        <TextField fx:id="polyField" prefWidth="300" promptText="Ej: 1,0,-2,-5"/>
+        <Button text="Calcular" onAction="#onCalcular"/>
+    </HBox>
+    <TableView fx:id="tablaRaices" prefHeight="250" prefWidth="480">
+        <columns>
+            <TableColumn text="Parte real" fx:id="colReal" prefWidth="100"/>
+            <TableColumn text="Parte imaginaria" fx:id="colImag" prefWidth="100"/>
+            <TableColumn text="Raíz a + bi" fx:id="colCompleja" prefWidth="180"/>
+        </columns>
+    </TableView>
+</VBox>

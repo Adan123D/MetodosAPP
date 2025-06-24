@@ -1,227 +1,113 @@
 package com.ipn.metodosnumericosnvo.math;
 
-import java.util.function.Function;
+import org.matheclipse.core.eval.ExprEvaluator;
+import org.matheclipse.core.expression.F;
+import org.matheclipse.core.interfaces.IExpr;
 
-import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.analysis.differentiation.DerivativeStructure;
-import org.apache.commons.math3.analysis.differentiation.FiniteDifferencesDifferentiator;
-import org.apache.commons.math3.analysis.differentiation.UnivariateDifferentiableFunction;
-import org.apache.commons.math3.exception.MathIllegalArgumentException;
-
-/**
- * Class for calculating derivatives of mathematical functions.
- * This class provides methods for numerical differentiation using various methods.
- * Uses Apache Commons Math library for optimized calculations.
- */
 public class DerivativeCalculator {
 
-    // Step size for numerical differentiation
-    private double h = 0.0001;
-
-    // Function evaluator
+    private ExprEvaluator evaluator;
     private FunctionEvaluator functionEvaluator;
 
-    // Default number of points to use for finite differences
-    private static final int DEFAULT_POINTS = 5;
-
-    // Default maximum evaluations
-    private static final int DEFAULT_MAX_EVALUATIONS = 1000;
-
     /**
-     * Constructor for the DerivativeCalculator.
+     * Constructor initializes the Symja evaluator.
      */
     public DerivativeCalculator() {
-        this.functionEvaluator = new FunctionEvaluator();
+        F.initSymbols(); // Requerido por Symja en algunos entornos
+        evaluator = new ExprEvaluator(false, (short)100);
+        this.functionEvaluator = null;
     }
 
     /**
-     * Constructor for the DerivativeCalculator with a specific function evaluator.
+     * Constructor initializes the Symja evaluator with a function evaluator.
      * 
-     * @param functionEvaluator The function evaluator to use for function evaluation
+     * @param functionEvaluator The function evaluator to use
      */
     public DerivativeCalculator(FunctionEvaluator functionEvaluator) {
+        F.initSymbols(); // Requerido por Symja en algunos entornos
+        evaluator = new ExprEvaluator(false, (short)100);
         this.functionEvaluator = functionEvaluator;
     }
 
     /**
-     * Sets the step size for numerical differentiation.
-     * 
-     * @param h The step size
+     * Obtiene la derivada simbólica de orden n de una función como texto.
+     * Ejemplo: getDerivativeExpression("sin(x)", "x", 2) => "-Sin(x)"
+     * @param functionText La función, ej "x^2+cos(x)"
+     * @param variable La variable, ej "x"
+     * @param order Orden de la derivada (1 = primera, 2 = segunda, ...)
+     * @return String con la derivada simbólica
      */
-    public void setStepSize(double h) {
-        if (h <= 0) {
-            throw new IllegalArgumentException("Step size must be positive");
+    public String getDerivativeExpression(String functionText, String variable, int order) {
+        String expr = "D(" + functionText + "," + variable;
+        if (order > 1) {
+            expr += "," + order;
         }
-        this.h = h;
+        expr += ")";
+        IExpr deriv = evaluator.evaluate(expr);
+        return deriv.toString();
     }
 
     /**
-     * Gets the current step size for numerical differentiation.
-     * 
-     * @return The current step size
+     * Evalúa la derivada de orden n de una función en un punto dado.
+     * @param functionText La función, ej "x^2+cos(x)"
+     * @param variable La variable, ej "x"
+     * @param x Punto a evaluar
+     * @param order Orden de la derivada
+     * @return Valor numérico de la derivada en x
      */
-    public double getStepSize() {
-        return h;
+    public double nthDerivativeAt(String functionText, String variable, double x, int order) {
+        // Obtiene la expresión simbólica de la derivada
+        String derivativeExpr = getDerivativeExpression(functionText, variable, order);
+
+        // Evalúa la derivada en el punto
+        String evalExpr = derivativeExpr + "| " + variable + " = " + x;
+        IExpr result = evaluator.evaluate(evalExpr);
+        return result.evalDouble();
     }
 
     /**
-     * Creates a UnivariateFunction from a function text.
-     * This is used to adapt our function representation to Apache Commons Math.
-     * 
-     * @param functionText The function text
-     * @return A UnivariateFunction that evaluates the function
+     * Evalúa la función original en un punto dado.
+     * @param functionText La función, ej "x^2+cos(x)"
+     * @param variable La variable, ej "x"
+     * @param x Punto a evaluar
+     * @return Valor de la función en x
      */
-    private UnivariateFunction createFunction(final String functionText) {
-        return new UnivariateFunction() {
-            @Override
-            public double value(double x) {
-                try {
-                    return functionEvaluator.evaluateFunction(functionText, x);
-                } catch (Exception e) {
-                    throw new RuntimeException("Error evaluating function: " + e.getMessage(), e);
-                }
-            }
-        };
+    public double evaluateFunction(String functionText, String variable, double x) {
+        String expr = functionText + "| " + variable + " = " + x;
+        IExpr result = evaluator.evaluate(expr);
+        return result.evalDouble();
     }
 
     /**
-     * Calculates the first derivative of a function at a point using finite differences.
-     * This implementation uses Apache Commons Math for optimized calculations.
-     * 
-     * @param functionText The function text (e.g., "sin(x)")
-     * @param x The point at which to calculate the derivative
-     * @return The first derivative of the function at the point
-     * @throws Exception If there's an error evaluating the function
+     * Calcula la primera derivada de una función en un punto dado.
+     * @param functionText La función, ej "x^2+cos(x)"
+     * @param x Punto a evaluar
+     * @return Valor numérico de la primera derivada en x
      */
-    public double firstDerivative(String functionText, double x) throws Exception {
-        try {
-            // Create a function that can be used by Apache Commons Math
-            UnivariateFunction function = createFunction(functionText);
-
-            // Create a FiniteDifferencesDifferentiator with the specified parameters
-            FiniteDifferencesDifferentiator differentiator = new FiniteDifferencesDifferentiator(
-                DEFAULT_POINTS, h);
-
-            // Create a differentiable function
-            UnivariateDifferentiableFunction differentiableFunction = differentiator.differentiate(function);
-
-            // Calculate the derivative
-            DerivativeStructure xDS = new DerivativeStructure(1, 1, 0, x);
-            DerivativeStructure yDS = differentiableFunction.value(xDS);
-
-            // Return the first derivative
-            return yDS.getPartialDerivative(1);
-        } catch (MathIllegalArgumentException e) {
-            throw new Exception("Error al calcular la derivada: " + e.getMessage(), e);
-        }
+    public double firstDerivative(String functionText, double x) {
+        return nthDerivativeAt(functionText, "x", x, 1);
     }
 
     /**
-     * Calculates the second derivative of a function at a point using finite differences.
-     * This implementation uses Apache Commons Math for optimized calculations.
-     * 
-     * @param functionText The function text (e.g., "sin(x)")
-     * @param x The point at which to calculate the derivative
-     * @return The second derivative of the function at the point
-     * @throws Exception If there's an error evaluating the function
+     * Calcula la derivada de la función en varios puntos (útil para graficar).
+     * @param functionText La función, ej "x^2+cos(x)"
+     * @param variable La variable, ej "x"
+     * @param xMin Valor mínimo de x
+     * @param xMax Valor máximo de x
+     * @param order Orden de la derivada
+     * @param numPoints Número de puntos
+     * @return Arreglo de pares [x, f^(n)(x)]
      */
-    public double secondDerivative(String functionText, double x) throws Exception {
-        try {
-            // Create a function that can be used by Apache Commons Math
-            UnivariateFunction function = createFunction(functionText);
-
-            // Create a FiniteDifferencesDifferentiator with the specified parameters
-            FiniteDifferencesDifferentiator differentiator = new FiniteDifferencesDifferentiator(
-                DEFAULT_POINTS, h);
-
-            // Create a differentiable function
-            UnivariateDifferentiableFunction differentiableFunction = differentiator.differentiate(function);
-
-            // Calculate the derivative
-            DerivativeStructure xDS = new DerivativeStructure(1, 2, 0, x);
-            DerivativeStructure yDS = differentiableFunction.value(xDS);
-
-            // Return the second derivative
-            return yDS.getPartialDerivative(2);
-        } catch (MathIllegalArgumentException e) {
-            throw new Exception("Error al calcular la segunda derivada: " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Calculates the nth derivative of a function at a point using finite differences.
-     * This implementation uses Apache Commons Math for optimized calculations.
-     * 
-     * @param functionText The function text (e.g., "sin(x)")
-     * @param x The point at which to calculate the derivative
-     * @param n The order of the derivative
-     * @return The nth derivative of the function at the point
-     * @throws Exception If there's an error evaluating the function or if n is negative
-     */
-    public double nthDerivative(String functionText, double x, int n) throws Exception {
-        if (n < 0) {
-            throw new IllegalArgumentException("Order of derivative must be non-negative");
-        }
-
-        if (n == 0) {
-            // 0th derivative is the function itself
-            return functionEvaluator.evaluateFunction(functionText, x);
-        }
-
-        try {
-            // Create a function that can be used by Apache Commons Math
-            UnivariateFunction function = createFunction(functionText);
-
-            // Create a FiniteDifferencesDifferentiator with the specified parameters
-            // For higher order derivatives, we need more points
-            int points = Math.max(DEFAULT_POINTS, n + 3);
-            FiniteDifferencesDifferentiator differentiator = new FiniteDifferencesDifferentiator(
-                points, h);
-
-            // Create a differentiable function
-            UnivariateDifferentiableFunction differentiableFunction = differentiator.differentiate(function);
-
-            // Calculate the derivative
-            DerivativeStructure xDS = new DerivativeStructure(1, n, 0, x);
-            DerivativeStructure yDS = differentiableFunction.value(xDS);
-
-            // Return the nth derivative
-            return yDS.getPartialDerivative(n);
-        } catch (MathIllegalArgumentException e) {
-            throw new Exception("Error al calcular la derivada de orden " + n + ": " + e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Calculates the derivative of a function over a range of x values.
-     * 
-     * @param functionText The function text (e.g., "sin(x)")
-     * @param xMin The minimum x value
-     * @param xMax The maximum x value
-     * @param n The order of the derivative
-     * @param numPoints The number of points to calculate
-     * @return An array of x-y pairs representing the derivative function
-     * @throws Exception If there's an error evaluating the function
-     */
-    public double[][] derivativeFunction(String functionText, double xMin, double xMax, int n, int numPoints) throws Exception {
-        if (xMin >= xMax) {
-            throw new IllegalArgumentException("xMin must be less than xMax");
-        }
-        if (numPoints <= 0) {
-            throw new IllegalArgumentException("Number of points must be positive");
-        }
-
+    public double[][] derivativeFunction(String functionText, String variable, double xMin, double xMax, int order, int numPoints) {
         double[][] result = new double[numPoints][2];
         double step = (xMax - xMin) / (numPoints - 1);
 
         for (int i = 0; i < numPoints; i++) {
             double x = xMin + i * step;
-            double y = nthDerivative(functionText, x, n);
-
+            double y = nthDerivativeAt(functionText, variable, x, order);
             result[i][0] = x;
             result[i][1] = y;
         }
-
         return result;
     }
 }

@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ipn.metodosnumericosnvo.controller.PuntoFIjoController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ipn.metodosnumericosnvo.controller.PuntoFIjoController" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="Método de Punto Fijo" style="-fx-font-size: 16px;"/>
+    <HBox spacing="10">
+        <Label text="f(x):"/>
+        <TextField fx:id="fxField" promptText="Ej: cos(x)-3*x+1" prefWidth="120"/>
+        <Label text="g(x):"/>
+        <TextField fx:id="gxField" promptText="Ej: (1+cos(x))/3" prefWidth="120"/>
+        <Label text="x₀:"/>
+        <TextField fx:id="x0Field" prefWidth="60"/>
+        <Label text="Error:"/>
+        <TextField fx:id="tolField" prefWidth="60"/>
+        <Label text="Iter máx:"/>
+        <TextField fx:id="maxItField" prefWidth="60"/>
+        <Button text="Calcular" onAction="#onCalcular"/>
+    </HBox>
+    <TableView fx:id="tablaPasos" prefHeight="250" prefWidth="650">
+        <columns>
+            <TableColumn text="Paso" fx:id="colPaso"/>
+            <TableColumn text="x₀" fx:id="colX0"/>
+            <TableColumn text="f(x₀)" fx:id="colFx0"/>
+            <TableColumn text="x₁" fx:id="colX1"/>
+            <TableColumn text="f(x₁)" fx:id="colFx1"/>
+        </columns>
+    </TableView>
+    <Label fx:id="resultadoLabel" style="-fx-font-size: 16px;"/>
+</VBox>

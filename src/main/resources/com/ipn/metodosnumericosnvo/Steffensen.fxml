@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ipn.metodosnumericosnvo.controller.SteffensenController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox spacing="8" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ipn.metodosnumericosnvo.controller.SteffensenController" alignment="CENTER">
+  <padding>
+    <Insets top="15" right="15" bottom="15" left="15"/>
+  </padding>
+  <Label text="Método de Steffensen" style="-fx-font-size:16px;"/>
+  <HBox spacing="6">
+    <Label text="f(x):"/><TextField fx:id="fxField" prefWidth="150" promptText="Ej: x^3-x-1"/>
+    <Label text="x₀:"/><TextField fx:id="x0Field" prefWidth="60"/>
+    <Label text="Error:"/><TextField fx:id="tolField" prefWidth="60"/>
+    <Label text="Iter máx:"/><TextField fx:id="maxItField" prefWidth="60"/>
+    <Button text="Calcular" onAction="#onCalcular"/>
+  </HBox>
+  <TableView fx:id="table" prefHeight="220" prefWidth="650">
+    <columns>
+      <TableColumn text="Paso" fx:id="colPaso"/>
+      <TableColumn text="xₙ" fx:id="colXn"/>
+      <TableColumn text="f(xₙ)" fx:id="colFxn"/>
+      <TableColumn text="f(xₙ+f(xₙ))" fx:id="colFxnPlus"/>
+      <TableColumn text="xₙ₊₁" fx:id="colXn1"/>
+      <TableColumn text="f(xₙ₊₁)" fx:id="colFxn1"/>
+    </columns>
+  </TableView>
+  <Label fx:id="resultLabel" style="-fx-font-size:14px;"/>
+</VBox>

@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ipn.metodosnumericosnvo.controller.FalsaPosicionController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ipn.metodosnumericosnvo.controller.FalsaPosicionController" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="Método de Falsa Posición" style="-fx-font-size: 18px;"/>
+    <HBox spacing="10">
+        <Label text="f(x):"/>
+        <TextField fx:id="fxField" promptText="Ej: x*log(x)-1.2" prefWidth="180"/>
+        <Label text="x₀:"/>
+        <TextField fx:id="x0Field" prefWidth="60"/>
+        <Label text="x₁:"/>
+        <TextField fx:id="x1Field" prefWidth="60"/>
+        <Label text="Error:"/>
+        <TextField fx:id="tolField" prefWidth="60"/>
+        <Button text="Calcular" onAction="#onCalcular"/>
+    </HBox>
+    <TableView fx:id="tablaPasos" prefHeight="240" prefWidth="600">
+        <columns>
+            <TableColumn text="Paso" fx:id="colPaso"/>
+            <TableColumn text="x₀" fx:id="colX0"/>
+            <TableColumn text="x₁" fx:id="colX1"/>
+            <TableColumn text="x₂" fx:id="colX2"/>
+            <TableColumn text="f(x₂)" fx:id="colFx2"/>
+        </columns>
+    </TableView>
+    <Label fx:id="resultadoLabel" style="-fx-font-size: 16px;"/>
+</VBox>

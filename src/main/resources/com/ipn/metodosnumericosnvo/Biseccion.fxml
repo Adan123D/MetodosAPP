@@ -37,4 +37,13 @@
             </columns>
         </TableView>
     </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Raíz encontrada:"/>
+            <Label fx:id="raizLabel" style="-fx-font-weight: bold;"/>
+        </HBox>
+    </bottom>
 </BorderPane>

@@ -15,15 +15,15 @@
                 <!-- Raíces de Ecuaciones -->
                 <Menu text="Raíces de Ecuaciones">
                     <MenuItem text="Método de Bisección" onAction="#onBiseccionMenuItemClick"/>
-                    <MenuItem text="Método de Muller" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Método de la Secante" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Método de Newton" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Método de Punto Fijo" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Método de Falsa Posición" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Método de Steffensen" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Método de Bisección-Aitken" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Muller" onAction="#onMullerMenuItemClick"/>
+                    <MenuItem text="Método de la Secante" onAction="#onSecanteMenuItemClick"/>
+                    <MenuItem text="Método de Newton" onAction="#onNewtonMenuItemClick"/>
+                    <MenuItem text="Método de Punto Fijo" onAction="#onPuntoFijoMenuItemClick"/>
+                    <MenuItem text="Método de Falsa Posición" onAction="#onFalsaPosicionMenuItemClick"/>
+                    <MenuItem text="Método de Steffensen" onAction="#onSteffensenMenuItemClick"/>
+                    <MenuItem text="Método de Bisección-Aitken" onAction="#onBiseccionAitkenMenuItemClick"/>
                     <MenuItem text="Método de la Secante-Aitken" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Deflación" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Deflación" onAction="#onDeflacionMenuItemClick"/>
                 </Menu>
 
                 <!-- Derivación -->

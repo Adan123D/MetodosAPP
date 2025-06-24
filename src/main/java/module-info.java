@@ -28,14 +28,17 @@ module com.ipn.metodosnumericosnvo {
 
     // Required for mXparser function evaluation
     requires MathParser.org.mXparser;
+    requires matheclipse.core;
 
     opens com.ipn.metodosnumericosnvo.app to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.controller to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.math to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.visualization to javafx.fxml;
+    opens com.ipn.metodosnumericosnvo.metodos_raices to javafx.base;
 
     exports com.ipn.metodosnumericosnvo.app;
     exports com.ipn.metodosnumericosnvo.controller;
     exports com.ipn.metodosnumericosnvo.math;
     exports com.ipn.metodosnumericosnvo.visualization;
+    exports com.ipn.metodosnumericosnvo.metodos_raices;
 }

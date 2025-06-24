@@ -131,14 +131,14 @@ public class RootFinder {
      * @throws Exception If there's an error evaluating the function or its derivative
      */
     public double newtonRaphsonMethod(String functionText, double initialGuess) throws Exception {
-        DerivativeCalculator derivativeCalculator = new DerivativeCalculator(functionEvaluator);
+        DerivativeCalculator derivativeCalculator = new DerivativeCalculator();
 
         double x = initialGuess;
 
         for (int i = 0; i < maxIterations; i++) {
             // Evaluate the function and its derivative at x
             double fx = functionEvaluator.evaluateFunction(functionText, x);
-            double fpx = derivativeCalculator.firstDerivative(functionText, x);
+            double fpx = derivativeCalculator.nthDerivativeAt(functionText, "x",x,1);
 
             // Check if the derivative is close to zero
             if (Math.abs(fpx) < 1e-10) {

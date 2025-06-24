@@ -17,6 +17,7 @@ public class BiseccionController {
     @FXML private TableColumn<Biseccion.Iteracion, Double> colX0, colX1, colX2;
     @FXML private TableColumn<Biseccion.Iteracion, Double> colFx0, colFx1, colFx2, colError;
     @FXML private Button calcularBtn;
+    @FXML private Label raizLabel;
 
     /**
      * Sets the function text in the function field.
@@ -46,9 +47,14 @@ public class BiseccionController {
         double x0 = Double.parseDouble(x0Field.getText());
         double x1 = Double.parseDouble(x1Field.getText());
         double tol = Double.parseDouble(tolField.getText());
-        ObservableList<Biseccion.Iteracion> datos = FXCollections.observableArrayList(
-            Biseccion.resolver(funcion, x0, x1, tol)
-        );
+
+        // Obtener las iteraciones
+        java.util.List<Biseccion.Iteracion> iteraciones = Biseccion.resolver(funcion, x0, x1, tol);
+        ObservableList<Biseccion.Iteracion> datos = FXCollections.observableArrayList(iteraciones);
         tablaIteraciones.setItems(datos);
+
+        // Mostrar la raíz encontrada
+        double raiz = Biseccion.obtenerRaiz(iteraciones);
+        raizLabel.setText(String.format("%.10f", raiz));
     }
 }
