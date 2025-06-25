@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.ipn.metodosnumericosnvo.derivacion_controller.LagrangeController" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <Label text="Interpolación de Lagrange" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <TextField fx:id="inputX" promptText="Ingrese puntos X separados por comas"/>
+    <TextField fx:id="inputY" promptText="Ingrese puntos Y separados por comas"/>
+    <TextField fx:id="inputXp" promptText="Ingrese puntos X a interpolar separados por comas"/>
+    <Button text="Calcular" onAction="#calcularInterpolacion"/>
+    <Label fx:id="resultadoLbl" text="Polinomio encontrado:" style="-fx-font-size: 14px;"/>
+
+    <TitledPane text="Polinomios de Lagrange" expanded="false">
+        <VBox spacing="10">
+            <ScrollPane prefHeight="100" fitToWidth="true">
+                <TextArea fx:id="polinomiosArea" promptText="Polinomios de Lagrange generados..." editable="false"/>
+            </ScrollPane>
+            <Pane fx:id="polinomiosDisplayPane" style="-fx-background-color: white;" prefHeight="150" minHeight="100">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+            </Pane>
+        </VBox>
+    </TitledPane>
+
+    <TitledPane text="Polinomio Interpolante" expanded="true">
+        <VBox spacing="10">
+            <ScrollPane prefHeight="100" fitToWidth="true">
+                <TextArea fx:id="polinomioInterpolanteArea" promptText="Polinomio interpolante..." editable="false"/>
+            </ScrollPane>
+            <Pane fx:id="polinomioInterpolanteDisplayPane" style="-fx-background-color: white;" prefHeight="150" minHeight="100">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+            </Pane>
+        </VBox>
+    </TitledPane>
+
+    <TableView fx:id="resultadosTable" prefHeight="150">
+        <columns>
+            <TableColumn fx:id="xpColumn" text="X interpolado"/>
+            <TableColumn fx:id="ypColumn" text="Y interpolado"/>
+        </columns>
+    </TableView>
+</VBox>

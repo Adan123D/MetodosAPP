@@ -522,6 +522,134 @@ public class MenuController {
     }
 
     /**
+     * Handles the click event for the Polinomio Interpolante de Lagrange menu item.
+     * This method opens a new window for the Lagrange interpolation method.
+     */
+    @FXML
+    protected void onLagrangeMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Lagrange
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Lagrange.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Lagrange.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage lagrangeStage = new Stage();
+            lagrangeStage.setTitle("Polinomio Interpolante de Lagrange");
+            lagrangeStage.setScene(new Scene(root, 600, 400));
+            lagrangeStage.initModality(Modality.NONE);
+            lagrangeStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Lagrange: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Derivación Numérica menu item.
+     * This method opens a new window for the numerical differentiation method.
+     */
+    @FXML
+    protected void onNumericalDifferentiationMenuItemClick() {
+        try {
+            // Cargar el archivo FXML de Derivación Numérica
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/NumericalDifferentiation.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo NumericalDifferentiation.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage numericalDiffStage = new Stage();
+            numericalDiffStage.setTitle("Derivación Numérica");
+            numericalDiffStage.setScene(new Scene(root, 600, 400));
+            numericalDiffStage.initModality(Modality.NONE);
+            numericalDiffStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Derivación Numérica: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Extrapolación de Richardson menu item.
+     * This method opens a new window for the Richardson extrapolation method.
+     */
+    @FXML
+    protected void onRichardsonExtrapolationMenuItemClick() {
+        try {
+            // Cargar el archivo FXML de Extrapolación de Richardson
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/ExtrapolacionRichardson.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo ExtrapolacionRichardson.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage richardsonStage = new Stage();
+            richardsonStage.setTitle("Extrapolación de Richardson");
+            richardsonStage.setScene(new Scene(root, 600, 400));
+            richardsonStage.initModality(Modality.NONE);
+            richardsonStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Extrapolación de Richardson: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Derivación para puntos desigualmente espaciados menu item.
+     * This method opens a new window for the numerical differentiation with unequally spaced points.
+     */
+    @FXML
+    protected void onDerivacionPuntosDesigualesMenuItemClick() {
+        try {
+            // Cargar el archivo FXML de Derivación para puntos desigualmente espaciados
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/DerivacionPuntosDesiguales.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo DerivacionPuntosDesiguales.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage puntosDesigualesStage = new Stage();
+            puntosDesigualesStage.setTitle("Derivación para Puntos Desigualmente Espaciados");
+            puntosDesigualesStage.setScene(new Scene(root, 800, 600));
+            puntosDesigualesStage.initModality(Modality.NONE);
+            puntosDesigualesStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Derivación para Puntos Desigualmente Espaciados: " + e.getMessage());
+        }
+    }
+
+    /**
      * Handles the click event for the Gráfica button.
      * This method opens a new window for visualizing mathematical functions as charts.
      * If a function is entered in the main menu, it will be passed to the chart visualizer.

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17"
+            fx:controller="com.ipn.metodosnumericosnvo.derivacion_controller.NumericalDifferentiationController">
+    <VBox alignment="CENTER" spacing="15" layoutX="50" layoutY="50" prefWidth="500" prefHeight="300">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        
+        <Label text="Derivación Numérica" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Función f(x):" />
+            <TextField fx:id="functionField" promptText="Ingrese la función f(x)" prefWidth="300" />
+        </HBox>
+        
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Valor de x:" />
+            <TextField fx:id="xValueField" promptText="Valor de x" prefWidth="100" />
+        </HBox>
+        
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Valor de h:" />
+            <TextField fx:id="hValueField" promptText="Valor de h" prefWidth="100" />
+        </HBox>
+        
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Puntos:" />
+            <ComboBox fx:id="pointsComboBox" prefWidth="100">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="2" />
+                        <String fx:value="3" />
+                        <String fx:value="4" />
+                        <String fx:value="5" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            
+            <Label text="Dirección:" />
+            <ComboBox fx:id="directionComboBox" prefWidth="150">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Adelante" />
+                        <String fx:value="Atrás" />
+                        <String fx:value="Centro" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </HBox>
+        
+        <Button text="Calcular Derivada" onAction="#calculateDerivative" prefWidth="200" />
+        
+        <Label fx:id="resultLabel" style="-fx-font-size: 14;" />
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Pos?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.ipn.metodosnumericosnvo.derivacion_controller.ExtrapolacionRichardsonController" spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/>
+    </padding>
+    <Label text="Método de Extrapolación de Richardson" style="-fx-font-weight: bold" />
+    <TextField fx:id="funcionField" promptText="Función (ej: x*exp(x))" />
+    <TextField fx:id="xField" promptText="Valor de x" />
+    <TextField fx:id="hField" promptText="Valor de h" />
+    <Button text="Calcular" onAction="#calcular" />
+    <TextArea fx:id="resultadoLabel" text="Resultado: " prefHeight="150" wrapText="true" editable="false" />
+</VBox>
