@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+// Importar la clase de utilidad para validación de funciones matemáticas
+import com.ipn.metodosnumericosnvo.utils.MathFunctionHelper;
+
 /**
  * A web-based function grapher using Plotly.js.
  * This class replaces the original FunctionChartManager with a web-based implementation.
@@ -98,6 +101,22 @@ public class FunctionGrapherWeb {
             // Check if the function already exists
             if (functions.contains(functionText)) {
                 return false;
+            }
+
+            // Importar la clase de utilidad para validación
+            // Debe agregarse al inicio del archivo: import com.ipn.metodosnumericosnvo.utils.MathFunctionHelper;
+
+            // Validar la sintaxis básica de la función
+            if (!com.ipn.metodosnumericosnvo.utils.MathFunctionHelper.validateBasicSyntax(functionText)) {
+                // Sugerir correcciones
+                String correctedFunction = com.ipn.metodosnumericosnvo.utils.MathFunctionHelper.suggestCorrections(functionText);
+                if (!correctedFunction.equals(functionText)) {
+                    showAlert("La función tiene errores de sintaxis. Se sugiere: " + correctedFunction);
+                    return false;
+                } else {
+                    showAlert("La función tiene errores de sintaxis. Verifique paréntesis y operadores.");
+                    return false;
+                }
             }
 
             // Add the function
@@ -588,6 +607,71 @@ public class FunctionGrapherWeb {
         <head>
           <!-- Load Plotly.js from CDNJS (alternative CDN) -->
           <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.24.2/plotly.min.js"></script>
+          <!-- Load custom Math library extensions -->
+          <script>
+            // MathJsLibrary.js - Funciones matemáticas extendidas
+            // Extensiones de Math para funciones trigonométricas adicionales
+            Math.sec = function(x) {
+                return 1 / Math.cos(x);
+            };
+
+            Math.csc = function(x) {
+                return 1 / Math.sin(x);
+            };
+
+            Math.cot = function(x) {
+                return 1 / Math.tan(x);
+            };
+
+            // Extensiones para funciones trigonométricas inversas adicionales
+            Math.asec = function(x) {
+                return Math.acos(1 / x);
+            };
+
+            Math.acsc = function(x) {
+                return Math.asin(1 / x);
+            };
+
+            Math.acot = function(x) {
+                return Math.PI / 2 - Math.atan(x);
+            };
+
+            // Alias para nombres alternativos de funciones trigonométricas inversas
+            Math.arcsec = Math.asec;
+            Math.arccsc = Math.acsc;
+            Math.arccot = Math.acot;
+
+            // Extensiones para funciones hiperbólicas adicionales
+            Math.sech = function(x) {
+                return 1 / Math.cosh(x);
+            };
+
+            Math.csch = function(x) {
+                return 1 / Math.sinh(x);
+            };
+
+            Math.coth = function(x) {
+                return 1 / Math.tanh(x);
+            };
+
+            // Extensiones para funciones hiperbólicas inversas adicionales
+            Math.asech = function(x) {
+                return Math.acosh(1 / x);
+            };
+
+            Math.acsch = function(x) {
+                return Math.asinh(1 / x);
+            };
+
+            Math.acoth = function(x) {
+                return Math.atanh(1 / x);
+            };
+
+            // Alias para nombres alternativos de funciones hiperbólicas inversas
+            Math.arcsech = Math.asech;
+            Math.arccsch = Math.acsch;
+            Math.arccoth = Math.acoth;
+          </script>
           <!-- Fallback if CDN fails -->
           <script>
             window.onload = function() {
@@ -1025,7 +1109,14 @@ public class FunctionGrapherWeb {
         return """
         {
           x: generateXValues(%f, %f, 500),
-          y: generateYValues(function(x) { return %s; }, %f, %f, 500),
+          y: generateYValues(function(x) { 
+            try {
+                return %s; 
+            } catch(e) {
+                console.error('Error evaluating function: ' + e.message);
+                return null;
+            }
+          }, %f, %f, 500),
           type: 'scatter',
           mode: 'lines',
           name: '%s',
@@ -1194,22 +1285,54 @@ public class FunctionGrapherWeb {
             .replace("acsc(", "Math.asin(1/")
 
             // Basic trigonometric functions (shortest names last)
-            .replace("sin", "Math.sin")
-            .replace("cos", "Math.cos")
-            .replace("tan", "Math.tan")
+            // Es importante que estos reemplazos se hagan después de los inversos
+            // para evitar que "sin" en "arcsin" sea reemplazado
+            .replace("sin(", "Math.sin(")
+            .replace("cos(", "Math.cos(")
+            .replace("tan(", "Math.tan(")
             .replace("cot(", "(1/Math.tan(")
             .replace("sec(", "(1/Math.cos(")
             .replace("csc(", "(1/Math.sin(");
 
         // Finally, handle other mathematical functions and operators
         jsFunction = jsFunction
-            .replace("log", "Math.log10")
-            .replace("ln", "Math.log")
-            .replace("sqrt", "Math.sqrt")
-            .replace("abs", "Math.abs")
+            .replace("log(", "Math.log10(")
+            .replace("ln(", "Math.log(")
+            .replace("sqrt(", "Math.sqrt(")
+            .replace("cbrt(", "Math.cbrt(")
+            .replace("abs(", "Math.abs(")
             .replace("pi", "Math.PI")
             .replace("e", "Math.E")
-            .replace("^", "**");
+            .replace("^", "**")
+            // Añadir manejo para raíz n-ésima
+            .replace("root(n,x)", "Math.pow(x, 1/n)")
+            // Soporte para max y min
+            .replace("max(", "Math.max(")
+            .replace("min(", "Math.min(")
+            // Soporte mejorado para funciones trigonométricas inversas
+            .replace("sec(", "Math.sec(")
+            .replace("csc(", "Math.csc(")
+            .replace("cot(", "Math.cot(")
+            .replace("asec(", "Math.asec(")
+            .replace("acsc(", "Math.acsc(")
+            .replace("acot(", "Math.acot(")
+            .replace("arcsec(", "Math.arcsec(")
+            .replace("arccsc(", "Math.arccsc(")
+            .replace("arccot(", "Math.arccot(");
+
+        // Añadir soporte para funciones adicionales
+        jsFunction = jsFunction
+            // Funciones de redondeo
+            .replace("floor(", "Math.floor(")
+            .replace("ceil(", "Math.ceil(")
+            .replace("round(", "Math.round(")
+            // Funciones exponenciales
+            .replace("exp(", "Math.exp(")
+            // Soporte mejorado para constantes
+            .replace("PI", "Math.PI")
+            .replace("E", "Math.E")
+            // Soporte para valor absoluto con notación de barras
+            .replace("|x|", "Math.abs(x)");
 
         // Replace x with the variable name, but only when it's a standalone variable
         jsFunction = jsFunction.replaceAll("\\b(x)\\b", "($1)");

@@ -7,6 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.ArrayList;
 import java.util.List;
 import com.ipn.metodosnumericosnvo.metodos_raices.Muller;
+import org.apache.commons.math3.complex.Complex;
 
 public class MullerController {
 
@@ -54,17 +55,27 @@ public class MullerController {
     public void onCalcular() {
         try {
             String fx = fxField.getText();
-            double x1 = Double.parseDouble(x1Field.getText());
-            double x2 = Double.parseDouble(x2Field.getText());
-            double x3 = Double.parseDouble(x3Field.getText());
+            String x1 = x1Field.getText();
+            String x2 = x2Field.getText();
+            String x3 = x3Field.getText();
             double tol = Double.parseDouble(tolField.getText());
             int maxIt = Integer.parseInt(maxItField.getText());
 
             List<Muller.Step> pasos = new ArrayList<>();
-            double raiz = modelo.resolver(fx, x1, x2, x3, tol, maxIt, pasos);
+            Complex raiz = modelo.resolver(fx, x1, x2, x3, tol, maxIt, pasos);
 
             tablaPasos.setItems(FXCollections.observableArrayList(pasos));
-            resultadoLabel.setText(String.format("Raíz encontrada: %.8f", raiz));
+
+            // Mostrar la raíz en formato complejo
+            if (Math.abs(raiz.getImaginary()) < 1e-10) {
+                // Si la parte imaginaria es prácticamente cero, mostrar solo la parte real
+                resultadoLabel.setText(String.format("Raíz encontrada: %.8f", raiz.getReal()));
+            } else {
+                // Mostrar en formato a+bi o a-bi
+                String signo = raiz.getImaginary() < 0 ? "" : "+";
+                resultadoLabel.setText(String.format("Raíz encontrada: %.8f%s%.8fi", 
+                                                   raiz.getReal(), signo, raiz.getImaginary()));
+            }
         } catch (NumberFormatException e) {
             resultadoLabel.setText("Verifica los números y la función.");
         } catch (IllegalArgumentException e) {
