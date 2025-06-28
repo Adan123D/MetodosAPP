@@ -17,20 +17,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
-
-import com.ipn.metodosnumericosnvo.controller.BiseccionController;
-import com.ipn.metodosnumericosnvo.controller.Biseccion_AitkenController;
-import com.ipn.metodosnumericosnvo.controller.ChartVisualizerController;
-import com.ipn.metodosnumericosnvo.controller.DeflacionController;
-import com.ipn.metodosnumericosnvo.controller.FalsaPosicionController;
-import com.ipn.metodosnumericosnvo.controller.MullerController;
-import com.ipn.metodosnumericosnvo.controller.PuntoFIjoController;
-import com.ipn.metodosnumericosnvo.controller.SecanteController;
-import com.ipn.metodosnumericosnvo.controller.Secante_AitkenController;
-import com.ipn.metodosnumericosnvo.controller.SteffensenController;
 
 // JLaTeXMath imports
 import org.scilab.forge.jlatexmath.TeXConstants;
@@ -661,23 +649,20 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader();
 
             // Asegurarse de usar la ruta correcta del archivo FXML
-            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/ChartVisualizer.fxml"));
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Graficadora.fxml"));
 
             if (loader.getLocation() == null) {
-                showError("No se pudo encontrar el archivo ChartVisualizer.fxml");
+                showError("No se pudo encontrar el archivo Graficadora.fxml");
                 return;
             }
 
             Parent root = loader.load();
 
             // Obtener el controlador y configurar la función inicial si existe
-            ChartVisualizerController controller = loader.getController();
+            GraficadoraController controller = loader.getController();
 
             // Si hay una función en el campo de texto, pasarla al visualizador
             String functionText = functionTextField.getText().trim();
-            if (!functionText.isEmpty()) {
-                controller.setInitialFunction(functionText);
-            }
 
             // Crear y mostrar la nueva ventana
             Stage chartStage = new Stage();

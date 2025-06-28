@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda - Graficadora de Funciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #0066cc;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #0066cc;
+            margin-top: 25px;
+        }
+        .code {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .example {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0066cc;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffca28;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Graficadora de Funciones - Ayuda</h1>
+
+    <h2>Introducción</h2>
+    <p>
+        La Graficadora de Funciones es una herramienta que permite visualizar gráficamente funciones matemáticas.
+        Utiliza la potente API de GeoGebra para realizar las representaciones gráficas de manera precisa e interactiva.
+    </p>
+
+    <h2>Cómo graficar una función</h2>
+    <ol>
+        <li>Ingresa la función matemática en el campo de texto, utilizando <span class="code">x</span> como variable independiente.</li>
+        <li>Presiona el botón "Graficar" o la tecla Enter para generar la gráfica.</li>
+        <li>La función aparecerá dibujada en el área de visualización.</li>
+    </ol>
+
+    <h2>Sintaxis básica</h2>
+    <p>La graficadora reconoce la sintaxis matemática estándar:</p>
+    <table>
+        <tr>
+            <th>Operación</th>
+            <th>Símbolo</th>
+            <th>Ejemplo</th>
+        </tr>
+        <tr>
+            <td>Suma</td>
+            <td>+</td>
+            <td><span class="code">x + 3</span></td>
+        </tr>
+        <tr>
+            <td>Resta</td>
+            <td>-</td>
+            <td><span class="code">x - 5</span></td>
+        </tr>
+        <tr>
+            <td>Multiplicación</td>
+            <td>*</td>
+            <td><span class="code">2 * x</span></td>
+        </tr>
+        <tr>
+            <td>División</td>
+            <td>/</td>
+            <td><span class="code">x / 2</span></td>
+        </tr>
+        <tr>
+            <td>Potencia</td>
+            <td>^</td>
+            <td><span class="code">x^2</span></td>
+        </tr>
+        <tr>
+            <td>Raíz cuadrada</td>
+            <td>sqrt()</td>
+            <td><span class="code">sqrt(x)</span></td>
+        </tr>
+    </table>
+
+    <h2>Funciones disponibles</h2>
+    <table>
+        <tr>
+            <th>Función</th>
+            <th>Sintaxis</th>
+            <th>Descripción</th>
+        </tr>
+        <tr>
+            <td>Seno</td>
+            <td><span class="code">sin(x)</span></td>
+            <td>Seno de x (en radianes)</td>
+        </tr>
+        <tr>
+            <td>Coseno</td>
+            <td><span class="code">cos(x)</span></td>
+            <td>Coseno de x (en radianes)</td>
+        </tr>
+        <tr>
+            <td>Tangente</td>
+            <td><span class="code">tan(x)</span></td>
+            <td>Tangente de x (en radianes)</td>
+        </tr>
+        <tr>
+            <td>Logaritmo natural</td>
+            <td><span class="code">ln(x)</span></td>
+            <td>Logaritmo en base e</td>
+        </tr>
+        <tr>
+            <td>Logaritmo base 10</td>
+            <td><span class="code">log(x)</span></td>
+            <td>Logaritmo en base 10</td>
+        </tr>
+        <tr>
+            <td>Exponencial</td>
+            <td><span class="code">exp(x)</span> o <span class="code">e^x</span></td>
+            <td>Función exponencial e elevado a x</td>
+        </tr>
+        <tr>
+            <td>Valor absoluto</td>
+            <td><span class="code">abs(x)</span></td>
+            <td>Valor absoluto de x</td>
+        </tr>
+    </table>
+
+    <h2>Ejemplos</h2>
+
+    <div class="example">
+        <p><strong>Función cuadrática:</strong> <span class="code">x^2 + 2*x - 3</span></p>
+    </div>
+
+    <div class="example">
+        <p><strong>Función trigonométrica:</strong> <span class="code">2*sin(x) + cos(3*x)</span></p>
+    </div>
+
+    <div class="example">
+        <p><strong>Función racional:</strong> <span class="code">(x^2 - 4)/(x - 2)</span></p>
+    </div>
+
+    <div class="example">
+        <p><strong>Función exponencial:</strong> <span class="code">e^x - 2</span> o <span class="code">exp(x) - 2</span></p>
+    </div>
+
+    <div class="note">
+        <p><strong>Nota:</strong> La variable independiente debe ser siempre <span class="code">x</span> en minúscula.</p>
+    </div>
+
+    <h2>Interacción con la gráfica</h2>
+    <p>
+        Una vez que la función está graficada, puedes interactuar con ella:
+    </p>
+    <ul>
+        <li><strong>Zoom:</strong> Usa la rueda del ratón o los botones de zoom en la interfaz.</li>
+        <li><strong>Desplazamiento:</strong> Haz clic y arrastra para mover la vista de la gráfica.</li>
+        <li><strong>Inspección de puntos:</strong> Coloca el cursor sobre la gráfica para ver las coordenadas.</li>
+    </ul>
+
+    <h2>Funciones avanzadas</h2>
+    <p>
+        La graficadora también soporta funciones más avanzadas como:
+    </p>
+    <ul>
+        <li>Funciones por tramos</li>
+        <li>Funciones paramétricas</li>
+        <li>Ecuaciones implícitas</li>
+    </ul>
+    <p>Consulta la documentación de GeoGebra para más detalles sobre estas funcionalidades avanzadas.</p>
+</body>
+</html>

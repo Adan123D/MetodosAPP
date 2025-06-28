@@ -48,18 +48,12 @@
                     </Menu>
                     <Menu text="Integración Múltiple">
                         <MenuItem text="Método del Trapecio" onAction="#handleMenuItemClick"/>
-                        <MenuItem text="Método de Simpson 1/3" onAction="#handleMenuItemClick"/>
-                    </Menu>
-                    <Menu text="Newton Abiertas">
-                        <MenuItem text="Newton-Cottes n=2" onAction="#handleMenuItemClick"/>
-                        <MenuItem text="Trapecio" onAction="#handleMenuItemClick"/>
                     </Menu>
                     <MenuItem text="Interpolación de Romberg" onAction="#handleMenuItemClick"/>
                     <Menu text="Método de Cuadratura Adaptiva">
-                        <MenuItem text="Simpson Compuesto" onAction="#handleMenuItemClick"/>
                         <MenuItem text="Trapecio Simple" onAction="#handleMenuItemClick"/>
+                        <MenuItem text="Simpson Compuesto 1/3" onAction="#handleMenuItemClick"/>
                     </Menu>
-                    <MenuItem text="Cuadratura Gaussiana" onAction="#handleMenuItemClick"/>
                 </Menu>
 
                 <!-- Ecuaciones Diferenciales -->

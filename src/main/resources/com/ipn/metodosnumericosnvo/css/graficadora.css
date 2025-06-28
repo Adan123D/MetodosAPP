@@ -1,0 +1,72 @@
+/* Estilos para la graficadora de funciones matemáticas */
+
+.root {
+    -fx-background-color: #f5f5f5;
+    -fx-font-family: 'Arial';
+}
+
+.label {
+    -fx-font-size: 14px;
+}
+
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0066cc;
+}
+
+.function-input {
+    -fx-font-size: 14px;
+    -fx-pref-width: 400px;
+}
+
+.button {
+    -fx-background-color: #0066cc;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 15px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #0055bb;
+}
+
+.clear-button {
+    -fx-background-color: #ff6600;
+}
+
+.clear-button:hover {
+    -fx-background-color: #e55500;
+}
+
+.help-button {
+    -fx-background-color: #009966;
+}
+
+.help-button:hover {
+    -fx-background-color: #008855;
+}
+
+.message-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #0066cc;
+}
+
+.error-message {
+    -fx-text-fill: #cc0000;
+}
+
+.web-view-container {
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-color: white;
+    -fx-padding: 10px;
+}
+
+.footer-label {
+    -fx-font-style: italic;
+    -fx-text-fill: #666666;
+    -fx-font-size: 12px;
+}

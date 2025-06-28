@@ -1,0 +1,30 @@
+--- pom.xml	(original)
++++ pom.xml	(modified)
+@@ -14,6 +14,12 @@
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+         <junit.version>5.10.2</junit.version>
+     </properties>
++    
++    <repositories>
++        <repository>
++            <id>central</id>
++            <url>https://repo.maven.apache.org/maven2</url>
++        </repository>
++    </repositories>
+
+     <dependencies>
+         <dependency>
+@@ -26,6 +32,13 @@
+             <artifactId>javafx-fxml</artifactId>
+             <version>24</version>
+         </dependency>
++        
++        <!-- Dependencia para WebView en JavaFX -->
++        <dependency>
++            <groupId>org.openjfx</groupId>
++            <artifactId>javafx-web</artifactId>
++            <version>24</version>
++        </dependency>
+
+         <dependency>
+             <groupId>org.kordamp.bootstrapfx</groupId>
