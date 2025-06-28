@@ -39,17 +39,17 @@
 
                 <!-- Integración -->
                 <Menu text="Integración">
-                    <MenuItem text="Simpson 1/3" onAction="#handleMenuItemClick"/>
-                    <MenuItem text="Simpson 3/8" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Simpson 1/3" onAction="#onSimpson13MenuItemClick"/>
+                    <MenuItem text="Simpson 3/8" onAction="#onSimpson38MenuItemClick"/>
                     <Menu text="Integración Compuesta">
                         <MenuItem text="Trapecio Compuesto" onAction="#handleMenuItemClick"/>
                         <MenuItem text="Simpson 1/3 Compuesto" onAction="#handleMenuItemClick"/>
                         <MenuItem text="Simpson 3/8 Compuesto" onAction="#handleMenuItemClick"/>
                     </Menu>
                     <Menu text="Integración Múltiple">
-                        <MenuItem text="Método del Trapecio" onAction="#handleMenuItemClick"/>
+                        <MenuItem text="Método del Trapecio" onAction="#onTrapecioMenuItemClick"/>
                     </Menu>
-                    <MenuItem text="Interpolación de Romberg" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Interpolación de Romberg" onAction="#onRombergMenuItemClick"/>
                     <Menu text="Método de Cuadratura Adaptiva">
                         <MenuItem text="Trapecio Simple" onAction="#handleMenuItemClick"/>
                         <MenuItem text="Simpson Compuesto 1/3" onAction="#handleMenuItemClick"/>

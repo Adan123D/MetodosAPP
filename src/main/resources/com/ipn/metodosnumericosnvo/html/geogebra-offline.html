@@ -40,16 +40,24 @@
                 "appName": "graphing",
                 "width": window.innerWidth,
                 "height": window.innerHeight,
-                "showToolBar": true,
-                "showAlgebraInput": true,
-                "showMenuBar": true,
+                "showToolBar": false,
+                "showAlgebraInput": false,
+                "showMenuBar": false,
                 "enableLabelDrags": false,
                 "enableShiftDragZoom": true,
                 "enableRightClick": true,
                 "showResetIcon": true,
                 "useBrowserForJS": true,
+                "enableUndoRedo": true,
+                "preventFocus": false,
+                "scaleContainerClass": "ggb-element",
+                "allowStyleBar": false,
                 "language": "es",
                 "id": "ggbApplet",
+                "allowUpscale": true,
+                "borderColor": "#FFFFFF",
+                "buttonShadows": false,
+                "buttonRounding": 0.5,
                 "appletOnLoad": function(api) {
                     // Ocultar mensaje de carga
                     document.getElementById('loading').style.display = 'none';
@@ -59,6 +67,9 @@
                     api.setCoordSystem(-10, 10, -10, 10);
                     api.setGridVisible(true);
                     api.setAxesVisible(true, true);
+
+                    // Ocultar panel algebraico
+                    api.setPerspective('G');
 
                     // Notificar a Java que GeoGebra está listo
                     if (typeof window.javaApp !== 'undefined') {
@@ -86,15 +97,22 @@
         function graficarFuncion(funcion) {
             if (typeof ggbApplet !== 'undefined') {
                 try {
+                    // Limpiar gráficas anteriores
+                    ggbApplet.deleteObject('f');
+                    // Graficar la nueva función
                     ggbApplet.evalCommand('f(x) = ' + funcion);
+                    ggbApplet.setAxesVisible(true, true);
+                    ggbApplet.setGridVisible(true);
                     return true;
                 } catch (e) {
                     if (typeof window.javaApp !== 'undefined') {
                         window.javaApp.recibirMensajeDeJS('Error: ' + e.message);
                     }
+                    console.error('Error al graficar:', e);
                     return false;
                 }
             } else {
+                console.error('GeoGebra no está disponible');
                 return false;
             }
         }

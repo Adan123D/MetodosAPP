@@ -33,7 +33,25 @@ public class GraficadoraController implements Initializable {
     private Button graficarButton;
 
     @FXML
+    private Button toggleKeyboardButton;
+
+    @FXML
+    private Button toggleMenuButton;
+
+    @FXML
+    private Button toggleInteractiveButton;
+
+    @FXML
+    private Button mostrarTecladoButton;
+
+    @FXML
+    private Button mostrarMenuButton;
+
+    @FXML
     private Label mensajeLabel;
+
+    // Estado de las funciones interactivas (habilitadas por defecto)
+    private boolean interactiveFeaturesEnabled = false;
 
     private WebEngine webEngine;
 
@@ -43,6 +61,13 @@ public class GraficadoraController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // Inicializar textos de botones
+        if (toggleKeyboardButton != null) toggleKeyboardButton.setText("Alternar teclado");
+        if (toggleMenuButton != null) toggleMenuButton.setText("Alternar menú");
+        if (toggleInteractiveButton != null) toggleInteractiveButton.setText("Activar interacción");
+        if (mostrarTecladoButton != null) mostrarTecladoButton.setText("Mostrar teclado");
+        if (mostrarMenuButton != null) mostrarMenuButton.setText("Mostrar menú");
+
         webEngine = webView.getEngine();
 
         try {
@@ -99,6 +124,23 @@ public class GraficadoraController implements Initializable {
     private void setupJSBridge() {
         JSObject window = (JSObject) webEngine.executeScript("window");
         window.setMember("javaApp", this);
+
+        // Ejecutar script para configuración adicional después de cargar GeoGebra
+        try {
+            webEngine.executeScript(
+                "if (typeof ggbApplet !== 'undefined') {" +
+                "  ggbApplet.setPerspective('G');" +  // Establece la perspectiva de graficación
+                "  ggbApplet.setAxesVisible(true, true);" +
+                "  ggbApplet.setGridVisible(true);" +
+                "}");
+
+            // Inicializar con funciones interactivas deshabilitadas
+            String script = com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleInteractiveFeatures(interactiveFeaturesEnabled);
+            webEngine.executeScript(script);
+
+        } catch (Exception e) {
+            System.out.println("Error en configuración adicional: " + e.getMessage());
+        }
     }
 
     /**
@@ -132,6 +174,9 @@ public class GraficadoraController implements Initializable {
         try {
             // Escapar comillas para prevenir errores en JavaScript
             funcion = funcion.replace("\"", "\\\"").replace("'", "\\'");
+
+            // Procesar la función para asegurarse de que tenga formato correcto
+            funcion = com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.convertirFuncionParaGeoGebra(funcion);
 
             // Crear una nueva función en GeoGebra
             String comando = String.format("ggbApplet.evalCommand('f(x) = %s'); " +
@@ -188,9 +233,183 @@ public class GraficadoraController implements Initializable {
             "  ggbApplet.reset();" +
             "  ggbApplet.setAxesVisible(true, true);" +
             "  ggbApplet.setGridVisible(true);" +
+            "  ggbApplet.setPerspective('G');" +  // Mantener perspectiva de graficación
             "}");
         funcionTextField.clear();
         mensajeLabel.setText("Gráfica limpiada. Ingresa una nueva función.");
+
+        // Reestablecer el estado de interactividad después de limpiar
+        try {
+            String script = com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleInteractiveFeatures(interactiveFeaturesEnabled);
+            webEngine.executeScript(script);
+        } catch (Exception e) {
+            System.out.println("Error al reestablecer interactividad: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Alterna la visualización del teclado algebraico de GeoGebra.
+     */
+    @FXML
+    private void onToggleKeyboardButtonClick(ActionEvent event) {
+        try {
+            Boolean result = (Boolean) webEngine.executeScript(
+                "(function() {" +
+                "  if (typeof ggbApplet !== 'undefined') {" +
+                "    var visible = ggbApplet.getAlgebraInput().isVisible();" +
+                "    ggbApplet.setShowAlgebraInput(!visible);" +
+                "    return !visible;" +
+                "  }" +
+                "  return false;" +
+                "})();");
+
+            if (result != null) {
+                if (result) {
+                    mensajeLabel.setText("Teclado algebraico mostrado");
+                    toggleKeyboardButton.setText("Ocultar teclado");
+                } else {
+                    mensajeLabel.setText("Teclado algebraico ocultado");
+                    toggleKeyboardButton.setText("Mostrar teclado");
+                }
+            }
+        } catch (Exception e) {
+            mensajeLabel.setText("No se pudo alternar el teclado: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Alterna la visualización del menú de GeoGebra.
+     */
+    @FXML
+    private void onToggleMenuButtonClick(ActionEvent event) {
+        try {
+            Boolean result = (Boolean) webEngine.executeScript(
+                "(function() {" +
+                "  if (typeof ggbApplet !== 'undefined') {" +
+                "    var toolbarVisible = ggbApplet.getToolbarVisible();" +
+                "    ggbApplet.showToolBar(!toolbarVisible);" +
+                "    ggbApplet.showMenuBar(!toolbarVisible);" +
+                "    return !toolbarVisible;" +
+                "  }" +
+                "  return false;" +
+                "})();");
+
+            if (result != null) {
+                if (result) {
+                    mensajeLabel.setText("Menú y barra de herramientas mostrados");
+                    toggleMenuButton.setText("Ocultar menú");
+                } else {
+                    mensajeLabel.setText("Menú y barra de herramientas ocultados");
+                    toggleMenuButton.setText("Mostrar menú");
+                }
+            }
+        } catch (Exception e) {
+            mensajeLabel.setText("No se pudo alternar el menú: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Habilita o deshabilita las funciones interactivas de GeoGebra.
+     * Cuando está deshabilitado, el usuario no podrá arrastrar puntos o crear nuevos objetos.
+     */
+    @FXML
+    private void onToggleInteractiveButtonClick(ActionEvent event) {
+        try {
+            // Invertir el estado actual
+            interactiveFeaturesEnabled = !interactiveFeaturesEnabled;
+
+            // Aplicar el nuevo estado usando el método de GeoGebraUtils
+            String script = com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleInteractiveFeatures(interactiveFeaturesEnabled);
+            Boolean result = (Boolean) webEngine.executeScript(script);
+
+            if (result) {
+                if (interactiveFeaturesEnabled) {
+                    mensajeLabel.setText("Modo interactivo: ACTIVADO. Puedes arrastrar y crear objetos.");
+                    toggleInteractiveButton.setText("Desactivar Interacción");
+                } else {
+                    mensajeLabel.setText("Modo interactivo: DESACTIVADO. Solo puedes ver la gráfica.");
+                    toggleInteractiveButton.setText("Activar Interacción");
+                }
+            } else {
+                mensajeLabel.setText("No se pudo cambiar el modo interactivo.");
+            }
+        } catch (Exception e) {
+            mensajeLabel.setText("Error al cambiar el modo interactivo: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Muestra el teclado algebraico de GeoGebra.
+     * Este método no alterna el estado, sino que siempre lo muestra.
+     */
+    @FXML
+    private void onMostrarTecladoButtonClick(ActionEvent event) {
+        try {
+            // Utilizamos el método en GeoGebraUtils para mostrar el teclado
+            String script = com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleAlgebraInput(true);
+            Boolean result = (Boolean) webEngine.executeScript(script);
+
+            if (result) {
+                mensajeLabel.setText("Teclado algebraico mostrado");
+            } else {
+                mensajeLabel.setText("No se pudo mostrar el teclado algebraico");
+            }
+        } catch (Exception e) {
+            mensajeLabel.setText("Error al mostrar teclado: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Muestra el menú y la barra de herramientas de GeoGebra.
+     * Este método no alterna el estado, sino que siempre los muestra.
+     */
+    @FXML
+    private void onMostrarMenuButtonClick(ActionEvent event) {
+        try {
+            // Utilizamos el método en GeoGebraUtils para mostrar el menú y la barra de herramientas
+            String script = com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleMenuAndToolbar(true);
+            Boolean result = (Boolean) webEngine.executeScript(script);
+
+            if (result) {
+                mensajeLabel.setText("Menú y barra de herramientas mostrados");
+            } else {
+                mensajeLabel.setText("No se pudo mostrar el menú");
+            }
+        } catch (Exception e) {
+            mensajeLabel.setText("Error al mostrar menú: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Restaura todas las opciones de GeoGebra, mostrando tanto el menú como el teclado
+     * y activando la interacción.
+     */
+    @FXML
+    private void onRestaurarOpcionesGeoGebraClick(ActionEvent event) {
+        try {
+            // Mostrar teclado algebraico
+            webEngine.executeScript(com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleAlgebraInput(true));
+
+            // Mostrar menú y barra de herramientas
+            webEngine.executeScript(com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleMenuAndToolbar(true));
+
+            // Activar funciones interactivas
+            interactiveFeaturesEnabled = true;
+            webEngine.executeScript(com.ipn.metodosnumericosnvo.utils.GeoGebraUtils.toggleInteractiveFeatures(true));
+
+            // Actualizar textos de botones
+            if (toggleKeyboardButton != null) toggleKeyboardButton.setText("Ocultar teclado");
+            if (toggleMenuButton != null) toggleMenuButton.setText("Ocultar menú");
+            if (toggleInteractiveButton != null) toggleInteractiveButton.setText("Desactivar interacción");
+
+            mensajeLabel.setText("Todas las opciones de GeoGebra han sido restauradas");
+        } catch (Exception e) {
+            mensajeLabel.setText("Error al restaurar opciones: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -43,18 +43,106 @@ public class GeoGebraUtils {
      */
     public static String generarScriptGeoGebra(String comando) {
         return String.format(
-            "if (typeof ggbApplet !== 'undefined') {" +
-            "  try {" +
-            "    %s;" +
-            "    return true;" +
-            "  } catch(e) {" +
-            "    if (typeof javaApp !== 'undefined') {" +
-            "      javaApp.recibirMensajeDeJS('Error: ' + e.message);" +
+            "(function() {" +
+            "  if (typeof ggbApplet !== 'undefined') {" +
+            "    try {" +
+            "      %s;" +
+            "      return true;" +
+            "    } catch(e) {" +
+            "      if (typeof javaApp !== 'undefined') {" +
+            "        javaApp.recibirMensajeDeJS('Error: ' + e.message);" +
+            "      }" +
+            "      return false;" +
             "    }" +
+            "  } else {" +
             "    return false;" +
             "  }" +
-            "} else {" +
-            "  return false;" +
-            "}", comando);
+            "})();", comando);
+            }
+
+            /**
+             * Genera un script para mostrar u ocultar el teclado algebraico de GeoGebra.
+             * 
+             * @param visible true para mostrar, false para ocultar
+             * @return El script JavaScript
+             */
+            public static String toggleAlgebraInput(boolean visible) {
+        return String.format(
+            "(function() {" +
+            "  if (typeof ggbApplet !== 'undefined') {" +
+            "    try {" +
+            "      ggbApplet.setShowAlgebraInput(%b);" +
+            "      if (%b) {" +
+            "        ggbApplet.evalCommand('SetPerspective(\"AD#\")');" +
+            "      }" +
+            "      return true;" +
+            "    } catch(e) {" +
+            "      console.error('Error al modificar teclado:', e);" +
+            "      return false;" +
+            "    }" +
+            "  } else {" +
+            "    return false;" +
+            "  }" +
+            "})();", visible, visible);
+            }
+
+            /**
+             * Genera un script para mostrar u ocultar el menú y la barra de herramientas de GeoGebra.
+             * 
+             * @param visible true para mostrar, false para ocultar
+             * @return El script JavaScript
+             */
+            public static String toggleMenuAndToolbar(boolean visible) {
+        return String.format(
+            "(function() {" +
+            "  if (typeof ggbApplet !== 'undefined') {" +
+            "    try {" +
+            "      ggbApplet.showToolBar(%b);" +
+            "      ggbApplet.showMenuBar(%b);" +
+            "      if (%b) {" +
+            "        ggbApplet.setMode(1);" +
+            "      }" +
+            "      return true;" +
+            "    } catch(e) {" +
+            "      console.error('Error al modificar menú:', e);" +
+            "      return false;" +
+            "    }" +
+            "  } else {" +
+            "    return false;" +
+            "  }" +
+            "})();", visible, visible, visible);
+    }
+
+    /**
+     * Genera un script para habilitar o deshabilitar las funciones interactivas de GeoGebra.
+     * Cuando está deshabilitado, el usuario no podrá arrastrar objetos, crear nuevos objetos o
+     * interactuar con la gráfica excepto para hacer zoom o desplazarse.
+     * 
+     * @param enabled true para habilitar, false para deshabilitar
+     * @return El script JavaScript
+     */
+    public static String toggleInteractiveFeatures(boolean enabled) {
+        return String.format(
+            "(function() {" +
+            "  if (typeof ggbApplet !== 'undefined') {" +
+            "    try {" +
+            "      ggbApplet.setOnTheFlyPointCreationActive(%b);" +  // Habilitar/deshabilitar creación de puntos
+            "      ggbApplet.setMode(%d);" +                        // Establecer modo (1 para mover, 0 para seleccionar)
+            "      var allObjects = ggbApplet.getAllObjectNames();" +
+            "      for (var i = 0; i < allObjects.length; i++) {" +
+            "        var obj = allObjects[i];" +
+            "        if (obj !== 'xAxis' && obj !== 'yAxis') {" +  // No afectar a los ejes
+            "          ggbApplet.setFixed(obj, !%b);" +            // Fijar/liberar objetos
+            "        }" +
+            "      }" +
+            "      return true;" +
+            "    } catch(e) {" +
+            "      console.error('Error al cambiar modo interactivo:', e);" +
+            "      return false;" +
+            "    }" +
+            "  } else {" +
+            "    return false;" +
+            "  }" +
+            "})();", enabled, enabled ? 1 : 0, enabled);
     }
 }

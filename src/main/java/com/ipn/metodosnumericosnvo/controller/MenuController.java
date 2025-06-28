@@ -18,6 +18,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+// Application controllers
+import com.ipn.metodosnumericosnvo.integracion_controller.RombergController;
+import com.ipn.metodosnumericosnvo.integracion_controller.Simpson1_3Controller;
+import com.ipn.metodosnumericosnvo.integracion_controller.Simpson3_8Controller;
+import com.ipn.metodosnumericosnvo.integracion_controller.TrapecioController;
+
 import java.io.IOException;
 
 // JLaTeXMath imports
@@ -634,6 +640,174 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             showError("Error al abrir la ventana de Derivación para Puntos Desigualmente Espaciados: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Simpson 1/3 menu item.
+     * This method opens a new window for the Simpson 1/3 integration method.
+     * If a function is entered in the main menu, it will be passed to the Simpson 1/3 window.
+     */
+    @FXML
+    protected void onSimpson13MenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Simpson 1/3
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Simpson1_3.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Simpson1_3.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            Simpson1_3Controller controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Simpson 1/3
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage simpson13Stage = new Stage();
+            simpson13Stage.setTitle("Método de Simpson 1/3");
+            simpson13Stage.setScene(new Scene(root, 600, 400));
+            simpson13Stage.initModality(Modality.NONE);
+            simpson13Stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Simpson 1/3: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Simpson 3/8 menu item.
+     * This method opens a new window for the Simpson 3/8 integration method.
+     * If a function is entered in the main menu, it will be passed to the Simpson 3/8 window.
+     */
+    @FXML
+    protected void onSimpson38MenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Simpson 3/8
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Simpson3_8.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Simpson3_8.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            Simpson3_8Controller controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Simpson 3/8
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage simpson38Stage = new Stage();
+            simpson38Stage.setTitle("Método de Simpson 3/8");
+            simpson38Stage.setScene(new Scene(root, 600, 400));
+            simpson38Stage.initModality(Modality.NONE);
+            simpson38Stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Simpson 3/8: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Trapecio menu item.
+     * This method opens a new window for the Trapecio integration method.
+     * If a function is entered in the main menu, it will be passed to the Trapecio window.
+     */
+    @FXML
+    protected void onTrapecioMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Trapecio
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Trapecio.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Trapecio.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            TrapecioController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Trapecio
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage trapecioStage = new Stage();
+            trapecioStage.setTitle("Método del Trapecio");
+            trapecioStage.setScene(new Scene(root, 600, 400));
+            trapecioStage.initModality(Modality.NONE);
+            trapecioStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Trapecio: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Romberg menu item.
+     * This method opens a new window for the Romberg integration method.
+     * If a function is entered in the main menu, it will be passed to the Romberg window.
+     */
+    @FXML
+    protected void onRombergMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Romberg
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Romberg.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Romberg.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            RombergController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Romberg
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage rombergStage = new Stage();
+            rombergStage.setTitle("Método de Romberg");
+            rombergStage.setScene(new Scene(root, 600, 400));
+            rombergStage.initModality(Modality.NONE);
+            rombergStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Romberg: " + e.getMessage());
         }
     }
 

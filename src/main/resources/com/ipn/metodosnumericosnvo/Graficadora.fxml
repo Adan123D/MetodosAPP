@@ -25,6 +25,12 @@
                 <Button text="Limpiar" styleClass="clear-button" onAction="#onLimpiarButtonClick"/>
                 <Button text="Ayuda" styleClass="help-button" onAction="#onAyudaButtonClick"/>
             </HBox>
+            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                <Button fx:id="mostrarMenuButton" text="Mostrar menú" onAction="#onMostrarMenuButtonClick"/>
+                <Button fx:id="mostrarTecladoButton" text="Mostrar teclado" onAction="#onMostrarTecladoButtonClick"/>
+                <Button fx:id="toggleInteractiveButton" text="Activar interacción" onAction="#onToggleInteractiveButtonClick"/>
+                <Button text="Restaurar opciones" onAction="#onRestaurarOpcionesGeoGebraClick"/>
+            </HBox>
             <Label fx:id="mensajeLabel" text="Cargando GeoGebra..." styleClass="message-label"/>
         </VBox>
     </top>

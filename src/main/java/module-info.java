@@ -41,6 +41,7 @@ module com.ipn.metodosnumericosnvo {
     opens com.ipn.metodosnumericosnvo.derivacion_controller to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.metodo_derivacion to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.modelo to javafx.base;
+    opens com.ipn.metodosnumericosnvo.integracion_controller to javafx.fxml;
 
     exports com.ipn.metodosnumericosnvo.app;
     exports com.ipn.metodosnumericosnvo.controller;
@@ -50,4 +51,5 @@ module com.ipn.metodosnumericosnvo {
     exports com.ipn.metodosnumericosnvo.derivacion_controller;
     exports com.ipn.metodosnumericosnvo.metodo_derivacion;
     exports com.ipn.metodosnumericosnvo.modelo;
+    exports com.ipn.metodosnumericosnvo.integracion_controller;
 }
