@@ -548,6 +548,48 @@ public class MenuController {
     }
 
     /**
+     * Handles the click event for the Interpolación menu item.
+     * This method opens a new window for the Interpolación method.
+     * If a function is entered in the main menu, it will be passed to the Interpolación window.
+     */
+    @FXML
+    protected void onInterpolacionMenuItemClick() {
+        try {
+            // Cargar el archivo FXML de Interpolación
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Interpolacion.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Interpolacion.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            com.ipn.metodosnumericosnvo.derivacion_controller.InterpolacionController controller = loader.getController();
+
+            // Si hay una función en el campo de texto, pasarla al método de Interpolación
+            String functionText = functionTextField.getText().trim();
+            if (!functionText.isEmpty()) {
+                controller.setFuncion(functionText);
+            }
+
+            // Crear y mostrar la nueva ventana
+            Stage interpolacionStage = new Stage();
+            interpolacionStage.setTitle("Polinomio de Taylor");
+            interpolacionStage.setScene(new Scene(root, 600, 400));
+            interpolacionStage.initModality(Modality.NONE);
+            interpolacionStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Interpolación: " + e.getMessage());
+        }
+    }
+
+    /**
      * Handles the click event for the Derivación Numérica menu item.
      * This method opens a new window for the numerical differentiation method.
      */

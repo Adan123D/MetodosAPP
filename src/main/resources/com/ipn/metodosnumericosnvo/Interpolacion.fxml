@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ipn.metodosnumericosnvo.derivacion_controller.InterpolacionController">
+  <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+  <Label text="Polinomio de Taylor Pₙ(x)" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+
+  <TextFlow maxWidth="400" textAlignment="CENTER">
+    <Text text="Pₙ(x) = f(x₀) + (x-x₀)/1!·f'(x₀) + (x-x₀)²/2!·f''(x₀) + ... + (x-x₀)ⁿ/n!·f⁽ⁿ⁾(x₀)" 
+          style="-fx-font-style:italic;" />
+  </TextFlow>
+
+  <GridPane hgap="15" vgap="10" alignment="CENTER">
+    <columnConstraints>
+        <ColumnConstraints minWidth="120" />
+        <ColumnConstraints minWidth="200" />
+    </columnConstraints>
+
+    <Label text="Función f(x):" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <TextField fx:id="funcTxt" promptText="Ejemplo: sin(x)" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+    <Label text="Punto base x₀:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="x0Txt" promptText="Ejemplo: 0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <Label text="Grado n:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="nTxt" promptText="Ejemplo: 4" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+    <Label text="Evaluar en x:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <TextField fx:id="xTxt" promptText="Ejemplo: 0.5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+  </GridPane>
+
+  <Button text="Calcular Polinomio" onAction="#onCalcular" style="-fx-font-size:14px;" 
+          prefWidth="200" prefHeight="30" />
+
+  <Separator />
+
+  <Label fx:id="resultLbl" text="Resultado: Pendiente de cálculo" wrapText="true" style="-fx-font-size:14px;" />
+
+  <Accordion>
+    <panes>
+      <TitledPane text="Ayuda" expanded="false">
+        <VBox spacing="5">
+          <Label text="Instrucciones de uso:" style="-fx-font-weight:bold;" />
+          <Label text="1. Ingrese una función válida (use x como variable)" wrapText="true" />
+          <Label text="2. Especifique el punto base x₀ donde se centran las derivadas" wrapText="true" />
+          <Label text="3. Elija el grado n del polinomio (orden máximo de derivada)" wrapText="true" />
+          <Label text="4. Ingrese el punto x donde desea evaluar el polinomio" wrapText="true" />
+          <Label text="5. Presione 'Calcular Polinomio' para obtener el resultado" wrapText="true" />
+          <Label text="Funciones admitidas: sin(x), cos(x), tan(x), exp(x), ln(x), etc." wrapText="true" />
+        </VBox>
+      </TitledPane>
+    </panes>
+  </Accordion>
+</VBox>
