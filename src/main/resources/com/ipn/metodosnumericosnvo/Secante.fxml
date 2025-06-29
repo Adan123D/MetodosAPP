@@ -22,6 +22,7 @@
         <Label text="Iter máx:"/>
         <TextField fx:id="maxItField" prefWidth="60"/>
         <Button text="Calcular" onAction="#onCalcular"/>
+        <Button text="Animar" fx:id="animarBtn" onAction="#onAnimar"/>
     </HBox>
     <TableView fx:id="tablaPasos" prefHeight="240" prefWidth="600">
         <columns>

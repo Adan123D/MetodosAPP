@@ -1,5 +1,6 @@
 package com.ipn.metodosnumericosnvo.controller;
 
+import com.ipn.metodosnumericosnvo.animation.SecanteAnimacionFX;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.*;
@@ -16,6 +17,7 @@ public class SecanteController {
     @FXML private TableColumn<Secante.Step, Integer> colPaso;
     @FXML private TableColumn<Secante.Step, Double> colX0, colX1, colX2, colFx2;
     @FXML private Label resultadoLabel;
+    @FXML private Button animarBtn;
 
     private final Secante modelo = new Secante();
 
@@ -60,6 +62,58 @@ public class SecanteController {
     public void setFuncion(String funcion) {
         if (fxField != null) {
             fxField.setText(funcion);
+        }
+    }
+
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Animar".
+     * Crea y muestra una animación del método de la secante.
+     */
+    @FXML
+    private void onAnimar() {
+        try {
+            // Validar que los campos no estén vacíos
+            if (fxField.getText().trim().isEmpty()) {
+                throw new IllegalArgumentException("La función no puede estar vacía");
+            }
+            if (x0Field.getText().trim().isEmpty() || x1Field.getText().trim().isEmpty() || tolField.getText().trim().isEmpty()) {
+                throw new IllegalArgumentException("Los valores de x0, x1 y tolerancia son obligatorios");
+            }
+
+            // Parsear los valores
+            String funcion = fxField.getText();
+            double x0 = Double.parseDouble(x0Field.getText());
+            double x1 = Double.parseDouble(x1Field.getText());
+            double tol = Double.parseDouble(tolField.getText());
+            int maxIt = Integer.parseInt(maxItField.getText());
+
+            // Validaciones adicionales
+            if (tol <= 0) {
+                throw new IllegalArgumentException("La tolerancia debe ser un valor positivo");
+            }
+
+            // Verificar que se hayan calculado los pasos
+            if (tablaPasos.getItems().isEmpty()) {
+                // Si no hay pasos, calcularlos
+                List<Secante.Step> pasos = new ArrayList<>();
+                modelo.resolver(funcion, x0, x1, tol, maxIt, pasos);
+                tablaPasos.setItems(FXCollections.observableArrayList(pasos));
+            }
+
+            // Obtener los pasos de la tabla
+            List<Secante.Step> pasos = tablaPasos.getItems();
+
+            // Crear y mostrar la animación
+            SecanteAnimacionFX animacion = new SecanteAnimacionFX(funcion, x0, x1, tol, pasos);
+            animacion.mostrarAnimacion();
+
+        } catch (Exception e) {
+            // Mostrar un mensaje de error si algo falla
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al crear la animación");
+            alert.setContentText("Asegúrese de ingresar valores válidos y que la función sea correcta.\n" + e.getMessage());
+            alert.showAndWait();
         }
     }
 }
