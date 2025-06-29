@@ -3,41 +3,78 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
 
 <BorderPane xmlns:fx="http://javafx.com/javafx"
             xmlns="http://javafx.com/javafx"
-            fx:controller="com.ipn.metodosnumericosnvo.controller.BiseccionController">
+            fx:controller="com.ipn.metodosnumericosnvo.controller.BiseccionController"
+            prefWidth="1200" prefHeight="1000">
     <top>
         <HBox spacing="10">
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label text="Función:"/>
-            <TextField fx:id="funcionField" prefWidth="160" text="cos(x) - x*exp(x)"/>
-            <Label text="x0:"/>
-            <TextField fx:id="x0Field" prefWidth="60" text="0"/>
-            <Label text="x1:"/>
-            <TextField fx:id="x1Field" prefWidth="60" text="1"/>
-            <Label text="Tolerancia:"/>
-            <TextField fx:id="tolField" prefWidth="60" text="1e-6"/>
-            <Button fx:id="calcularBtn" text="Calcular" onAction="#onCalcular"/>
-            <Button fx:id="animarBtn" text="Animar" onAction="#onAnimar"/>
+            <!-- Gráfica en la esquina superior izquierda (cuadrada) -->
+            <VBox spacing="5" alignment="TOP_CENTER" minWidth="400" maxWidth="400" minHeight="400" maxHeight="400">
+                <padding>
+                    <Insets top="5" right="5" bottom="5" left="5"/>
+                </padding>
+                <Label text="Gráfica de la función" style="-fx-font-weight: bold;" alignment="CENTER" maxWidth="Infinity"/>
+                <WebView fx:id="geogebraView" minWidth="380" maxWidth="380" minHeight="350" maxHeight="350"/>
+                <Label fx:id="geogebraStatusLabel" text="Cargando GeoGebra..." style="-fx-font-size: 10px;"/>
+            </VBox>
+
+            <!-- Opciones de entrada en el lado derecho -->
+            <VBox spacing="15" alignment="TOP_LEFT" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="20"/>
+                </padding>
+                <Label text="Opciones del Método de Bisección" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+
+                <GridPane hgap="10" vgap="10">
+                    <Label text="Función:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="funcionField" prefWidth="250" text="cos(x) - x*exp(x)" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="x0:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="x0Field" prefWidth="100" text="0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="x1:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="x1Field" prefWidth="100" text="1" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Tolerancia:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tolField" prefWidth="100" text="1e-6" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button fx:id="calcularBtn" text="Calcular" onAction="#onCalcular" prefWidth="100"/>
+                    <Button fx:id="animarBtn" text="Animar" onAction="#onAnimar" prefWidth="100"/>
+                </HBox>
+            </VBox>
         </HBox>
     </top>
+
     <center>
-        <TableView fx:id="tablaIteraciones" prefHeight="400">
-            <columns>
-                <TableColumn fx:id="colIteracion" text="Iter"/>
-                <TableColumn fx:id="colX0" text="x0"/>
-                <TableColumn fx:id="colX1" text="x1"/>
-                <TableColumn fx:id="colX2" text="x2"/>
-                <TableColumn fx:id="colFx0" text="f(x0)"/>
-                <TableColumn fx:id="colFx1" text="f(x1)"/>
-                <TableColumn fx:id="colFx2" text="f(x2)"/>
-                <TableColumn fx:id="colError" text="Error"/>
-            </columns>
-        </TableView>
+        <!-- Tabla de iteraciones debajo de ambos elementos -->
+        <VBox spacing="5">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label text="Tabla de Iteraciones" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+            <TableView fx:id="tablaIteraciones" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colIteracion" text="Iter" prefWidth="50"/>
+                    <TableColumn fx:id="colX0" text="x0" prefWidth="100"/>
+                    <TableColumn fx:id="colX1" text="x1" prefWidth="100"/>
+                    <TableColumn fx:id="colX2" text="x2" prefWidth="100"/>
+                    <TableColumn fx:id="colFx0" text="f(x0)" prefWidth="100"/>
+                    <TableColumn fx:id="colFx1" text="f(x1)" prefWidth="100"/>
+                    <TableColumn fx:id="colFx2" text="f(x2)" prefWidth="100"/>
+                    <TableColumn fx:id="colError" text="Error" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
     </center>
+
     <bottom>
         <HBox spacing="10" alignment="CENTER_LEFT">
             <padding>

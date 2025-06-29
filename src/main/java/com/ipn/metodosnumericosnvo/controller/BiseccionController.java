@@ -2,11 +2,17 @@ package com.ipn.metodosnumericosnvo.controller;
 
 import com.ipn.metodosnumericosnvo.animation.BiseccionAnimacionFX;
 import com.ipn.metodosnumericosnvo.metodos_raices.Biseccion;
+import com.ipn.metodosnumericosnvo.utils.GeoGebraUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 
+import java.net.URL;
 import java.util.List;
 
 public class BiseccionController {
@@ -21,6 +27,10 @@ public class BiseccionController {
     @FXML private TableColumn<Biseccion.Iteracion, Double> colFx0, colFx1, colFx2, colError;
     @FXML private Button calcularBtn;
     @FXML private Label raizLabel;
+    @FXML private WebView geogebraView;
+    @FXML private Label geogebraStatusLabel;
+
+    private WebEngine webEngine;
 
     /**
      * Sets the function text in the function field.
@@ -42,6 +52,123 @@ public class BiseccionController {
         colFx1.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().fx1).asObject());
         colFx2.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().fx2).asObject());
         colError.setCellValueFactory(data -> new javafx.beans.property.SimpleDoubleProperty(data.getValue().error).asObject());
+
+        // Inicializar GeoGebra
+        initializeGeoGebra();
+    }
+
+    /**
+     * Inicializa el componente GeoGebra para visualizar la función.
+     */
+    private void initializeGeoGebra() {
+        if (geogebraView == null) {
+            return;
+        }
+
+        webEngine = geogebraView.getEngine();
+
+        try {
+            // Cargar GeoGebra desde el archivo HTML local
+            URL geogebraHtmlUrl = getClass().getResource("/com/ipn/metodosnumericosnvo/html/geogebra-offline.html");
+
+            if (geogebraHtmlUrl != null) {
+                webEngine.load(geogebraHtmlUrl.toExternalForm());
+                geogebraStatusLabel.setText("Cargando GeoGebra...");
+            } else {
+                // Si no se encuentra el archivo local, intentar cargar desde Internet
+                webEngine.load("https://www.geogebra.org/classic/graphing");
+                geogebraStatusLabel.setText("Cargando GeoGebra desde Internet...");
+            }
+
+            // Configurar el listener para cuando la página se cargue completamente
+            webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == Worker.State.SUCCEEDED) {
+                    geogebraStatusLabel.setText("GeoGebra cargado correctamente");
+                    setupJSBridge();
+
+                    // Si ya hay una función ingresada, graficarla
+                    if (funcionField.getText() != null && !funcionField.getText().isEmpty()) {
+                        graficarFuncion(funcionField.getText());
+                    }
+                } else if (newState == Worker.State.FAILED) {
+                    geogebraStatusLabel.setText("Error al cargar GeoGebra");
+                }
+            });
+        } catch (Exception e) {
+            geogebraStatusLabel.setText("Error al inicializar GeoGebra: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Configura el puente JavaScript para interactuar con GeoGebra.
+     */
+    private void setupJSBridge() {
+        try {
+            JSObject window = (JSObject) webEngine.executeScript("window");
+            window.setMember("javaApp", this);
+
+            // Configurar GeoGebra con opciones básicas
+            webEngine.executeScript(
+                "if (typeof ggbApplet !== 'undefined') {" +
+                "  ggbApplet.setPerspective('G');" +  // Establece la perspectiva de graficación
+                "  ggbApplet.setAxesVisible(true, true);" +
+                "  ggbApplet.setGridVisible(true);" +
+                "}"
+            );
+
+            // Deshabilitar interacción para simplificar la visualización
+            webEngine.executeScript(GeoGebraUtils.toggleInteractiveFeatures(false));
+
+        } catch (Exception e) {
+            geogebraStatusLabel.setText("Error al configurar GeoGebra: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Método para ser llamado desde JavaScript.
+     * Permite recibir mensajes desde la aplicación GeoGebra.
+     */
+    public void recibirMensajeDeJS(String mensaje) {
+        geogebraStatusLabel.setText(mensaje);
+    }
+
+    /**
+     * Grafica la función en GeoGebra.
+     * 
+     * @param funcion La función a graficar
+     */
+    private void graficarFuncion(String funcion) {
+        if (webEngine == null || funcion == null || funcion.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            // Escapar comillas para prevenir errores en JavaScript
+            funcion = funcion.replace("\"", "\\\"").replace("'", "\\'");
+
+            // Procesar la función para asegurarse de que tenga formato correcto
+            funcion = GeoGebraUtils.convertirFuncionParaGeoGebra(funcion);
+
+            // Crear una nueva función en GeoGebra
+            String comando = String.format("ggbApplet.evalCommand('f(x) = %s'); " +
+                                        "ggbApplet.setAxesVisible(true, true); " +
+                                        "ggbApplet.setGridVisible(true)", funcion);
+
+            String script = GeoGebraUtils.generarScriptGeoGebra(comando);
+
+            Object result = webEngine.executeScript(script);
+
+            if (result instanceof Boolean && (Boolean)result) {
+                geogebraStatusLabel.setText("Función graficada: " + funcion);
+            } else {
+                geogebraStatusLabel.setText("No se pudo graficar la función. Verifica la sintaxis.");
+            }
+        } catch (Exception e) {
+            geogebraStatusLabel.setText("Error al graficar la función: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -59,6 +186,25 @@ public class BiseccionController {
         // Mostrar la raíz encontrada
         double raiz = Biseccion.obtenerRaiz(iteraciones);
         raizLabel.setText(String.format("%.10f", raiz));
+
+        // Graficar la función en GeoGebra
+        graficarFuncion(funcion);
+
+        // Marcar la raíz en la gráfica
+        if (webEngine != null) {
+            try {
+                String comando = String.format(
+                    "ggbApplet.evalCommand('Raiz = (%.10f, 0)'); " +
+                    "ggbApplet.evalCommand('SetColor(Raiz, 255, 0, 0)'); " +
+                    "ggbApplet.evalCommand('SetPointSize(Raiz, 5)'); " +
+                    "ggbApplet.evalCommand('SetPointStyle(Raiz, 0)');",
+                    raiz
+                );
+                webEngine.executeScript(GeoGebraUtils.generarScriptGeoGebra(comando));
+            } catch (Exception e) {
+                geogebraStatusLabel.setText("Error al marcar la raíz: " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -93,6 +239,29 @@ public class BiseccionController {
                 java.util.List<Biseccion.Iteracion> iteraciones = Biseccion.resolver(funcion, x0, x1, tol);
                 ObservableList<Biseccion.Iteracion> datos = FXCollections.observableArrayList(iteraciones);
                 tablaIteraciones.setItems(datos);
+
+                // Mostrar la raíz encontrada
+                double raiz = Biseccion.obtenerRaiz(iteraciones);
+                raizLabel.setText(String.format("%.10f", raiz));
+
+                // Actualizar la gráfica
+                graficarFuncion(funcion);
+
+                // Marcar la raíz en la gráfica
+                if (webEngine != null) {
+                    try {
+                        String comando = String.format(
+                            "ggbApplet.evalCommand('Raiz = (%.10f, 0)'); " +
+                            "ggbApplet.evalCommand('SetColor(Raiz, 255, 0, 0)'); " +
+                            "ggbApplet.evalCommand('SetPointSize(Raiz, 5)'); " +
+                            "ggbApplet.evalCommand('SetPointStyle(Raiz, 0)');",
+                            raiz
+                        );
+                        webEngine.executeScript(GeoGebraUtils.generarScriptGeoGebra(comando));
+                    } catch (Exception ex) {
+                        geogebraStatusLabel.setText("Error al marcar la raíz: " + ex.getMessage());
+                    }
+                }
             }
 
             // Obtener las iteraciones de la tabla
