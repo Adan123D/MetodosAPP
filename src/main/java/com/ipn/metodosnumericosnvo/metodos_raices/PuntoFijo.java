@@ -6,60 +6,52 @@ import java.util.List;
 
 public class PuntoFijo {
 
-    public static class Step {
-        public int paso;
-        public double x0, fx0, x1, fx1;
-        public Step(int paso, double x0, double fx0, double x1, double fx1) {
-            this.paso = paso;
-            this.x0 = x0;
-            this.fx0 = fx0;
-            this.x1 = x1;
-            this.fx1 = fx1;
+    public static class Iteration {
+        public final int i;
+        public final double xi;
+        public final double gxi;
+        public final double error;
+        public Iteration(int i, double xi, double gxi, double error) {
+            this.i = i; this.xi = xi; this.gxi = gxi; this.error = error;
         }
-        public int getPaso() { return paso; }
-        public double getX0() { return x0; }
-        public double getFx0() { return fx0; }
-        public double getX1() { return x1; }
-        public double getFx1() { return fx1; }
     }
 
-    /**
-     * Realiza el método de Punto Fijo con las expresiones de f(x) y g(x).
-     * @param exprF   Expresión de f(x) (ejemplo: "cos(x)-3*x+1")
-     * @param exprG   Expresión de g(x) (ejemplo: "(1+cos(x))/3")
-     * @param x0      Valor inicial
-     * @param tol     Tolerancia
-     * @param maxIter Máximo de iteraciones
-     * @param pasos   Lista para guardar pasos (opcional)
-     * @return        Raíz aproximada
-     */
-    public double resolver(String exprF, String exprG, double x0, double tol, int maxIter, List<Step> pasos) {
-        Argument argX = new Argument("x", x0);
-        Expression f = new Expression(exprF, argX);
-        Expression g = new Expression(exprG, argX);
+    public List<Iteration> resolver(String gExpr, double x0, int maxIter, double tol) {
+        Function g = new Function("g(x) = " + gExpr);
+        if (!g.checkSyntax()) throw new IllegalArgumentException("Función g(x) inválida: " + g.getErrorMessage());
 
-        double x1 = x0;
-        int paso = 1;
+        List<Iteration> iters = new ArrayList<>();
+        double xi = x0;
+        double prevError = Double.MAX_VALUE;
 
-        do {
-            argX.setArgumentValue(x0);
-            double fx0 = f.calculate();
+        for (int i = 1; i <= maxIter; i++) {
+            double gxi = g.calculate(xi);
 
-            argX.setArgumentValue(x0);
-            x1 = g.calculate();
-
-            argX.setArgumentValue(x1);
-            double fx1 = f.calculate();
-
-            pasos.add(new Step(paso, x0, fx0, x1, fx1));
-
-            paso++;
-            if (paso > maxIter) {
-                throw new IllegalArgumentException("No converge en el número de iteraciones especificado.");
+            // Check for NaN or infinite values
+            if (Double.isNaN(gxi) || Double.isInfinite(gxi)) {
+                throw new ArithmeticException("La función diverge: g(" + xi + ") = " + gxi);
             }
-            x0 = x1;
-        } while (Math.abs(f.calculate()) > tol);
 
-        return x1;
+            double err = Math.abs(gxi - xi);
+            iters.add(new Iteration(i, xi, gxi, err));
+
+            // Check for convergence
+            if (err <= tol) break;
+
+            // Check for divergence (error is increasing)
+            if (i > 1 && err > prevError * 2) {
+                throw new ArithmeticException("El método está divergiendo. Intente con otro valor inicial o una función diferente.");
+            }
+
+            prevError = err;
+            xi = gxi;
+        }
+
+        // Check if we reached max iterations without converging
+        if (iters.size() == maxIter && iters.get(maxIter-1).error > tol) {
+            throw new ArithmeticException("El método no convergió después de " + maxIter + " iteraciones.");
+        }
+
+        return iters;
     }
 }

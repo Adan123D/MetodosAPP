@@ -4,33 +4,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.ipn.metodosnumericosnvo.controller.PuntoFIjoController" alignment="CENTER">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Label text="Método de Punto Fijo" style="-fx-font-size: 16px;"/>
-    <HBox spacing="10">
-        <Label text="f(x):"/>
-        <TextField fx:id="fxField" promptText="Ej: cos(x)-3*x+1" prefWidth="120"/>
-        <Label text="g(x):"/>
-        <TextField fx:id="gxField" promptText="Ej: (1+cos(x))/3" prefWidth="120"/>
-        <Label text="x₀:"/>
-        <TextField fx:id="x0Field" prefWidth="60"/>
-        <Label text="Error:"/>
-        <TextField fx:id="tolField" prefWidth="60"/>
-        <Label text="Iter máx:"/>
-        <TextField fx:id="maxItField" prefWidth="60"/>
-        <Button text="Calcular" onAction="#onCalcular"/>
-    </HBox>
-    <TableView fx:id="tablaPasos" prefHeight="250" prefWidth="650">
+<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ipn.metodosnumericosnvo.controller.PuntoFIjoController">
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+    <Label text="Método del Punto Fijo" style="-fx-font-size:16px;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="g(x):" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="gTxt" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="x₀:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="x0Txt" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Iteraciones máximas:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <TextField fx:id="maxIterTxt" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Tolerancia ε:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+        <TextField fx:id="tolTxt" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    </GridPane>
+
+    <Button text="Calcular" onAction="#onCalcular"/>
+    <Label fx:id="resultLbl" text="Resultado:" wrapText="true"/>
+    <TableView fx:id="tableView">
         <columns>
-            <TableColumn text="Paso" fx:id="colPaso"/>
-            <TableColumn text="x₀" fx:id="colX0"/>
-            <TableColumn text="f(x₀)" fx:id="colFx0"/>
-            <TableColumn text="x₁" fx:id="colX1"/>
-            <TableColumn text="f(x₁)" fx:id="colFx1"/>
+            <TableColumn text="i" fx:id="colIter"/>
+            <TableColumn text="xᵢ" fx:id="colXi"/>
+            <TableColumn text="g(xᵢ)" fx:id="colGxi"/>
+            <TableColumn text="Error" fx:id="colError"/>
         </columns>
     </TableView>
-    <Label fx:id="resultadoLabel" style="-fx-font-size: 16px;"/>
 </VBox>
