@@ -1,0 +1,167 @@
+/* Estilos para la animación del método de bisección */
+/* Estilos básicos para la animación del método de bisección */
+
+.chart-plot-background {
+    -fx-background-color: white;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #e0e0e0;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e0e0e0;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.control-button {
+    -fx-background-color: #4d90fe;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+}
+
+.control-button:hover {
+    -fx-background-color: #357ae8;
+}
+
+.default-color0.chart-series-line { /* Función f(x) */
+    -fx-stroke: blue;
+    -fx-stroke-width: 2px;
+}
+
+.default-color2.chart-series-line { /* x0 */
+    -fx-stroke: red;
+    -fx-stroke-width: 1.5px;
+}
+
+.default-color3.chart-series-line { /* x1 */
+    -fx-stroke: green;
+    -fx-stroke-width: 1.5px;
+}
+
+.default-color4.chart-series-line { /* x2 */
+    -fx-stroke: purple;
+    -fx-stroke-width: 1.5px;
+}
+/* Estilos para el gráfico */
+.biseccion-chart {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+}
+
+.chart-plot-background {
+    -fx-background-color: #ffffff;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #e0e0e0;
+    -fx-stroke-dash-array: 5 5;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e0e0e0;
+    -fx-stroke-dash-array: 5 5;
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.axis-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555555;
+}
+
+.chart-legend {
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-padding: 8px;
+    -fx-border-color: #d0d0d0;
+    -fx-border-radius: 5;
+}
+
+/* Estilos para los botones de control */
+.control-button {
+    -fx-background-color: linear-gradient(to bottom, #4d90fe, #357ae8);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+.control-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #4d90fe, #4787ed);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+.control-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #357ae8, #2c6cd3);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 0);
+}
+
+/* Estilos para el panel de información */
+#iterLabel, #x0Label, #x1Label, #x2Label, #fx0Label, #fx1Label, #fx2Label, #errorLabel {
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Estilos para el slider de velocidad */
+.slider .track {
+    -fx-background-color: linear-gradient(to right, #d0d0d0, #a0a0a0);
+    -fx-background-radius: 4;
+}
+
+.slider .thumb {
+    -fx-background-color: linear-gradient(to bottom, #4d90fe, #357ae8);
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 0, 1);
+}
+
+.slider .thumb:hover {
+    -fx-background-color: linear-gradient(to bottom, #4d90fe, #4787ed);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 0, 2);
+}
+
+/* Estilos para los puntos en la gráfica */
+.default-color0.chart-series-line { /* Función f(x) */
+    -fx-stroke: #1f77b4;
+    -fx-stroke-width: 3px;
+}
+
+.default-color1.chart-series-line { /* Eje X */
+    -fx-stroke: #000000;
+    -fx-stroke-width: 1px;
+    -fx-stroke-dash-array: 5 5;
+}
+
+.default-color2.chart-series-line { /* x0 */
+    -fx-stroke: #ff0000;
+    -fx-stroke-width: 2px;
+    -fx-stroke-dash-array: 3 3;
+}
+
+.default-color3.chart-series-line { /* x1 */
+    -fx-stroke: #00aa00;
+    -fx-stroke-width: 2px;
+    -fx-stroke-dash-array: 3 3;
+}
+
+.default-color4.chart-series-line { /* x2 */
+    -fx-stroke: #9467bd;
+    -fx-stroke-width: 2px;
+}
+
+.default-color5.chart-series-line { /* Raíz */
+    -fx-stroke: #ff7f0e;
+    -fx-stroke-width: 3px;
+}

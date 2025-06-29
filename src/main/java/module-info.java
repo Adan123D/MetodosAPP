@@ -30,6 +30,7 @@ module com.ipn.metodosnumericosnvo {
     // Required for mXparser function evaluation
     requires MathParser.org.mXparser;
     requires matheclipse.core;
+    requires JMathAnim;
     //requires rings;
 
     opens com.ipn.metodosnumericosnvo.app to javafx.fxml;
@@ -42,6 +43,7 @@ module com.ipn.metodosnumericosnvo {
     opens com.ipn.metodosnumericosnvo.metodo_derivacion to javafx.fxml;
     opens com.ipn.metodosnumericosnvo.modelo to javafx.base;
     opens com.ipn.metodosnumericosnvo.integracion_controller to javafx.fxml;
+    opens com.ipn.metodosnumericosnvo.animation to javafx.fxml;
 
     exports com.ipn.metodosnumericosnvo.app;
     exports com.ipn.metodosnumericosnvo.controller;
@@ -52,4 +54,5 @@ module com.ipn.metodosnumericosnvo {
     exports com.ipn.metodosnumericosnvo.metodo_derivacion;
     exports com.ipn.metodosnumericosnvo.modelo;
     exports com.ipn.metodosnumericosnvo.integracion_controller;
+    exports com.ipn.metodosnumericosnvo.animation;
 }

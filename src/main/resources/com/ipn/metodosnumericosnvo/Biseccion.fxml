@@ -21,6 +21,7 @@
             <Label text="Tolerancia:"/>
             <TextField fx:id="tolField" prefWidth="60" text="1e-6"/>
             <Button fx:id="calcularBtn" text="Calcular" onAction="#onCalcular"/>
+            <Button fx:id="animarBtn" text="Animar" onAction="#onAnimar"/>
         </HBox>
     </top>
     <center>

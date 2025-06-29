@@ -1,10 +1,13 @@
 package com.ipn.metodosnumericosnvo.controller;
 
+import com.ipn.metodosnumericosnvo.animation.BiseccionAnimacionFX;
 import com.ipn.metodosnumericosnvo.metodos_raices.Biseccion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.List;
 
 public class BiseccionController {
 
@@ -56,5 +59,56 @@ public class BiseccionController {
         // Mostrar la raíz encontrada
         double raiz = Biseccion.obtenerRaiz(iteraciones);
         raizLabel.setText(String.format("%.10f", raiz));
+    }
+
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Animar".
+     * Crea y muestra una animación del método de bisección.
+     */
+    @FXML
+    private void onAnimar() {
+        try {
+            // Validar que los campos no estén vacíos
+            if (funcionField.getText().trim().isEmpty()) {
+                throw new IllegalArgumentException("La función no puede estar vacía");
+            }
+            if (x0Field.getText().trim().isEmpty() || x1Field.getText().trim().isEmpty() || tolField.getText().trim().isEmpty()) {
+                throw new IllegalArgumentException("Los valores de x0, x1 y tolerancia son obligatorios");
+            }
+
+            // Parsear los valores
+            String funcion = funcionField.getText();
+            double x0 = Double.parseDouble(x0Field.getText());
+            double x1 = Double.parseDouble(x1Field.getText());
+            double tol = Double.parseDouble(tolField.getText());
+
+            // Validaciones adicionales
+            if (tol <= 0) {
+                throw new IllegalArgumentException("La tolerancia debe ser un valor positivo");
+            }
+
+            // Verificar que se hayan calculado las iteraciones
+            if (tablaIteraciones.getItems().isEmpty()) {
+                // Si no hay iteraciones, calcularlas
+                java.util.List<Biseccion.Iteracion> iteraciones = Biseccion.resolver(funcion, x0, x1, tol);
+                ObservableList<Biseccion.Iteracion> datos = FXCollections.observableArrayList(iteraciones);
+                tablaIteraciones.setItems(datos);
+            }
+
+            // Obtener las iteraciones de la tabla
+            java.util.List<Biseccion.Iteracion> iteraciones = tablaIteraciones.getItems();
+
+            // Crear y mostrar la animación
+            BiseccionAnimacionFX animacion = new BiseccionAnimacionFX(funcion, x0, x1, tol, iteraciones);
+            animacion.mostrarAnimacion();
+
+        } catch (Exception e) {
+            // Mostrar un mensaje de error si algo falla
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al crear la animación");
+            alert.setContentText("Asegúrese de ingresar valores válidos y que la función sea correcta.\n" + e.getMessage());
+            alert.showAndWait();
+        }
     }
 }
