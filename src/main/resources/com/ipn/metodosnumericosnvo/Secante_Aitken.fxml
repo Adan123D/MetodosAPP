@@ -7,6 +7,7 @@
 <BorderPane xmlns:fx="http://javafx.com/javafx"
             xmlns="http://javafx.com/javafx"
             fx:controller="com.ipn.metodosnumericosnvo.controller.Secante_AitkenController"
+            fx:id="rootPane"
             prefWidth="1200" prefHeight="1000">
     <top>
         <HBox spacing="10">
@@ -18,9 +19,9 @@
                 <padding>
                     <Insets top="5" right="5" bottom="5" left="5"/>
                 </padding>
-                <Label text="Gráfica de la función" style="-fx-font-weight: bold;" alignment="CENTER" maxWidth="Infinity"/>
+                <Label text="Gráfica de la función" style="-fx-font-weight: bold; -fx-text-fill: white;" alignment="CENTER" maxWidth="Infinity"/>
                 <WebView fx:id="geogebraView" minWidth="380" maxWidth="380" minHeight="350" maxHeight="350"/>
-                <Label fx:id="geogebraStatusLabel" text="Cargando GeoGebra..." style="-fx-font-size: 10px;"/>
+                <Label fx:id="geogebraStatusLabel" text="Cargando GeoGebra..." style="-fx-font-size: 10px; -fx-text-fill: white;"/>
             </VBox>
 
             <!-- Opciones de entrada en el lado derecho -->
@@ -28,22 +29,22 @@
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="20"/>
                 </padding>
-                <Label text="Método de la Secante con Aceleración de Aitken" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <Label text="Método de la Secante con Aceleración de Aitken" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: white;"/>
 
                 <GridPane hgap="10" vgap="10">
-                    <Label text="Función:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label text="Función:" style="-fx-text-fill: white;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                     <TextField fx:id="txtFunc" prefWidth="250" promptText="Ej: x^3-x-2" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                    <Label text="x₀:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label text="x₀:" style="-fx-text-fill: white;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                     <TextField fx:id="txtX0" prefWidth="100" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <Label text="x₁:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label text="x₁:" style="-fx-text-fill: white;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="txtX1" prefWidth="100" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                    <Label text="Tolerancia:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label text="Tolerancia:" style="-fx-text-fill: white;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                     <TextField fx:id="txtTolerancia" prefWidth="100" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-                    <Label text="Iter máx:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label text="Iter máx:" style="-fx-text-fill: white;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                     <TextField fx:id="txtMaxIter" prefWidth="100" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
                 </GridPane>
 
@@ -61,19 +62,27 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label text="Tabla de Iteraciones" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            <TableView fx:id="tablaPasos" VBox.vgrow="ALWAYS">
+            <Label text="Tabla de Iteraciones" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: white;"/>
+            <TableView fx:id="tablaPasos" VBox.vgrow="ALWAYS" style="-fx-base: rgba(60, 60, 60, 0.8); -fx-control-inner-background: rgba(60, 60, 60, 0.8); -fx-background-color: rgba(60, 60, 60, 0.8); -fx-table-cell-border-color: derive(-fx-control-inner-background, -10%); -fx-table-header-border-color: derive(-fx-control-inner-background, -20%);">
                 <columns>
-                    <TableColumn text="Iter" fx:id="colIteracion" prefWidth="50"/>
-                    <TableColumn text="x₀" fx:id="colXPrevPrev" prefWidth="80"/>
-                    <TableColumn text="f(x₀)" fx:id="colFxPrevPrev" prefWidth="80"/>
-                    <TableColumn text="x₁" fx:id="colXPrev" prefWidth="80"/>
-                    <TableColumn text="f(x₁)" fx:id="colFxPrev" prefWidth="80"/>
-                    <TableColumn text="x₂" fx:id="colXActual" prefWidth="80"/>
-                    <TableColumn text="f(x₂)" fx:id="colFxActual" prefWidth="80"/>
-                    <TableColumn text="xAitken" fx:id="colXAitken" prefWidth="80"/>
-                    <TableColumn text="f(xAitken)" fx:id="colFxAitken" prefWidth="80"/>
+                    <TableColumn text="Iter" fx:id="colIteracion" prefWidth="50" style="-fx-text-fill: white;"/>
+                    <TableColumn text="x₀" fx:id="colXPrevPrev" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="f(x₀)" fx:id="colFxPrevPrev" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="x₁" fx:id="colXPrev" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="f(x₁)" fx:id="colFxPrev" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="x₂" fx:id="colXActual" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="f(x₂)" fx:id="colFxActual" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="xAitken" fx:id="colXAitken" prefWidth="80" style="-fx-text-fill: white;"/>
+                    <TableColumn text="f(xAitken)" fx:id="colFxAitken" prefWidth="80" style="-fx-text-fill: white;"/>
                 </columns>
+                <style>
+                    -fx-text-fill: white;
+                    .table-row-cell { -fx-text-fill: white; }
+                    .table-column { -fx-text-fill: white; }
+                    .table-cell { -fx-text-fill: white; }
+                    .column-header { -fx-text-fill: white; -fx-font-weight: bold; }
+                    .column-header-background { -fx-background-color: rgba(60, 60, 60, 0.8); }
+                </style>
             </TableView>
         </VBox>
     </center>
@@ -84,8 +93,8 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Label text="Raíz encontrada:"/>
-                <Label fx:id="lblResultado" style="-fx-font-weight: bold;"/>
+                <Label text="Raíz encontrada:" style="-fx-text-fill: white;"/>
+                <Label fx:id="lblResultado" style="-fx-font-weight: bold; -fx-text-fill: white;"/>
             </HBox>
             <Label fx:id="lblError" textFill="red" wrapText="true"/>
         </VBox>

@@ -8,6 +8,7 @@
 <BorderPane xmlns:fx="http://javafx.com/javafx"
             xmlns="http://javafx.com/javafx"
             fx:controller="com.ipn.metodosnumericosnvo.controller.BiseccionController"
+            fx:id="rootPane"
             prefWidth="1200" prefHeight="1000">
     <top>
         <HBox spacing="10">
@@ -19,9 +20,9 @@
                 <padding>
                     <Insets top="5" right="5" bottom="5" left="5"/>
                 </padding>
-                <Label text="Gráfica de la función" style="-fx-font-weight: bold;" alignment="CENTER" maxWidth="Infinity"/>
+                <Label text="Gráfica de la función" style="-fx-font-weight: bold; -fx-text-fill: white;" alignment="CENTER" maxWidth="Infinity"/>
                 <WebView fx:id="geogebraView" minWidth="380" maxWidth="380" minHeight="350" maxHeight="350"/>
-                <Label fx:id="geogebraStatusLabel" text="Cargando GeoGebra..." style="-fx-font-size: 10px;"/>
+                <Label fx:id="geogebraStatusLabel" text="Cargando GeoGebra..." style="-fx-font-size: 10px; -fx-text-fill: white;"/>
             </VBox>
 
             <!-- Opciones de entrada en el lado derecho -->
@@ -29,19 +30,19 @@
                 <padding>
                     <Insets top="10" right="10" bottom="10" left="20"/>
                 </padding>
-                <Label text="Opciones del Método de Bisección" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                <Label text="Opciones del Método de Bisección" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: white;"/>
 
                 <GridPane hgap="10" vgap="10">
-                    <Label text="Función:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label text="Función:" style="-fx-text-fill: white;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
                     <TextField fx:id="funcionField" prefWidth="250" text="cos(x) - x*exp(x)" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                    <Label text="x0:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label text="x0:" style="-fx-text-fill: white;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                     <TextField fx:id="x0Field" prefWidth="100" text="0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                    <Label text="x1:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label text="x1:" style="-fx-text-fill: white;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
                     <TextField fx:id="x1Field" prefWidth="100" text="1" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                    <Label text="Tolerancia:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label text="Tolerancia:" style="-fx-text-fill: white;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                     <TextField fx:id="tolField" prefWidth="100" text="1e-6" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
                 </GridPane>
 
@@ -59,18 +60,26 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label text="Tabla de Iteraciones" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            <TableView fx:id="tablaIteraciones" VBox.vgrow="ALWAYS">
+            <Label text="Tabla de Iteraciones" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: white;"/>
+            <TableView fx:id="tablaIteraciones" VBox.vgrow="ALWAYS" style="-fx-base: rgba(60, 60, 60, 0.8); -fx-control-inner-background: rgba(60, 60, 60, 0.8); -fx-background-color: rgba(60, 60, 60, 0.8); -fx-table-cell-border-color: derive(-fx-control-inner-background, -10%); -fx-table-header-border-color: derive(-fx-control-inner-background, -20%);">
                 <columns>
-                    <TableColumn fx:id="colIteracion" text="Iter" prefWidth="50"/>
-                    <TableColumn fx:id="colX0" text="x0" prefWidth="100"/>
-                    <TableColumn fx:id="colX1" text="x1" prefWidth="100"/>
-                    <TableColumn fx:id="colX2" text="x2" prefWidth="100"/>
-                    <TableColumn fx:id="colFx0" text="f(x0)" prefWidth="100"/>
-                    <TableColumn fx:id="colFx1" text="f(x1)" prefWidth="100"/>
-                    <TableColumn fx:id="colFx2" text="f(x2)" prefWidth="100"/>
-                    <TableColumn fx:id="colError" text="Error" prefWidth="100"/>
+                    <TableColumn fx:id="colIteracion" text="Iter" prefWidth="50" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colX0" text="x0" prefWidth="100" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colX1" text="x1" prefWidth="100" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colX2" text="x2" prefWidth="100" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colFx0" text="f(x0)" prefWidth="100" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colFx1" text="f(x1)" prefWidth="100" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colFx2" text="f(x2)" prefWidth="100" style="-fx-text-fill: white;"/>
+                    <TableColumn fx:id="colError" text="Error" prefWidth="100" style="-fx-text-fill: white;"/>
                 </columns>
+                <style>
+                    -fx-text-fill: white;
+                    .table-row-cell { -fx-text-fill: white; }
+                    .table-column { -fx-text-fill: white; }
+                    .table-cell { -fx-text-fill: white; }
+                    .column-header { -fx-text-fill: white; -fx-font-weight: bold; }
+                    .column-header-background { -fx-background-color: rgba(60, 60, 60, 0.8); }
+                </style>
             </TableView>
         </VBox>
     </center>
@@ -80,8 +89,8 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label text="Raíz encontrada:"/>
-            <Label fx:id="raizLabel" style="-fx-font-weight: bold;"/>
+            <Label text="Raíz encontrada:" style="-fx-text-fill: white;"/>
+            <Label fx:id="raizLabel" style="-fx-font-weight: bold; -fx-text-fill: white;"/>
         </HBox>
     </bottom>
 </BorderPane>

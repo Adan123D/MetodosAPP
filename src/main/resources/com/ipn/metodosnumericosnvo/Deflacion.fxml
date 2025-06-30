@@ -5,21 +5,30 @@
 <?import javafx.scene.layout.*?>
 
 <VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.ipn.metodosnumericosnvo.controller.DeflacionController" alignment="CENTER">
+      fx:controller="com.ipn.metodosnumericosnvo.controller.DeflacionController" alignment="CENTER"
+      fx:id="rootPane">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <Label text="Deflación Sintética (todas las raíces del polinomio)" style="-fx-font-size: 16px;"/>
+    <Label text="Deflación Sintética (todas las raíces del polinomio)" style="-fx-font-size: 16px; -fx-text-fill: white;"/>
     <HBox spacing="10">
-        <Label text="Coeficientes (mayor a menor, separados por coma):"/>
+        <Label text="Coeficientes (mayor a menor, separados por coma):" style="-fx-text-fill: white;"/>
         <TextField fx:id="polyField" prefWidth="300" promptText="Ej: 1,0,-2,-5"/>
         <Button text="Calcular" onAction="#onCalcular"/>
     </HBox>
-    <TableView fx:id="tablaRaices" prefHeight="250" prefWidth="480">
+    <TableView fx:id="tablaRaices" prefHeight="250" prefWidth="480" style="-fx-base: rgba(60, 60, 60, 0.8); -fx-control-inner-background: rgba(60, 60, 60, 0.8); -fx-background-color: rgba(60, 60, 60, 0.8); -fx-table-cell-border-color: derive(-fx-control-inner-background, -10%); -fx-table-header-border-color: derive(-fx-control-inner-background, -20%);">
         <columns>
-            <TableColumn text="Parte real" fx:id="colReal" prefWidth="100"/>
-            <TableColumn text="Parte imaginaria" fx:id="colImag" prefWidth="100"/>
-            <TableColumn text="Raíz a + bi" fx:id="colCompleja" prefWidth="180"/>
+            <TableColumn text="Parte real" fx:id="colReal" prefWidth="100" style="-fx-text-fill: white;"/>
+            <TableColumn text="Parte imaginaria" fx:id="colImag" prefWidth="100" style="-fx-text-fill: white;"/>
+            <TableColumn text="Raíz a + bi" fx:id="colCompleja" prefWidth="180" style="-fx-text-fill: white;"/>
         </columns>
+        <style>
+            -fx-text-fill: white;
+            .table-row-cell { -fx-text-fill: white; }
+            .table-column { -fx-text-fill: white; }
+            .table-cell { -fx-text-fill: white; }
+            .column-header { -fx-text-fill: white; -fx-font-weight: bold; }
+            .column-header-background { -fx-background-color: rgba(60, 60, 60, 0.8); }
+        </style>
     </TableView>
 </VBox>

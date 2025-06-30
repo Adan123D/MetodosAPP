@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:controller="com.ipn.metodosnumericosnvo.integracion_controller.Simpson13CompuestoController"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="1000" prefHeight="700">
+
+    <top>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <Label text="n:" />
+            <TextField fx:id="txtTamano" prefWidth="60" />
+            <Label text="h:" />
+            <TextField fx:id="txtH" prefWidth="60" />
+            <Button text="Calcular" onAction="#onCalcular" />
+            <Label fx:id="lblResultado" text="Resultado:" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <TextArea fx:id="txtValores" prefHeight="100" wrapText="true" promptText="Ingresa valores separados por espacio o coma" />
+            <TableView fx:id="tabla" prefHeight="400">
+                <columns>
+                    <TableColumn fx:id="colI" text="i" prefWidth="50"/>
+                    <TableColumn fx:id="colFx" text="f(x)" prefWidth="100"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <Button text="Home" onAction="#onHomeButtonClick" />
+            <Button text="Exit" onAction="#onExitButtonClick" />
+        </HBox>
+    </bottom>
+</BorderPane>

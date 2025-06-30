@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ipn.metodosnumericosnvo.integracion_controller.TrapecioCompuestoController"
+            prefWidth="1000.0" prefHeight="600.0">
+
+    <top>
+        <HBox spacing="15.0">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <Label text="a:" />
+            <TextField fx:id="txtA" promptText="a" />
+            <Label text="b:" />
+            <TextField fx:id="txtB" promptText="b" />
+            <Label text="n:" />
+            <TextField fx:id="txtN" promptText="n" />
+            <Button text="Ejecutar" onAction="#onEjecutar" />
+            <Label fx:id="lblResultado" text="Resultado:" />
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaIteraciones">
+            <columns>
+                <TableColumn fx:id="colI" text="Paso" prefWidth="100"/>
+                <TableColumn fx:id="colXi" text="xᵢ" prefWidth="200"/>
+                <TableColumn fx:id="colFxi" text="f(xᵢ)" prefWidth="200"/>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>

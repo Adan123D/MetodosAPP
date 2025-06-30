@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.ipn.metodosnumericosnvo.eliminacion_controller.EliminacionGaussController">
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <HBox spacing="10">
+                <Label text="Número de incógnitas:"/>
+                <TextField fx:id="txtIncognitas" prefWidth="50"/>
+                <Button text="Generar Matriz" onAction="#generarMatriz"/>
+            </HBox>
+            <HBox spacing="10">
+                <fx:define>
+                    <ToggleGroup fx:id="metodoGroup"/>
+                </fx:define>
+                <RadioButton text="Eliminación Gaussiana" toggleGroup="$metodoGroup" fx:id="radioGauss" selected="true"/>
+                <RadioButton text="Pivoteo Máximo" toggleGroup="$metodoGroup" fx:id="radioPivoteo"/>
+                <RadioButton text="Pivoteo Escalado" toggleGroup="$metodoGroup" fx:id="radioEscalado"/>
+                <Button text="Calcular" onAction="#calcular"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tablaMatriz" editable="true"/>
+    </center>
+
+    <bottom>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+            <Label text="Matriz Triangular:"/>
+            <TableView fx:id="tablaTriangular"/>
+            <Label text="Resultados:"/>
+            <TableView fx:id="tablaResultados"/>
+        </VBox>
+    </bottom>
+</BorderPane>

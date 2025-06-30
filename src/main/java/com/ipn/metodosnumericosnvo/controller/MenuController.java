@@ -603,10 +603,10 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader();
 
             // Asegurarse de usar la ruta correcta del archivo FXML
-            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/NumericalDifferentiation.fxml"));
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/MDerivacionNumerica.fxml"));
 
             if (loader.getLocation() == null) {
-                showError("No se pudo encontrar el archivo NumericalDifferentiation.fxml");
+                showError("No se pudo encontrar el archivo MDerivacionNumerica.fxml");
                 return;
             }
 
@@ -985,6 +985,170 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             showError("Error al abrir la ventana de SEDO: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Cuadratura Adaptativa menu item.
+     * This method opens a new window for the Cuadratura Adaptativa method.
+     * If a function is entered in the main menu, it will be passed to the Cuadratura Adaptativa window.
+     */
+    @FXML
+    protected void onCuadraturaAdaptativaMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Cuadratura Adaptativa
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/CuadraturaAdaptativa.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo CuadraturaAdaptativa.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage cuadraturaStage = new Stage();
+            cuadraturaStage.setTitle("Cuadratura Adaptativa - Simpson 1/3 Compuesto");
+            cuadraturaStage.setScene(new Scene(root, 1100, 700));
+            cuadraturaStage.initModality(Modality.NONE);
+            cuadraturaStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Cuadratura Adaptativa: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Trapecio Compuesto menu item.
+     * This method opens a new window for the Trapecio Compuesto method.
+     * If a function is entered in the main menu, it will be passed to the Trapecio Compuesto window.
+     */
+    @FXML
+    protected void onTrapecioCompuestoMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Trapecio Compuesto
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/TrapecioCompuesto.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo TrapecioCompuesto.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage trapecioStage = new Stage();
+            trapecioStage.setTitle("Trapecio Compuesto");
+            trapecioStage.setScene(new Scene(root, 1000, 600));
+            trapecioStage.initModality(Modality.NONE);
+            trapecioStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Trapecio Compuesto: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Simpson 1/3 Compuesto menu item.
+     * This method opens a new window for the Simpson 1/3 Compuesto method.
+     * If a function is entered in the main menu, it will be passed to the Simpson 1/3 Compuesto window.
+     */
+    @FXML
+    protected void onSimpson13CompuestoMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Simpson 1/3 Compuesto
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Simpson13Compuesto.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Simpson13Compuesto.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage simpsonStage = new Stage();
+            simpsonStage.setTitle("Simpson 1/3 Compuesto");
+            simpsonStage.setScene(new Scene(root, 1000, 700));
+            simpsonStage.initModality(Modality.NONE);
+            simpsonStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Simpson 1/3 Compuesto: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Simpson 3/8 Compuesto menu item.
+     * This method opens a new window for the Simpson 3/8 Compuesto method.
+     * If a function is entered in the main menu, it will be passed to the Simpson 3/8 Compuesto window.
+     */
+    @FXML
+    protected void onSimpson38CompuestoMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Simpson 3/8 Compuesto
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Simpson38Compuesto.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Simpson38Compuesto.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage simpsonStage = new Stage();
+            simpsonStage.setTitle("Simpson 3/8 Compuesto");
+            simpsonStage.setScene(new Scene(root, 1000, 700));
+            simpsonStage.initModality(Modality.NONE);
+            simpsonStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Simpson 3/8 Compuesto: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Eliminación Gaussiana menu item.
+     * This method opens a new window for the Gaussian elimination method.
+     */
+    @FXML
+    protected void onEliminacionGaussMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Eliminación Gaussiana
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/EliminacionGauss.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo EliminacionGauss.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage gaussStage = new Stage();
+            gaussStage.setTitle("Eliminación Gaussiana");
+            gaussStage.setScene(new Scene(root, 1000, 700));
+            gaussStage.initModality(Modality.NONE);
+            gaussStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Eliminación Gaussiana: " + e.getMessage());
         }
     }
 

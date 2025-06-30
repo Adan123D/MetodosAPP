@@ -7,6 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
@@ -24,6 +31,7 @@ public class Biseccion_AitkenController {
     @FXML private Button animarBtn;
     @FXML private WebView geogebraView;
     @FXML private Label geogebraStatusLabel;
+    @FXML private BorderPane rootPane;
 
     private final Biseccion_Aitken model = new Biseccion_Aitken();
     private WebEngine webEngine;
@@ -40,6 +48,24 @@ public class Biseccion_AitkenController {
         // Valores predeterminados
         tolField.setText("0.0001");
         maxItField.setText("100");
+
+        // Establecer la imagen de fondo
+        try {
+            Image backgroundImage = new Image(getClass().getResourceAsStream("/imgs/background.png"));
+
+            BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+            );
+
+            rootPane.setBackground(new Background(background));
+        } catch (Exception e) {
+            System.err.println("Error al cargar la imagen de fondo: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // Inicializar GeoGebra
         initializeGeoGebra();

@@ -4,6 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 import com.ipn.metodosnumericosnvo.metodos_raices.Muller;
@@ -16,6 +23,7 @@ public class MullerController {
     @FXML private TableColumn<Muller.Step, Integer> colPaso;
     @FXML private TableColumn<Muller.Step, Double> colX1, colX2, colX3, colX4, colFx1, colFx2, colFx3, colFx4, colA, colB, colC;
     @FXML private Label resultadoLabel;
+    @FXML private VBox rootPane;
 
     private final Muller modelo = new Muller();
 
@@ -37,6 +45,24 @@ public class MullerController {
         // Valores predeterminados
         tolField.setText("0.0001");
         maxItField.setText("100");
+
+        // Establecer la imagen de fondo
+        try {
+            Image backgroundImage = new Image(getClass().getResourceAsStream("/imgs/background.png"));
+
+            BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+            );
+
+            rootPane.setBackground(new Background(background));
+        } catch (Exception e) {
+            System.err.println("Error al cargar la imagen de fondo: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

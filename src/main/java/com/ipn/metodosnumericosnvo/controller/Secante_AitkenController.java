@@ -6,6 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.FXCollections;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
@@ -28,6 +35,7 @@ public class Secante_AitkenController {
     @FXML private Button animarBtn;
     @FXML private WebView geogebraView;
     @FXML private Label geogebraStatusLabel;
+    @FXML private BorderPane rootPane;
 
     // TableView y columnas para mostrar los pasos del método
     @FXML private TableView<Secante_Aitken.Step> tablaPasos;
@@ -56,6 +64,24 @@ public class Secante_AitkenController {
         colFxActual.setCellValueFactory(new PropertyValueFactory<>("fxActual"));
         colXAitken.setCellValueFactory(new PropertyValueFactory<>("xAitken"));
         colFxAitken.setCellValueFactory(new PropertyValueFactory<>("fxAitken"));
+
+        // Establecer la imagen de fondo
+        try {
+            Image backgroundImage = new Image(getClass().getResourceAsStream("/imgs/background.png"));
+
+            BackgroundImage background = new BackgroundImage(
+                backgroundImage,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
+            );
+
+            rootPane.setBackground(new Background(background));
+        } catch (Exception e) {
+            System.err.println("Error al cargar la imagen de fondo: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // Inicializar GeoGebra
         initializeGeoGebra();
