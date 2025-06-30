@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:controller="com.ipn.metodosnumericosnvo.diferenciales_controller.RungeKutta3Controller"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="1100.0" prefHeight="700.0">
+
+
+    <center>
+        <Pane prefHeight="700.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="300.0" layoutY="20.0" text="MÉTODO DE RUNGE-KUTTA ORDEN 3" textFill="WHITE">
+                    <font><Font name="Trattatello" size="40.0"/></font>
+                </Label>
+
+                <!-- Tabla -->
+                <TableView fx:id="tablaIteraciones" layoutX="95.0" layoutY="337.0" prefHeight="320.0" prefWidth="926.0">
+                    <columns>
+                        <TableColumn fx:id="colPaso" prefWidth="75.0" text="Paso"/>
+                        <TableColumn fx:id="colT" prefWidth="200.0" text="t"/>
+                        <TableColumn fx:id="colY" prefWidth="200.0" text="y"/>
+                    </columns>
+                </TableView>
+
+                <!-- Entradas -->
+                <Label layoutX="70.0" layoutY="120.0" text="t0:" textFill="WHITE"/>
+                <TextField fx:id="txtT0" layoutX="110.0" layoutY="115.0" prefWidth="120.0"/>
+
+                <Label layoutX="250.0" layoutY="120.0" text="y0:" textFill="WHITE"/>
+                <TextField fx:id="txtY0" layoutX="290.0" layoutY="115.0" prefWidth="120.0"/>
+
+                <Label layoutX="430.0" layoutY="120.0" text="tf:" textFill="WHITE"/>
+                <TextField fx:id="txtTf" layoutX="470.0" layoutY="115.0" prefWidth="120.0"/>
+
+                <Label layoutX="610.0" layoutY="120.0" text="n:" textFill="WHITE"/>
+                <TextField fx:id="txtN" layoutX="640.0" layoutY="115.0" prefWidth="120.0"/>
+
+                <Label layoutX="70.0" layoutY="170.0" text="Función (f(t,y)):" textFill="WHITE"/>
+                <TextField fx:id="txtFuncion" layoutX="200.0" layoutY="165.0" prefWidth="400.0" promptText="Ej: y - t^2 + 1"/>
+
+                <!-- Botón -->
+                <Button fx:id="btnEjecutar" layoutX="650.0" layoutY="165.0" text="Ejecutar"
+                        styleClass="button3-custom" textFill="WHITE" prefWidth="120.0" onAction="#onEjecutar">
+                    <font><Font size="16.0"/></font>
+                    <cursor><Cursor fx:constant="HAND"/></cursor>
+                </Button>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

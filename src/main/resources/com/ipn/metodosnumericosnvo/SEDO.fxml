@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane fx:controller="com.ipn.metodosnumericosnvo.diferenciales_controller.SEDOController"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="1100.0" prefHeight="700.0">
+
+
+    <center>
+        <Pane prefHeight="700.0" prefWidth="1100.0">
+            <children>
+                <Label layoutX="300.0" layoutY="20.0" text="SISTEMAS DE EDOs - Runge Kutta 4" textFill="WHITE">
+                    <font><Font name="Trattatello" size="40.0"/></font>
+                </Label>
+
+                <TableView fx:id="tabla" layoutX="90.0" layoutY="330.0" prefHeight="340.0" prefWidth="900.0">
+                    <columns>
+                        <TableColumn fx:id="colPaso" prefWidth="100.0" text="Paso"/>
+                        <TableColumn fx:id="colT" prefWidth="250.0" text="t"/>
+                        <TableColumn fx:id="colU1" prefWidth="250.0" text="u1 (y)"/>
+                        <TableColumn fx:id="colU2" prefWidth="250.0" text="u2 (dy/dt)"/>
+                    </columns>
+                </TableView>
+
+                <Label layoutX="60.0" layoutY="100.0" text="t0:" textFill="WHITE"/>
+                <TextField fx:id="txtT0" layoutX="100.0" layoutY="95.0" prefWidth="100.0"/>
+
+                <Label layoutX="220.0" layoutY="100.0" text="u1:" textFill="WHITE"/>
+                <TextField fx:id="txtU1" layoutX="260.0" layoutY="95.0" prefWidth="100.0"/>
+
+                <Label layoutX="380.0" layoutY="100.0" text="u2:" textFill="WHITE"/>
+                <TextField fx:id="txtU2" layoutX="420.0" layoutY="95.0" prefWidth="100.0"/>
+
+                <Label layoutX="540.0" layoutY="100.0" text="tf:" textFill="WHITE"/>
+                <TextField fx:id="txtTf" layoutX="580.0" layoutY="95.0" prefWidth="100.0"/>
+
+                <Label layoutX="700.0" layoutY="100.0" text="n:" textFill="WHITE"/>
+                <TextField fx:id="txtN" layoutX="730.0" layoutY="95.0" prefWidth="100.0"/>
+
+                <Label layoutX="60.0" layoutY="160.0" text="f1 (du1/dt):" textFill="WHITE"/>
+                <TextField fx:id="txtFuncion1" layoutX="160.0" layoutY="155.0" prefWidth="350.0"
+                           promptText="Ej: u2"/>
+
+                <Label layoutX="520.0" layoutY="160.0" text="f2 (du2/dt):" textFill="WHITE"/>
+                <TextField fx:id="txtFuncion2" layoutX="620.0" layoutY="155.0" prefWidth="350.0"
+                           promptText="Ej: -u1"/>
+
+                <Button fx:id="btnEjecutar" layoutX="470.0" layoutY="220.0" text="Ejecutar"
+                        styleClass="button3-custom" textFill="WHITE" prefWidth="160.0" onAction="#onEjecutar">
+                    <font><Font size="16.0"/></font>
+                    <cursor><Cursor fx:constant="HAND"/></cursor>
+                </Button>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

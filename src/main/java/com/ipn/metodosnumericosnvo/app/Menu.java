@@ -31,16 +31,16 @@ public class Menu extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        // Load the FXML file
+
         FXMLLoader fxmlLoader = new FXMLLoader(Menu.class.getResource("/com/ipn/metodosnumericosnvo/Menu.fxml"));
 
-        // Load the root element from the FXML file
+
         BorderPane root = fxmlLoader.load();
 
-        // Load the background image
+
         Image backgroundImage = new Image(getClass().getResourceAsStream("/imgs/Métodos.png"));
 
-        // Create a BackgroundImage object
+
         BackgroundImage background = new BackgroundImage(
                 backgroundImage,
                 BackgroundRepeat.NO_REPEAT,
@@ -49,10 +49,10 @@ public class Menu extends Application {
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true)
         );
 
-        // Set the background of the root element
+
         root.setBackground(new Background(background));
 
-        // Create the scene with the loaded FXML content
+
         Scene scene = new Scene(root, 1000, 660);
 
         // Configure and show the stage
@@ -68,7 +68,7 @@ public class Menu extends Application {
      * @param args Command line arguments (not used)
      */
     public static void main(String[] args) {
-        // Confirm non-commercial use of the mXparser library
+
         License.iConfirmNonCommercialUse("Métodos Numéricos IPN");
         launch();
     }

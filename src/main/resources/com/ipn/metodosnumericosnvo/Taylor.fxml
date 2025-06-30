@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:controller="com.ipn.metodosnumericosnvo.diferenciales_controller.TaylorController"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="1100.0" prefHeight="700.0">
+
+
+    <center>
+        <Pane prefHeight="700.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+            <children>
+                <!-- Título -->
+                <Label layoutX="370.0" layoutY="1.0" text="MÉTODO DE TAYLOR ORDEN 2" textFill="WHITE">
+                    <font><Font name="Trattatello" size="40.0"/></font>
+                </Label>
+
+                <!-- Tabla -->
+                <TableView fx:id="tablaIteraciones" layoutX="95.0" layoutY="337.0" prefHeight="355.0" prefWidth="926.0">
+                    <columns>
+                        <TableColumn fx:id="colPaso" prefWidth="75.0" text="Paso"/>
+                        <TableColumn fx:id="colT" prefWidth="145.0" text="t"/>
+                        <TableColumn fx:id="colY" prefWidth="145.0" text="y"/>
+                    </columns>
+                </TableView>
+
+                <!-- Campos de entrada -->
+                <Label layoutX="475.0" layoutY="154.0" text="t0:" textFill="WHITE"><font><Font size="22.0"/></font></Label>
+                <TextField fx:id="txtT0" layoutX="550.0" layoutY="155.0" prefHeight="29.0" prefWidth="151.0" promptText="Valor inicial t"/>
+
+                <Label layoutX="475.0" layoutY="209.0" text="y0:" textFill="WHITE"><font><Font size="22.0"/></font></Label>
+                <TextField fx:id="txtY0" layoutX="550.0" layoutY="210.0" prefHeight="29.0" prefWidth="151.0" promptText="Valor inicial y"/>
+
+                <Label layoutX="720.0" layoutY="154.0" text="tf:" textFill="WHITE"><font><Font size="22.0"/></font></Label>
+                <TextField fx:id="txtTf" layoutX="770.0" layoutY="155.0" prefHeight="29.0" prefWidth="151.0" promptText="Valor final t"/>
+
+                <Label layoutX="720.0" layoutY="209.0" text="n:" textFill="WHITE"><font><Font size="22.0"/></font></Label>
+                <TextField fx:id="txtN" layoutX="770.0" layoutY="210.0" prefHeight="29.0" prefWidth="151.0" promptText="Número de pasos"/>
+
+                <Button fx:id="btnEjecutar" layoutX="835.0" layoutY="264.0" mnemonicParsing="false"
+                        prefHeight="41.0" prefWidth="143.0" styleClass="button3-custom"
+                        text="Ejecutar" textFill="WHITE" onAction="#onEjecutar">
+                    <font><Font size="19.0"/></font>
+                    <cursor><Cursor fx:constant="HAND"/></cursor>
+                </Button>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

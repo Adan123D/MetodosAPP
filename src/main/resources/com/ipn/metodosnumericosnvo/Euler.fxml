@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:controller="com.ipn.metodosnumericosnvo.diferenciales_controller.EulerController"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="1100.0" prefHeight="700.0">
+
+
+    <!-- Vista del Método de Euler -->
+    <center>
+        <Pane prefHeight="700.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+            <children>
+                <!-- Título -->
+                <Label layoutX="318.0" layoutY="1.0" text="MÉTODO DE EULER" textFill="WHITE">
+                    <font><Font name="Trattatello" size="45.0"/></font>
+                </Label>
+
+                <!-- Campos de entrada -->
+                <Label layoutX="200.0" layoutY="100.0" text="Función f(t,y):" textFill="WHITE">
+                    <font><Font size="18.0"/></font>
+                </Label>
+                <TextField fx:id="funcionField" layoutX="350.0" layoutY="100.0" prefHeight="30.0" prefWidth="300.0" promptText="Ejemplo: -2*t*y"/>
+
+                <Label layoutX="200.0" layoutY="150.0" text="Valor inicial t0:" textFill="WHITE">
+                    <font><Font size="18.0"/></font>
+                </Label>
+                <TextField fx:id="t0Field" layoutX="350.0" layoutY="150.0" prefHeight="30.0" prefWidth="150.0" promptText="Ejemplo: 0"/>
+
+                <Label layoutX="550.0" layoutY="150.0" text="Valor inicial y0:" textFill="WHITE">
+                    <font><Font size="18.0"/></font>
+                </Label>
+                <TextField fx:id="y0Field" layoutX="700.0" layoutY="150.0" prefHeight="30.0" prefWidth="150.0" promptText="Ejemplo: 1"/>
+
+                <Label layoutX="200.0" layoutY="200.0" text="Valor final tf:" textFill="WHITE">
+                    <font><Font size="18.0"/></font>
+                </Label>
+                <TextField fx:id="tfField" layoutX="350.0" layoutY="200.0" prefHeight="30.0" prefWidth="150.0" promptText="Ejemplo: 1"/>
+
+                <Label layoutX="550.0" layoutY="200.0" text="Número de pasos:" textFill="WHITE">
+                    <font><Font size="18.0"/></font>
+                </Label>
+                <TextField fx:id="nField" layoutX="700.0" layoutY="200.0" prefHeight="30.0" prefWidth="150.0" promptText="Ejemplo: 10"/>
+
+                <Button fx:id="calcularBtn" layoutX="450.0" layoutY="250.0" mnemonicParsing="false"
+                        prefHeight="40.0" prefWidth="200.0" styleClass="button-custom"
+                        text="Calcular" textFill="WHITE" onAction="#onCalcular">
+                    <font><Font size="18.0"/></font>
+                    <cursor><Cursor fx:constant="HAND"/></cursor>
+                </Button>
+
+                <!-- Tabla de resultados -->
+                <TableView fx:id="tabla" layoutX="200.0" layoutY="320.0" prefHeight="350.0" prefWidth="700.0">
+                    <columns>
+                        <TableColumn fx:id="colPaso" prefWidth="100.0" text="Paso"/>
+                        <TableColumn fx:id="colT" prefWidth="300.0" text="t"/>
+                        <TableColumn fx:id="colY" prefWidth="300.0" text="y"/>
+                    </columns>
+                </TableView>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

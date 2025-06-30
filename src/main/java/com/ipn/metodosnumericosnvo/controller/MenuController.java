@@ -89,6 +89,9 @@ public class MenuController {
 
         // Handle specific menu items
         switch (menuText) {
+            case "Método de Euler":
+                onEulerMenuItemClick();
+                break;
             default:
                 // For menu items that are not yet implemented
                 break;
@@ -850,6 +853,138 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             showError("Error al abrir la ventana de Romberg: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Euler menu item.
+     * This method opens a new window for the Euler method.
+     * If a function is entered in the main menu, it will be passed to the Euler window.
+     */
+    @FXML
+    protected void onEulerMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Euler
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Euler.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Euler.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage eulerStage = new Stage();
+            eulerStage.setTitle("Método de Euler");
+            eulerStage.setScene(new Scene(root, 1100, 700));
+            eulerStage.initModality(Modality.NONE);
+            eulerStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Euler: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Taylor menu item.
+     * This method opens a new window for the Taylor method.
+     * If a function is entered in the main menu, it will be passed to the Taylor window.
+     */
+    @FXML
+    protected void onTaylorMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Taylor
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/Taylor.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo Taylor.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage taylorStage = new Stage();
+            taylorStage.setTitle("Método de Taylor");
+            taylorStage.setScene(new Scene(root, 1100, 700));
+            taylorStage.initModality(Modality.NONE);
+            taylorStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Taylor: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Runge-Kutta menu item.
+     * This method opens a new window for the Runge-Kutta method.
+     * If a function is entered in the main menu, it will be passed to the Runge-Kutta window.
+     */
+    @FXML
+    protected void onRungeKuttaMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Runge-Kutta
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/RungeKutta3.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo RungeKutta3.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage rungeKuttaStage = new Stage();
+            rungeKuttaStage.setTitle("Método de Runge-Kutta Orden 3");
+            rungeKuttaStage.setScene(new Scene(root, 1100, 700));
+            rungeKuttaStage.initModality(Modality.NONE);
+            rungeKuttaStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Runge-Kutta: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the SEDO menu item.
+     * This method opens a new window for the SEDO method.
+     * If a function is entered in the main menu, it will be passed to the SEDO window.
+     */
+    @FXML
+    protected void onSEDOMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método SEDO
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/SEDO.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo SEDO.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage sedoStage = new Stage();
+            sedoStage.setTitle("Sistemas de Ecuaciones Diferenciales Ordinarias");
+            sedoStage.setScene(new Scene(root, 1100, 700));
+            sedoStage.initModality(Modality.NONE);
+            sedoStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de SEDO: " + e.getMessage());
         }
     }
 
