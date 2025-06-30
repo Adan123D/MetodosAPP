@@ -15,7 +15,7 @@
     <center>
         <Pane prefHeight="700.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="300.0" layoutY="20.0" text="MÉTODO DE RUNGE-KUTTA ORDEN 3" textFill="WHITE">
+                <Label layoutX="300.0" layoutY="20.0" text="MÉTODO DE RUNGE-KUTTA ORDEN 4" textFill="WHITE">
                     <font><Font name="Trattatello" size="40.0"/></font>
                 </Label>
 

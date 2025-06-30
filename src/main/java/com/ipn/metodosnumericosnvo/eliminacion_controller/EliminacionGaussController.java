@@ -17,6 +17,33 @@ public class EliminacionGaussController {
 
     private int n;
 
+    /**
+     * Establece la matriz del sistema desde una fuente externa
+     * @param matriz La matriz del sistema a resolver
+     */
+    public void setMatriz(double[][] matriz) {
+        if (matriz == null || matriz.length == 0) {
+            return;
+        }
+
+        // Establecer el número de incógnitas
+        n = matriz.length;
+        txtIncognitas.setText(String.valueOf(n));
+
+        // Generar la estructura de la tabla
+        generarMatriz();
+
+        // Llenar la tabla con los valores de la matriz
+        for (int i = 0; i < n; i++) {
+            double[] row = new double[n + 1];
+            System.arraycopy(matriz[i], 0, row, 0, n + 1);
+            tablaMatriz.getItems().set(i, row);
+        }
+
+        // Opcionalmente, calcular automáticamente
+        // calcular();
+    }
+
     @FXML
     public void generarMatriz() {
         tablaMatriz.getColumns().clear();

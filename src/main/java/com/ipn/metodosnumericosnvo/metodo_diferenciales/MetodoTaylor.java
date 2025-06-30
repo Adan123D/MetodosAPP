@@ -45,25 +45,68 @@ public class MetodoTaylor {
         double y = y0;
 
         String f = funcion;
-        String f2_expr = "D(" + f + ", t)";  // Derivada simbólica respecto a t
+        String f1_expr = f; // Primera derivada f(t,y)
+        String f2_expr = "D(" + f + ", t) + D(" + f + ", y)*" + f; // Segunda derivada completa df/dt + df/dy * f
 
-        for (int i = 0; i <= n; i++) {
-            pasos.add(new Iteracion(i, t, y));
+        pasos.add(new Iteracion(0, t, y)); // Agregar condición inicial
 
-            String f_eval = f.replace("t", String.format("%.10f", t))
-                             .replace("y", String.format("%.10f", y));
-            double f_val = util.evaluate(f_eval).evalDouble();
+        for (int i = 1; i <= n; i++) {
+            // Evaluar f(t, y) - primera derivada
+            String f1_eval = f1_expr.replace("t", String.format("%.10f", t))
+                                 .replace("y", String.format("%.10f", y));
+            double f1_val = util.evaluate(f1_eval).evalDouble();
 
+            // Evaluar f'(t, y) - segunda derivada
             IExpr f2_symbolic = util.evaluate(f2_expr);
             String f2_eval_str = f2_symbolic.toString()
                     .replace("t", String.format("%.10f", t))
                     .replace("y", String.format("%.10f", y));
             double f2_val = util.evaluate(f2_eval_str).evalDouble();
 
-            y = y + h * f_val + (Math.pow(h, 2) / 2.0) * f2_val;
+            // Serie de Taylor de orden 2
+            y = y + h * f1_val + (Math.pow(h, 2) / 2.0) * f2_val;
             t = t + h;
+
+            pasos.add(new Iteracion(i, t, y));
         }
 
         return pasos;
+    }
+
+    /**
+     * Obtiene la expansión simbólica de la serie de Taylor para una EDO.
+     * @param funcion Función de la EDO en la forma dy/dt = f(t,y)
+     * @return Representación textual de la expansión de Taylor
+     */
+    public static String obtenerExpansionTaylor(String funcion) {
+        F.initSymbols();
+        EvalUtilities util = new EvalUtilities(false, true);
+
+        try {
+            // Primera derivada f(t,y)
+            String f1 = funcion;
+
+            // Segunda derivada df/dt + df/dy * f
+            String f2 = "D(" + f1 + ", t) + D(" + f1 + ", y)*" + f1;
+            IExpr f2_symbolic = util.evaluate(f2);
+
+            // Tercera derivada (opcional para expansiones de orden superior)
+            String f3 = "D(" + f2 + ", t) + D(" + f2 + ", y)*" + f1;
+            IExpr f3_symbolic = util.evaluate(f3);
+
+            StringBuilder expansion = new StringBuilder();
+            expansion.append("Expansión de Taylor para dy/dt = ").append(funcion).append("\n\n");
+            expansion.append("y(t + h) = y(t) + h·f(t,y) + (h²/2!)·f'(t,y) + (h³/3!)·f''(t,y) + ...\n\n");
+            expansion.append("Donde:\n");
+            expansion.append("f(t,y) = ").append(f1).append("\n");
+            expansion.append("f'(t,y) = ").append(f2_symbolic.toString()).append("\n");
+            expansion.append("f''(t,y) = ").append(f3_symbolic.toString()).append("\n\n");
+            expansion.append("Para el método de Taylor de orden 2 implementado se usa:\n");
+            expansion.append("y(t + h) = y(t) + h·f(t,y) + (h²/2!)·f'(t,y)\n");
+
+            return expansion.toString();
+        } catch (Exception e) {
+            return "Error al generar la expansión: " + e.getMessage();
+        }
     }
 }

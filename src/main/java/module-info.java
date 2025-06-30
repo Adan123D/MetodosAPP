@@ -30,7 +30,7 @@ module com.ipn.metodosnumericosnvo {
     // Required for mXparser function evaluation
     requires MathParser.org.mXparser;
     requires matheclipse.core;
-    requires JMathAnim;
+    //requires JMathAnim;
     //requires rings;
 
     opens com.ipn.metodosnumericosnvo.app to javafx.fxml;

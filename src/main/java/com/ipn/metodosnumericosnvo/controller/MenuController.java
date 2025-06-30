@@ -92,6 +92,9 @@ public class MenuController {
             case "Método de Euler":
                 onEulerMenuItemClick();
                 break;
+            case "Método de Minimos Cuadrados":
+                onMinimosCuadradosMenuItemClick();
+                break;
             default:
                 // For menu items that are not yet implemented
                 break;
@@ -985,6 +988,39 @@ public class MenuController {
         } catch (Exception e) {
             e.printStackTrace();
             showError("Error al abrir la ventana de SEDO: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the click event for the Método de Minimos Cuadrados menu item.
+     * This method opens a new window for the Mínimos Cuadrados method.
+     * If a function is entered in the main menu, it will be passed to the Mínimos Cuadrados window.
+     */
+    @FXML
+    protected void onMinimosCuadradosMenuItemClick() {
+        try {
+            // Cargar el archivo FXML del método de Mínimos Cuadrados
+            FXMLLoader loader = new FXMLLoader();
+
+            // Asegurarse de usar la ruta correcta del archivo FXML
+            loader.setLocation(getClass().getResource("/com/ipn/metodosnumericosnvo/minCuadrados.fxml"));
+
+            if (loader.getLocation() == null) {
+                showError("No se pudo encontrar el archivo minCuadrados.fxml");
+                return;
+            }
+
+            Parent root = loader.load();
+
+            // Crear y mostrar la nueva ventana
+            Stage minimosCuadradosStage = new Stage();
+            minimosCuadradosStage.setTitle("Método de Mínimos Cuadrados");
+            minimosCuadradosStage.setScene(new Scene(root, 800, 600));
+            minimosCuadradosStage.initModality(Modality.NONE);
+            minimosCuadradosStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Error al abrir la ventana de Mínimos Cuadrados: " + e.getMessage());
         }
     }
 

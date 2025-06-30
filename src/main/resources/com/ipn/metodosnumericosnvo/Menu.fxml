@@ -59,7 +59,7 @@
                     <MenuItem text="Método de Euler" onAction="#onEulerMenuItemClick"/>
                     <MenuItem text="Método de Taylor" onAction="#onTaylorMenuItemClick"/>
                     <MenuItem text="Método de Runge-Kutta" onAction="#onRungeKuttaMenuItemClick"/>
-                    <MenuItem text="Método de Minimos Cuadrados" onAction="#handleMenuItemClick"/>
+                    <MenuItem text="Método de Minimos Cuadrados" onAction="#onMinimosCuadradosMenuItemClick"/>
                     <MenuItem text="SEDO" onAction="#onSEDOMenuItemClick"/>
                 </Menu>
 
