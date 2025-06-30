@@ -31,6 +31,5 @@
   <Button text="Calcular Romberg" onAction="#onCalcular"/>
   <Label fx:id="resultLbl" text="Resultado:" wrapText="true"/>
   <TableView fx:id="tableRomberg">
-    <!-- Opcional: Puedes agregar columnas dinámicamente via controlador -->
   </TableView>
 </VBox>
